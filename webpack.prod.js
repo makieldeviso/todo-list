@@ -29,14 +29,16 @@ module.exports = merge (common, {
         new MiniCssExtractPlugin({
             filename: '[name].[contenthash].css'
         }),
+
         new HtmlWebpackPlugin ({
-            template: "./src/index.html",
+            template: "./src/template.html",
             minify: {
                 removeAttributeQuotes: true,
                 collapseWhiteSpace: true,
                 removeComments: true
             }
         }),
+        
         new CopyWebpackPlugin({
             patterns: [
                 {   from: 'src/assets',

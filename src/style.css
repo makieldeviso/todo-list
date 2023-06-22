@@ -1,0 +1,500 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Pacifico&family=Play&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--common-font-style);
+}
+
+:root {
+    --base-orange: #FFAB73;
+    --base-light-orange: #FFD384;
+    --base-yellow: #FFF9B0;
+    --base-pink: #FFAEC0;
+
+    --dark-orange: #FF8400;
+    --dark-yellow: #FFD93D;
+    --dark-pink: #EE046C;
+    --darkest-color: #3E3E3E;
+    --off-white: #ECECEC;
+
+    --logo-size: calc(40px + 1vw);
+
+    --title-font-style: 'Pacifico', sans-serif;
+    --header-font-style: 'Play', sans-serif;
+    --common-font-style: 'Montserrat', sans-serif;
+
+    --title-font-size: calc(1.3rem + 1vw);
+    --header-font-size: calc(0.8rem + 1vw);
+    --common-font-size: calc(0.6rem + 1vw);
+
+    --min-width: 280px;
+
+    --common-margin: calc(10px + 0.5vw);
+    --common-padding: calc(5px + 0.5vw);
+
+    --icon-size: calc(20px + 0.5vw);
+}
+
+body {
+    background-color: var(--off-white);
+}
+
+header {
+    background-color: var(--dark-orange);
+    min-width: var(--min-width);
+    padding: var(--common-padding);
+    width: 100%;
+    display: flex;
+}
+
+main {
+    min-width: var(--min-width);
+    padding: var(--common-padding);
+    margin-top: var(--common-margin);
+    overflow: hidden;
+}
+
+footer {
+    min-width: var(--min-width);
+    width: 250px;
+}
+
+/* HEADER (start) */
+div#title-banner {
+    display: grid;
+    grid-template-columns:max-content 1fr;
+    width: max-content;
+}
+
+img#logo {
+    width: var(--logo-size);
+    height: var(--logo-size);
+}
+
+h1#page-title {
+    font-family: var(--title-font-style);
+    font-size: var(--title-font-size);
+    color: var(--off-white);
+    text-shadow: 0 0 3px var(--darkest-color);
+    width: 100%;
+}   
+/* HEADER (end) */
+
+/* MAIN (start) */
+
+/* Categories (start) -  */
+div#events-cont {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    /* margin: var(--common-margin) 0; */
+    border-bottom: 3px dotted var(--base-light-orange);
+    padding-bottom: calc(var(--common-padding) * 2);
+}
+
+div.category {
+    text-align: center;
+    width: 95%;
+    padding: calc(var(--common-padding) * 0.5);
+    margin: auto;
+
+    display: grid;
+    grid-template-columns: max-content 1fr max-content;
+    align-items: center;
+}
+
+div.category h3 {
+    font-family: var(--header-font-style);
+    font-size: calc(var(--common-font-size) * 1);
+    width: 100%;
+    text-align: left;
+    padding-left: var(--common-padding);
+}
+
+div.category p {
+    width: 100%;
+    font-size: var(--common-font-size);
+}
+
+svg.tab-icon {
+    width: var(--icon-size);
+    height: var(--icon-size);
+}
+
+div#today {
+    margin-top: var(--common-margin);
+}
+
+div#someday {
+    margin-bottom: var(--common-margin);
+}
+/* Categories (end) -  */
+
+/* Priority Filter (start) - */
+div#priority-sum {
+    margin-top: var(--common-margin);
+    border-bottom: 3px dotted var(--base-light-orange);
+    padding-bottom: calc(var(--common-padding) * 2);
+}
+
+div#priority-sum h2 {
+    font-family: var(--header-font-style);
+    font-size: calc(var(--common-font-size) * 1.1);
+    width: 95%;
+    margin: auto;
+}
+
+svg#high-icon {
+    fill: green;
+}
+
+svg#medium-icon {
+    fill: orange;
+}
+
+svg#low-icon {
+    fill: red;
+}
+/* Priority Filter (end) - */
+
+/* Add (start) */
+div#add-button {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    overflow: hidden;
+
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--base-orange);
+
+    border-radius: 50% 50% 0 0;
+}
+
+button#add {
+    width: calc(50px + 1vw);
+    height: calc(50px + 1vw);
+    border-radius: 50%;
+    margin: auto;
+    margin-top: calc(var(--common-margin) * 0.5);
+    margin-bottom: calc(var(--common-margin) * 1);
+    background-color: var(--dark-orange);
+    border: 2px solid var(--off-white);
+    box-shadow: 0 3px 3px 2px rgba(109, 108, 108, 0.5);
+
+    display: flex;
+}
+
+button#add svg {
+    fill: var(--off-white);
+    width: 80%;
+    height: 80%;
+    margin: auto;
+}
+/* Add (ends) */
+
+
+/* Add Prompt Modal (start) */
+
+dialog#add-prompt {
+    width: 95vw;
+    height: 95vh;
+    margin: auto;
+    border: 1px solid var(--base-orange);
+    border-radius: 10px;
+}
+
+dialog::backdrop {
+    background-color: rgba(62, 62, 62, 0.9);
+}
+
+div.modal-cont {
+    width: 100%;
+    height: 100%;
+    padding: var(--common-padding);
+    padding-bottom: calc(var(--common-padding) * 2);
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: max-content max-content 1fr;
+    background-color: var(--base-orange);
+}
+
+button[value="close-add"] {
+    border-radius: 50%;
+    width: calc(30px + 1vw);
+    height: calc(30px + 1vw);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: auto;
+    margin-right: 0;
+    margin-bottom: var(--common-margin);
+
+    border: 2px solid white;
+    background-color: var(--dark-orange);
+    box-shadow: 0 2px 2px 1px rgba(62, 62, 62, 0.3);
+}
+
+button[value="close-add"] svg {
+    fill: white;
+}
+
+div#add-options button[data-open="open"] {
+    border: 2px solid var(--dark-orange);
+    box-shadow: 0 7px 5px 2px rgba(62, 62, 62, 0.3);
+    color: var(--dark-orange);
+    background-color: white;
+    transform: translateY(-5px) scale(1.1);
+    transition: all 0.2s ease-in-out;
+}
+
+div#add-options button[data-open="open"] svg {
+    fill: var(--dark-orange);
+}
+
+div#add-options {
+    display: flex;
+    gap: calc(var(--common-margin) * 2);
+    padding: var(--common-padding);
+}
+
+div#add-options button {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    align-items: center;
+    
+    padding: 
+        calc(var(--common-padding) * 0.5)
+        var(--common-padding);
+    border-radius: 5px;
+    border: 2px solid white;
+    background-color: var(--dark-orange);
+    color: white;
+    box-shadow: 0 2px 2px 1px rgba(62, 62, 62, 0.3);
+}
+
+div#add-options button span {
+    font-family: var(--header-font-style);
+    font-size: var(--header-font-size);
+}
+
+div#add-options button svg {
+    width: var(--header-font-size);
+    margin: auto;
+    fill: white;
+}
+
+/* form (start) */
+div.modal-cont form {
+    display: flex;
+    flex-direction: column;
+    margin-top: var(--common-margin);
+    border: 1px solid black;
+    padding: var(--common-padding);
+    gap: var(--common-margin);
+    border-radius: 10px;
+    overflow-y: scroll;
+    background-color: white;
+
+    border: none;
+    box-shadow: 0 4px 3px 2px rgba(62, 62, 62, 0.3);
+}
+
+div.input {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--common-margin) * 0.5);
+    margin-bottom: var(--common-margin);
+    padding: calc(var(--common-padding) * 0.5);
+}
+
+div.input input,
+div.input textarea,
+div.input select {
+    width: 95%;
+    max-width: 95%;
+    min-width: 95%;
+    margin: auto;
+    text-align: left;
+    padding: calc(var(--common-padding) * 0.5);
+    font-size: var(--common-font-size);
+}
+
+div.input label {
+    font-size: var(--common-font-size);
+}
+
+/* Priority (start) */
+div#prio-btns-cont {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+    border-style: none;
+    padding-top: calc(var(--common-padding) * 3);
+    gap: var(--common-margin);
+}
+
+div#event-priority p {
+    font-size: var(--common-font-size);
+}
+
+button.prio-btn {
+    padding: var(--common-padding);
+    text-align: center;
+    border-radius: 5px;
+    width: 100%;
+
+    background-color: white;
+    box-shadow: 0 2px 2px 1px rgba(62, 62, 62, 0.3);
+
+    font-size: var(--common-font-size);
+    font-weight: bold;
+}
+
+button[data-id="high"] {
+    border: 2px solid green; 
+    color: green;
+}
+
+button[data-id="mid"] {
+    border: 2px solid orange; 
+    color: orange;
+}
+
+button[data-id="low"] {
+    border: 2px solid red; 
+    color: red;
+}
+
+button[data-selected="selected"] {
+    border: 2px solid white;
+    color: white;
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 7px 5px 2px rgba(62, 62, 62, 0.3);
+    transition: all 0.2s ease-in-out;
+}
+
+button[data-selected="selected"][data-id="high"] {
+    background-color: green;
+}
+
+button[data-selected="selected"][data-id="mid"] {
+    background-color: orange;
+}
+
+button[data-selected="selected"][data-id="low"] {
+    background-color: red;
+}
+
+/* Tasks (start) */
+p#task-label {
+    font-size: var(--common-font-size);
+}
+
+div#add-task {
+    display: grid;
+    grid-template-columns: 1fr max-content;
+    height: max-content;
+}
+
+button#add-task-btn {
+    width: calc(30px + 0.5vw);
+    /* padding: calc(var(--common-padding) * 0.5); */
+    height: calc(30px + 0.5vw);
+    border: none;
+    background-color: var(--dark-orange);
+    border: 2px solid white;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 2px 1px rgba(62, 62, 62, 0.3);
+}
+
+button#add-task-btn svg {
+    fill: white;
+}
+
+/* Save Buttons Container (start) */
+
+div.save-cont {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: calc(var(--common-margin) * 2);
+    
+}
+
+button.clear-form,
+button.save-form {
+    width: 20vw;
+    min-width: max-content;
+    font-size: calc(var(--header-font-size) * 1.3);
+    font-family: var(--header-font-style);
+    padding: calc(var(--common-padding) * 0.5);
+    border: 2px solid var(--off-white);
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: 0 2px 2px 1px rgba(62, 62, 62, 0.3);
+}
+
+button.save-form {
+    color: white;
+    border-color: white;
+    background-color: green;
+    box-shadow: 0 2px 2px 1px rgba(62, 62, 62, 0.3);
+}
+
+/* New task (start) */
+div#task-container input.new-task {
+    border: none;
+    background-color: white;
+    justify-self: start;
+    width: 100%;
+    max-width: 100%;
+}
+
+div.new-task {
+    display: grid;
+    grid-template-columns: max-content 1fr max-content max-content;
+    /* gap: calc(var(--common-margin) * 0.5); */
+}
+
+div.new-task svg.list-mark {
+    width: calc(20px + 0.5vw);
+    height: calc(20px + 0.5vw);
+    fill: var(--base-orange);
+    margin-left: var(--common-margin);
+}
+
+div.new-task button {
+    width: calc(20px + 0.5vw);
+    height: calc(20px + 0.5vw);
+    border: none;
+    background-color: transparent;
+    margin-right: calc(var(--common-margin) * 0.5);
+}
+
+div.new-task button svg {
+    fill: var(--base-orange);
+}
+
+div.new-task button:hover svg {
+    fill: var(--dark-orange);
+    transform: scale(1.1);
+}
+
+
+
+
+
+
+/* MAIN (end) */

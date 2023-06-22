@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+</head>
+<body>
+    <header>
+        <div id="title-banner">
+            <img id="logo" src="./assets/logo.png" alt="logo">
+            <h1 id="page-title">Todo List</h1>
+        </div>
+    </header>
+
+    <main>
+        <div id="events-cont">
+
+            <div id="inbox" class="category">
+                <svg class="tab-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>inbox</title><path d="M19,15H15A3,3 0 0,1 12,18A3,3 0 0,1 9,15H5V5H19M19,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z" /></svg>
+                <h3>Inbox</h3>
+                <p id="inbox-count" data-count="5">5</p>
+            </div>
+
+            <div id="today" class="category">
+                <svg class="tab-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>star</title><path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" /></svg>
+                <h3>Today</h3>
+                <p id="today-count" data-count="5">5</p>
+            </div>
+
+            <div id="upcoming" class="category">
+                <svg class="tab-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>calendar-month</title><path d="M9,10V12H7V10H9M13,10V12H11V10H13M17,10V12H15V10H17M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5C3.89,21 3,20.1 3,19V5A2,2 0 0,1 5,3H6V1H8V3H16V1H18V3H19M19,19V8H5V19H19M9,14V16H7V14H9M13,14V16H11V14H13M17,14V16H15V14H17Z" /></svg>
+                <h3>Upcoming</h3>
+                <p id="upcoming-count" data-count="5">5</p>
+            </div>
+
+            <div id="someday" class="category">
+                <svg class="tab-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>archive</title><path d="M3,3H21V7H3V3M4,8H20V21H4V8M9.5,11A0.5,0.5 0 0,0 9,11.5V13H15V11.5A0.5,0.5 0 0,0 14.5,11H9.5Z" /></svg>
+                <h3>Someday</h3>
+                <p id="someday-count" data-count="5">5</p>
+            </div>
+            
+            <div id="events" class="category">
+                <svg class="tab-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>checkbox-marked-outline</title><path d="M19,19H5V5H15V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V11H19M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z" /></svg>
+                <h3>Events</h2>
+                <p id="events-count" data-count="5">5</p>
+            </div>
+
+            <div id="projects" class="category">
+                <svg class="tab-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>notebook-multiple</title><path d="M9.05,9H7.06V6H9.05V4.03H7.06V3.03C7.06,1.92 7.95,1.04 9.05,1.04H15.03V8L17.5,6.5L20,8V1.04H21C22.05,1.04 23,2 23,3.03V17C23,18.03 22.05,19 21,19H9.05C8,19 7.06,18.05 7.06,17V16H9.05V14H7.06V11H9.05V9M1,18H3V15H1V13H3V10H1V8H3V5H5V8H3V10H5V13H3V15H5V18H3V20H5V21H21V23H5A2,2 0 0,1 3,21V20H1V18Z" /></svg>
+                <h3>Projects</h2>
+                <p id="projects-count" data-count="5">5</p>
+            </div>
+        </div>
+
+        <div id="priority-sum">
+            <h2 class="filter-header">Priority Filter</h2>
+
+            <div id="high-prio" class="category">
+                <svg class="tab-icon" id="high-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>flag</title><path d="M14.4,6L14,4H5V21H7V14H12.6L13,16H20V6H14.4Z" /></svg>
+                <h3>High</h2>
+                <p id="tasks-count" data-count="5">5</p>
+            </div>
+
+            <div id="medium-prio" class="category">
+                <svg class="tab-icon" id="medium-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>flag</title><path d="M14.4,6L14,4H5V21H7V14H12.6L13,16H20V6H14.4Z" /></svg>
+                <h3>Medium</h2>
+                <p id="tasks-count" data-count="5">5</p>
+            </div>
+
+            <div id="low-prio" class="category">
+                <svg class="tab-icon" id="low-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>flag</title><path d="M14.4,6L14,4H5V21H7V14H12.6L13,16H20V6H14.4Z" /></svg>
+                <h3>Low</h2>
+                <p id="tasks-count" data-count="5">5</p>
+            </div>
+
+        </div>
+
+        <div id="add-button">
+            <button id="add">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>plus</title><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg>
+            </button>
+        </div>
+
+        <dialog id="add-prompt">
+            <div class="modal-cont">
+                <button value="close-add">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>close</title><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>
+                </button>
+
+                <div id="add-options">
+                    <button value="add-event" data-open="open">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>plus</title><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg>
+                        <span>New Event</span>
+                    </button>
+
+                    <button value="add-project">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>plus</title><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg>
+                        <span>New Project</span>
+                    </button>
+                </div>
+
+                <form id="event-form" action="">
+                    <div class="input">
+                        <label for="event-title">Title:</label>
+                        <input 
+                            id="event-title" 
+                            name="event-title" 
+                            type="text">
+                    </div>
+
+                    <div class="input">
+                        <label for="event-desc">Description:</label>
+                        <textarea 
+                            id="event-desc" 
+                            name="event-desc" 
+                            cols="30" 
+                            rows="3"></textarea>
+                    </div>
+
+                    <div class="input">
+                        <label for="event-schedule">Schedule:</label>
+                        <input 
+                            id="event-schedule" 
+                            name="event-schedule" 
+                            type="date">
+                    </div>
+
+                    <div class="input">
+                        <label for="event-project">Add to Project:</label>
+                        <select 
+                            name="event-project" 
+                            id="event-project">
+                            <option value="i wanna be a star 1">i wanna be a star 1</option>
+                            <option value="i wanna be a star 2">i wanna be a star 2</option>
+                        </select>
+                    </div>
+
+                    <div class="input" id="event-priority">
+                        
+                        <p>Event Priority:</p>
+
+                        <div id="prio-btns-cont">
+                            <button 
+                                class="prio-btn"
+                                type="button"
+                                data-id="low"
+                                value="low"> 
+                                Low
+                            </button>
+                            
+                            <button 
+                                class="prio-btn"
+                                type="button"
+                                data-id="mid"
+                                data-selected="selected"
+                                value="mid"> 
+                                Mid
+                            </button>
+    
+                            <button 
+                                class="prio-btn"
+                                type="button"
+                                data-id="high"
+                                value="high"> 
+                                High
+                            </button>
+                        </div>
+
+                        <!-- <div class="radio-field" data-id="high">
+                            <input 
+                                type="radio" 
+                                id="high" 
+                                name="priority" 
+                                value="high">
+                            <label for="high">High</label>
+                        </div>
+
+                        <div class="radio-field" data-id="mid" data-mark="marked">
+                            <input 
+                                type="radio" 
+                                id="mid" 
+                                name="priority" 
+                                value="mid"
+                                checked>
+                            <label for="mid">Mid</label>
+                        </div>
+
+                        <div class="radio-field" data-id="low">
+                            <input 
+                                type="radio" 
+                                id="low" 
+                                name="priority" 
+                                value="low">
+                            <label for="low">Low</label>
+                        </div> -->
+                    </div>
+
+                    <div class="input">
+                        <p id="task-label">Tasks: </p>
+                        <div id="task-container">
+                            <div class="new-task" data-id="task-1">
+                                <svg class="list-mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>checkbox-blank-outline</title><path d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,5V19H5V5H19Z" /></svg>
+
+                                <input 
+                                    class="new-task"
+                                    data-id="task-1"
+                                    value="Make a todo list app"
+                                    type="text"
+                                    disabled>
+
+                                <button class="edit-task" data-id="task-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>pencil-outline</title><path d="M14.06,9L15,9.94L5.92,19H5V18.08L14.06,9M17.66,3C17.41,3 17.15,3.1 16.96,3.29L15.13,5.12L18.88,8.87L20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18.17,3.09 17.92,3 17.66,3M14.06,6.19L3,17.25V21H6.75L17.81,9.94L14.06,6.19Z" /></svg>
+
+                                <button class="delete-task" data-id="task-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>trash-can-outline</title><path d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z" /></svg>
+                                </button>
+
+                            </div>
+                        </div>
+                        
+                        <div id="add-task">
+                            <input class="add-task" type="text">
+                            <button type="button" id="add-task-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>plus</title><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="input save-cont">
+                        <button class="clear-form">Clear</button>
+                        <button class="save-form">Save</button>
+
+                    </div>
+
+
+                    
+                </form>
+
+            </div>
+        </dialog>
+
+    </main>
+
+    <footer></footer>
+</body>
+</html>
