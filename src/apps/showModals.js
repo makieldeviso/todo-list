@@ -1,3 +1,4 @@
+import { addTaskToEvent } from "./addTaskToEvent";
 import { modalUX } from "./modalUX";
 
 const showModals = (function () {
@@ -14,6 +15,7 @@ const showModals = (function () {
 
         // Add additional event listeners upon show modal
         modalUX.addModalUX();
+        addTaskToEvent.addNewTaskEvent();
     } 
 
     // Closes Modal and removes eventListeners to elements inside the modal

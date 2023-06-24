@@ -1,3 +1,5 @@
+import { addTaskToEvent } from "./addTaskToEvent";
+
 const modalUX = (function () {
 
     // Closes/ unselect all buttons from given nodeList

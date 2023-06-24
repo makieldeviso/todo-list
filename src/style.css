@@ -454,7 +454,7 @@ button.save-form {
 }
 
 /* New task (start) */
-div#task-container input.new-task {
+div#tasks-container input.new-task {
     border: none;
     background-color: white;
     justify-self: start;
