@@ -1,5 +1,9 @@
 const addTaskToEvent = (function () {
-    const newTasks = [];
+    const newTasks = {};
+
+    const getNewTasks = function () {
+        return newTasks;
+    }
 
     const addNewTask = function () {
         const tasksCont = document.querySelector('div#tasks-container');
@@ -12,7 +16,7 @@ const addTaskToEvent = (function () {
         }
 
         // New task ID counter
-        const newTaskCount = newTasks.length;
+        const newTaskCount = Object.keys(newTasks).length;
         const newTaskId = `task-${newTaskCount + 1}`;
 
         // Create new task DOM Component
@@ -53,6 +57,10 @@ const addTaskToEvent = (function () {
         newTaskDeleteBtn.setAttribute('class', 'delete-task');
         newTaskDeleteBtn.setAttribute('type', 'button');
 
+        // Adds event listener to delete button
+        newTaskDeleteBtn.addEventListener('click', deleteTask);
+
+        // Adds delete button icon
         const taskDeleteIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         taskDeleteIcon.setAttribute('viewBox', '0 0 24 24');
         taskDeleteIcon.innerHTML = '<title>trash-can-outline</title><path d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z"></path>';
@@ -71,22 +79,80 @@ const addTaskToEvent = (function () {
 
         // Saves to memory new tasks added
         // Create dynamic property assign;
-        const newTaskObj = {};
-        newTaskObj[newTaskId] = newTaskValue;
-
-        newTasks.push(newTaskObj);
+        newTasks[newTaskId] = newTaskValue;
 
         // Clears text box upon adding
         addTaskInput.value = '';
     }
 
     const editTask = function () {
-        console.log(this);
+        const editButtonId =  this.dataset.id;
+
+        const taskTextBox = document.querySelector(`input[data-id='${editButtonId}']`);
+        taskTextBox.disabled = false;
+
+        // Refer to tasks array to get value of the task for edit
+        const taskValue = newTasks[`${editButtonId}`];
+
+        // Ensures that the cursor is at the end of the text
+        // Note: event listener linked function
+        const cursorEnd = function () {
+            taskTextBox.setSelectionRange(taskValue.length, taskValue.length);
+        }
+        
+        // Saves the edit
+        // Note: event listener linked function
+        const saveEdit = function () {
+            // Assign new value to the edited task
+            newTasks[`${editButtonId}`] = taskTextBox.value;
+
+            //Disables text box upon save
+            taskTextBox.disabled = true;
+
+            // Remove focus and blur events on save
+            taskTextBox.removeEventListener('focus', cursorEnd);
+            taskTextBox.removeEventListener('blur', saveEdit);
+        }
+
+        // Add focus and blur events to the text Box
+        taskTextBox.addEventListener('focus', cursorEnd);
+        taskTextBox.addEventListener('blur', saveEdit);
+
+        // Focus to text box when edit button is clicked
+        taskTextBox.focus();
     }
 
+    const deleteTask = function () {
+        const buttonId = this.dataset.id;
 
+        // Remove task from the newTasks Obj;
+        delete newTasks[`${buttonId}`];
 
+        const oldTaskKeys = Object.keys(newTasks); // Array of the newTasks property keys
 
+        // Rename newTasks properties
+        // Create temporary object for the new properties
+        const tempObj = {}
+        for (let i = 0; i < oldTaskKeys.length; i++) {
+            // Save value
+            const savedValue = newTasks[oldTaskKeys[i]];
+            
+            tempObj[`task-${i + 1}`] = savedValue;
+        }
+
+        // Deletes old task
+        oldTaskKeys.forEach( key => delete newTasks[key] );
+
+        // Replace the newTasks properties with new from tempObj
+        for (let i = 0; i < oldTaskKeys.length; i++) {
+            newTasks[`task-${i + 1}`] = tempObj[`task-${i + 1}`];
+        }
+
+        // Remove task from the DOM
+        const tasksCont = document.querySelector('div#tasks-container');
+        const taskForDeleteCont = document.querySelector(`div[data-id='${buttonId}']`);
+        tasksCont.removeChild(taskForDeleteCont);
+    }
 
 
     const addNewTaskEvent = function () {
@@ -95,7 +161,7 @@ const addTaskToEvent = (function () {
     }
 
 
-    return {addNewTaskEvent}
+    return { addNewTaskEvent, getNewTasks }
 })();
 
 export { addTaskToEvent };

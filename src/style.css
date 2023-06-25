@@ -7,6 +7,10 @@
     font-family: var(--common-font-style);
 }
 
+button:hover {
+    cursor: pointer;
+}
+
 :root {
     --base-orange: #FFAB73;
     --base-light-orange: #FFD384;
@@ -419,6 +423,10 @@ button#add-task-btn {
     box-shadow: 0 2px 2px 1px rgba(62, 62, 62, 0.3);
 }
 
+button#add-task-btn:active {
+    transform: scale(0.9);
+}
+
 button#add-task-btn svg {
     fill: white;
 }
@@ -456,11 +464,17 @@ button.save-form {
 /* New task (start) */
 div#tasks-container input.new-task {
     border: none;
+    border-bottom: 1px solid var(--darkest-color);
     background-color: white;
     justify-self: start;
     width: 100%;
     max-width: 100%;
 }
+
+div#tasks-container input.new-task:disabled {
+    border: none;
+}
+
 
 div.new-task {
     display: grid;
@@ -480,7 +494,11 @@ div.new-task button {
     height: calc(20px + 0.5vw);
     border: none;
     background-color: transparent;
-    margin-right: calc(var(--common-margin) * 0.5);
+    margin-left: calc(var(--common-margin) * 0.5);
+}
+
+div.new-task button:active {
+    transform: scale(0.8);
 }
 
 div.new-task button svg {
