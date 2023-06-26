@@ -1,10 +1,8 @@
-const addForm = (function () {
+const addEventForm = (function () {
 
     const newEventBtn = document.querySelector('button#new-event');
-    const newProjectBtn = document.querySelector('button#new-project');
 
     const eventFormComp = function () {
-
         const title = {
             inputType: 'input',
             label: 'Title',
@@ -236,4 +234,4 @@ const addForm = (function () {
 
 })();
 
-export { addForm }
+export { addEventForm }

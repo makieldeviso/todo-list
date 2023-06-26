@@ -1,6 +1,6 @@
 import { addTaskToEvent } from "./addTaskToEvent";
 import { modalUX } from "./modalUX";
-import { addForm } from "./addForm";
+import { addEventForm } from "./addEventForm";
 
 const showModals = (function () {
 
@@ -15,8 +15,8 @@ const showModals = (function () {
         closeBtn.addEventListener('click', closeModal);
 
         // Add additional event listeners upon show modal
-        addForm.newEventForm();
-        addForm.addFormEvent();
+        addEventForm.newEventForm();
+        addEventForm.addFormEvent();
         modalUX.addModalUX();
         addTaskToEvent.addNewTaskEvent();
     } 
@@ -25,7 +25,7 @@ const showModals = (function () {
     const closeModal = function () {
         // Removes form and event listeners from elements inside modal
         modalUX.removeModalUX();
-        addForm.removeForm();
+        addEventForm.removeForm();
 
         // Closes modal
         const addPromptModal = document.querySelector('dialog#add-prompt');
