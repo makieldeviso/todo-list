@@ -312,7 +312,7 @@ div.modal-cont form {
     box-shadow: 0 4px 3px 2px rgba(62, 62, 62, 0.3);
 }
 
-div.input {
+div.comp-container {
     display: flex;
     flex-direction: column;
     gap: calc(var(--common-margin) * 0.5);
@@ -320,9 +320,9 @@ div.input {
     padding: calc(var(--common-padding) * 0.5);
 }
 
-div.input input,
-div.input textarea,
-div.input select {
+div.comp-container input,
+div.comp-container textarea,
+div.comp-container select {
     width: 95%;
     max-width: 95%;
     min-width: 95%;
@@ -332,7 +332,7 @@ div.input select {
     font-size: var(--common-font-size);
 }
 
-div.input label {
+div.comp-container label {
     font-size: var(--common-font-size);
 }
 
@@ -346,7 +346,7 @@ div#prio-btns-cont {
     gap: var(--common-margin);
 }
 
-div#event-priority p {
+div.comp-container p {
     font-size: var(--common-font-size);
 }
 
