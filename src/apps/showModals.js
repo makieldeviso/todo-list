@@ -1,11 +1,18 @@
+import { createModal } from "./createModal";
+import { addEventForm } from "./addEventForm";
 import { addTaskToEvent } from "./addTaskToEvent";
 import { modalUX } from "./modalUX";
-import { addEventForm } from "./addEventForm";
+import { addProjectForm } from "./addProjectForm";
 
 const showModals = (function () {
-
+    
     // Opens Modal and adds required eventListeners to elements inside the modal
     const showAddOptions = function () {
+
+        // Create dialog/ modal element
+        createModal.createNewModal('add');
+        createModal.createAddOptionsBtns();
+        
         const addPromptModal = document.querySelector('dialog#add-prompt');
         const closeBtn = document.querySelector('button#close-add');
 
@@ -14,22 +21,29 @@ const showModals = (function () {
         // Add eventListener to close-add/ close modal button
         closeBtn.addEventListener('click', closeModal);
 
-        // Add additional event listeners upon show modal
+        // Opens modal with add new event form as default
         addEventForm.newEventForm();
-        addEventForm.addFormEvent();
+
+        // Add additional event listeners upon show modal
+        addEventForm.addEventFormEvent();
+        addProjectForm.addProjectFormEvent();
         modalUX.addModalUX();
-        addTaskToEvent.addNewTaskEvent();
+
     } 
 
-    // Closes Modal and removes eventListeners to elements inside the modal
+    // Closes Modal, removes eventListeners to elements inside the modal then removes the modal in the DOM
     const closeModal = function () {
         // Removes form and event listeners from elements inside modal
         modalUX.removeModalUX();
-        addEventForm.removeForm();
+        addEventForm.removeEventForm();
 
         // Closes modal
         const addPromptModal = document.querySelector('dialog#add-prompt');
         addPromptModal.close();
+
+        // Removes modal from the DOM
+        const main = document.querySelector('main');
+        main.removeChild(addPromptModal);
     }
 
     // Adds event listener to addButton
@@ -38,7 +52,6 @@ const showModals = (function () {
         addButton.addEventListener('click', showAddOptions);
     }
 
-    
     return { addButtonEvent }
 })();
 

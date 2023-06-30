@@ -1,9 +1,7 @@
 import { createFormComponents } from "./createFormComponents";
+import { addTaskToEvent } from "./addTaskToEvent";
 
 const addEventForm = (function () {
-
-    const newEventBtn = document.querySelector('button#new-event');
-    const modalCont = document.querySelector('div.modal-cont');
 
     const eventFormComp = function () {
         const title = {
@@ -41,15 +39,20 @@ const addEventForm = (function () {
     }
 
     const newEventForm = function() {
+        const modalCont = document.querySelector('div.modal-cont');
         // Conditions when executing newEventForm
-        const eventBtnSelected = newEventBtn.dataset.selected === 'selected';
-        const newEventClicked = this === newEventBtn;
+        const projectForm = document.querySelector('form#project-form');
         const existingForm = document.querySelector('form#event-form');
 
-        // If add Button is clicked or newEvent
-        if ((eventBtnSelected && newEventClicked) || (existingForm !== null)) {
-            console.log('nope')
+        // If add Event Form is existing, cancel execution
+        if (existingForm !== null) {
+            console.log('nope');
             return;
+        }
+
+        // Removes project form if it exist
+        if (projectForm !== null) {
+            modalCont.removeChild(projectForm);
         }
 
         // Creates the parent form element
@@ -79,16 +82,24 @@ const addEventForm = (function () {
         modalCont.appendChild(eventForm);
     }
 
-    const removeForm = function () {
+    const removeEventForm = function () {
+        const modalCont = document.querySelector('div.modal-cont');
         const form = document.querySelector('form#event-form');
-        modalCont.removeChild(form);
+    
+        // Ensures that the form is present in the DOM
+        if (form !== null) {
+            modalCont.removeChild(form);
+        } else {
+            return;
+        }
     }
 
-    const addFormEvent = function() {
+    const addEventFormEvent = function() {
+        const newEventBtn = document.querySelector('button#new-event');
         newEventBtn.addEventListener('click', newEventForm);
     }
 
-    return { newEventForm, addFormEvent, removeForm }
+    return { newEventForm, addEventFormEvent, removeEventForm }
 
 })();
 

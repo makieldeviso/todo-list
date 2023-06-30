@@ -10,7 +10,7 @@ const createFormComponents = (function () {
     // Create component container
     const createContainer = function (assignClass, dataId) {
         const container = document.createElement('div');
-        container.setAttribute('class', assignClass );
+        container.setAttribute('class', assignClass);
         container.dataset.id = dataId;
 
         return container
@@ -147,6 +147,8 @@ const createFormComponents = (function () {
             newBtn.dataset.id = dataId;
             newBtn.textContent = label;
 
+            newBtn.setAttribute('type', 'button');
+
             container.appendChild(newBtn);
         }
 
@@ -156,8 +158,6 @@ const createFormComponents = (function () {
 
         return container;
     }
-
-
 
     return { createFormElement, createBasicComponent, createPriorityBtns, createTaskAdder, createSaveFormBtns }
 })();

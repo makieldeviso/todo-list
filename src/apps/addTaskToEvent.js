@@ -154,14 +154,23 @@ const addTaskToEvent = (function () {
         tasksCont.removeChild(taskForDeleteCont);
     }
 
-
     const addNewTaskEvent = function () {
         const addTaskBtn = document.querySelector('button#add-task-btn');
-        addTaskBtn.addEventListener('click', addNewTask);
+        // Ensures if addTaskBtn exists
+        if (addTaskBtn !== null) {
+            addTaskBtn.addEventListener('click', addNewTask);
+        }
     }
 
+    const removeNewTaskEvent = function () {
+        const addTaskBtn = document.querySelector('button#add-task-btn');
+        // Ensures if addTaskBtn exists
+        if (addTaskBtn !== null) {
+            addTaskBtn.removeEventListener('click', addNewTask);
+        }
+    }
 
-    return { addNewTaskEvent, getNewTasks }
+    return { addNewTaskEvent, removeNewTaskEvent, getNewTasks }
 })();
 
 export { addTaskToEvent };
