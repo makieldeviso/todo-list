@@ -1,5 +1,5 @@
 import { createFormComponents } from "./createFormComponents";
-import { addTaskToEvent } from "./addTaskToEvent";
+import { modalUX } from "./modalUX";
 
 const addEventForm = (function () {
 
@@ -38,6 +38,15 @@ const addEventForm = (function () {
         return [title, description, schedule, addToProject];
     }
 
+    const addProjectOptions = function (value) {
+        const newOption = document.createElement('option');
+        newOption.setAttribute('value', value);
+        newOption.textContent = `${value.slice(0,1).toUpperCase()}${value.slice(1)}`;
+
+        const projectSelect = document.querySelector('select#event-project');
+        projectSelect.appendChild(newOption);
+    }
+
     const newEventForm = function() {
         const modalCont = document.querySelector('div.modal-cont');
         // Conditions when executing newEventForm
@@ -61,7 +70,7 @@ const addEventForm = (function () {
         // Add form components
         // Note: creates multiple from array of objects
         const newBasicComps = eventFormComp().map(comp => {
-           const component = createFormComponents.createBasicComponent(comp, 'event-form');
+           const component = createFormComponents.createBasicComponent(comp, 'new-event');
            return component;
         }); 
 
@@ -80,6 +89,12 @@ const addEventForm = (function () {
 
         // Appends the form to the modal Cont
         modalCont.appendChild(eventForm);
+
+        // Add to project options to the Add to Project Dropdown
+        addProjectOptions('standalone');
+
+        // Adds event listeners to the created form
+        modalUX.addModalUX();
     }
 
     const removeEventForm = function () {

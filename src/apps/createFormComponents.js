@@ -90,6 +90,21 @@ const createFormComponents = (function () {
         return container;
     }
 
+    const adderBtn = function (dataId) {
+        const newBtn = document.createElement('button');
+        newBtn.setAttribute('type', 'button');
+        newBtn.setAttribute('id', dataId);
+        newBtn.setAttribute('class', 'adder-btn');
+
+        // Create and append button icon
+        const buttonIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        buttonIcon.setAttribute('viewBox', '0 0 24 24');
+        buttonIcon.innerHTML = '<title>plus</title><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"></path>'
+        newBtn.appendChild(buttonIcon);
+
+        return newBtn;
+    }
+    
     const createTaskAdder = function (dataId) {
          // lvl-1 parent
          const container = createContainer('comp-container', dataId); 
@@ -105,6 +120,7 @@ const createFormComponents = (function () {
         // Create add task input container - lvl-1 child, - lvl-2 parent 
         const inputCont = document.createElement('div');
         inputCont.setAttribute('id', 'add-task');
+        inputCont.setAttribute('class', 'adder-comp');
 
         // Create input field - lvl-2 child
         const taskInput = document.createElement('input');
@@ -113,15 +129,7 @@ const createFormComponents = (function () {
         taskInput.setAttribute('maxlength', '50');
 
         //Create create task button - lvl-2 child, lvl-3 parent
-        const addTaskBtn = document.createElement('button');
-        addTaskBtn.setAttribute('type', 'button');
-        addTaskBtn.setAttribute('id', 'add-task-btn');
-
-        // Create and append button icon - lvl-3 child
-        const buttonIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        buttonIcon.setAttribute('viewBox', '0 0 24 24');
-        buttonIcon.innerHTML = '<title>plus</title><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"></path>'
-        addTaskBtn.appendChild(buttonIcon);
+        const addTaskBtn = adderBtn('add-task-btn');
 
         // Assemble component
         // lvl-2
@@ -136,6 +144,38 @@ const createFormComponents = (function () {
         return container;
     }
 
+    const createEventAdder = function (dataId) {
+        const container = createContainer('comp-container', dataId);
+
+        //Create p as label - lvl-1 child
+        const label = document.createElement('p');
+        label.textContent = 'Add Event:'
+
+        //  Create empty tasks container - lvl-1 child
+        const eventsCont = document.createElement('div');
+        eventsCont.setAttribute('id', 'events-container');
+
+        // Create add task input container - lvl-1 child, - lvl-2 parent 
+        const inputCont = document.createElement('div');
+        inputCont.setAttribute('id', 'add-event');
+        inputCont.setAttribute('class', 'adder-comp');
+
+        // Create dropdown select event
+        const eventSelect = document.createElement('select');
+        eventSelect.setAttribute('id', 'add-event-select');
+        
+        // Create add event btn
+        const addEventBtn = adderBtn('add-event-btn');
+
+        const inputParts = [eventSelect, addEventBtn];
+        inputParts.forEach(part => inputCont.appendChild(part));
+
+        const eventAdderParts = [label, eventsCont, inputCont];
+        eventAdderParts.forEach(part => container.appendChild(part));
+
+        return container
+    }
+
     const createSaveFormBtns = function (dataId) {
         // Create container lvl-1 parent
         const container = createContainer('comp-container save-cont', dataId);
@@ -145,6 +185,7 @@ const createFormComponents = (function () {
             const newBtn = document.createElement('button');
             newBtn.setAttribute('class', assignClass);
             newBtn.dataset.id = dataId;
+            newBtn.setAttribute('id', `${assignClass}-${dataId}`);
             newBtn.textContent = label;
 
             newBtn.setAttribute('type', 'button');
@@ -159,7 +200,7 @@ const createFormComponents = (function () {
         return container;
     }
 
-    return { createFormElement, createBasicComponent, createPriorityBtns, createTaskAdder, createSaveFormBtns }
+    return { createFormElement, createBasicComponent, createPriorityBtns, createTaskAdder, createEventAdder, createSaveFormBtns }
 })();
 
 

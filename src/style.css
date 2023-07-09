@@ -403,13 +403,13 @@ p#task-label {
     font-size: var(--common-font-size);
 }
 
-div#add-task {
+div.adder-comp {
     display: grid;
     grid-template-columns: 1fr max-content;
     height: max-content;
 }
 
-button#add-task-btn {
+button.adder-btn {
     width: calc(30px + 0.5vw);
     /* padding: calc(var(--common-padding) * 0.5); */
     height: calc(30px + 0.5vw);
@@ -423,11 +423,11 @@ button#add-task-btn {
     box-shadow: 0 2px 2px 1px rgba(62, 62, 62, 0.3);
 }
 
-button#add-task-btn:active {
+button.adder-btn:active {
     transform: scale(0.9);
 }
 
-button#add-task-btn svg {
+button.adder-btn svg {
     fill: white;
 }
 

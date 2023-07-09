@@ -13,7 +13,24 @@ const addProjectForm = (function () {
             'max-length': '50',
         }
 
-        return [title];
+        const desc = {
+            inputType: 'textarea',
+            label: 'Description',
+            id: 'project-desc',
+
+            cols: '30',
+            rows: '3',
+        }
+
+        const deadline = {
+            inputType: 'input',
+            label: 'Deadline',
+            id: 'project-deadline',
+
+            type: 'date'
+        }
+
+        return [title, desc, deadline];
     }
 
     const newProjectForm = function () {
@@ -44,16 +61,19 @@ const addProjectForm = (function () {
             return component;
          }); 
 
-         // Appends the components to the parent form
-        const allComp = [...newBasicComps];
+
+        const newEventAdder = createFormComponents.createEventAdder('project-form');
+
+        const newSaveBtns = createFormComponents.createSaveFormBtns('project-form');
+
+        // Appends the components to the parent form
+        const allComp = [...newBasicComps, newEventAdder, newSaveBtns];
         allComp.forEach(component => projectForm.appendChild(component));
 
         // Appends the form to the modal Cont
         modalCont.appendChild(projectForm);
         }
 
-
-    
         const removeProjectForm = function () {
             const modalCont = document.querySelector('div.modal-cont');
             const form = document.querySelector('form#project-form');

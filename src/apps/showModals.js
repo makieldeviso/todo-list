@@ -1,8 +1,8 @@
 import { createModal } from "./createModal";
 import { addEventForm } from "./addEventForm";
-import { addTaskToEvent } from "./addTaskToEvent";
 import { modalUX } from "./modalUX";
 import { addProjectForm } from "./addProjectForm";
+import { saveFormValues } from "./saveFormValues";
 
 const showModals = (function () {
     
@@ -27,7 +27,6 @@ const showModals = (function () {
         // Add additional event listeners upon show modal
         addEventForm.addEventFormEvent();
         addProjectForm.addProjectFormEvent();
-        modalUX.addModalUX();
 
     } 
 
@@ -45,6 +44,11 @@ const showModals = (function () {
         const main = document.querySelector('main');
         main.removeChild(addPromptModal);
     }
+
+    const saveEvent = function () {
+
+    }
+
 
     // Adds event listener to addButton
     const addButtonEvent = function () {

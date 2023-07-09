@@ -1,4 +1,5 @@
 import { addTaskToEvent } from "./addTaskToEvent";
+import { saveFormValues } from "./saveFormValues";
 
 const modalUX = (function () {
 
@@ -69,14 +70,6 @@ const modalUX = (function () {
         }
     }
 
-    const addTaskBtnEvent = function (action) {
-        if (action === true ) {
-            addTaskToEvent.addNewTaskEvent();
-        } else if (action === false) {
-            addTaskToEvent.removeNewTaskEvent();
-        }
-    }
-
 
     // Compiled function to add all necessary listeners and UX
     const addModalUX = function () {
@@ -84,7 +77,8 @@ const modalUX = (function () {
         // Reminder: true argument to add eventListeners, false means remove
         addOptionsBtns(true);
         addPriorityBtnEvent(true);
-        addTaskBtnEvent(true);
+        addTaskToEvent.addNewTaskEvent(true);
+        saveFormValues.addSaveEventFormEvent(true);
     }
 
     // Compiled function to remove all listeners and UX
@@ -93,8 +87,8 @@ const modalUX = (function () {
         // Reminder: false to remove eventListeners
         addOptionsBtns(false);
         addPriorityBtnEvent(false);
-        addTaskBtnEvent(false);
-        
+        addTaskToEvent.addNewTaskEvent(false);
+        saveFormValues.addSaveEventFormEvent(false);
     }
 
     return { addModalUX, removeModalUX }
