@@ -1,19 +1,50 @@
+import { memoryHandler } from "./memoryHandler";
+
 const saveFormValues = (function () {
 
     const saveEventForm = function () {
 
+        // Factory function to create event object
+        const createEvent = function (title, description, schedule, projectTag, priority) {
+
+            return {title, description, schedule, projectTag, priority}
+        }
+
+        // Reusable DOM value getter function
         const valueGet = function (selector) {
             const value = document.querySelector(`${selector}`).value;
             return value
         }
 
-        const title = valueGet('#event-title');
-        const description = valueGet('#event-desc');
-        const schedule = valueGet('#event-schedule');
-        const projectTag = valueGet('#event-project');
-        const priority = valueGet('button.prio-btn[data-selected="selected"]');
+        // Execute factory function, to make event object
+        // Note: arguments depends on valueGet function to get values from DOM
+        const newEvent = createEvent(
+            valueGet('#event-title'),
+            valueGet('#event-desc'),
+            new Date(valueGet('#event-schedule')), // object date
+            valueGet('#event-project'),
+            valueGet('button.prio-btn[data-selected="selected"]')
+        )
+            
+        // Add tasks to the event object
+        const tasks = document.querySelectorAll('#tasks-container input.new-task');
+        tasks.forEach(task => {
+            newEvent[`${task.dataset.id}`] = task.value;
+        })
 
-        console.log({title, description, schedule, projectTag, priority});
+        // Create an id for the event object
+        const eventId = function (object) {
+            const eventTitle = object.title;
+            const eventSchedule = object.schedule.valueOf();
+
+            const titleId = eventTitle.split(" ").map(word => `${word.toLowerCase()}`).join('');
+            const newEventId = `${titleId + eventSchedule}`;
+
+            object['eventId'] = newEventId;
+        }
+        eventId(newEvent); // Executes event id maker
+
+        memoryHandler.saveEvent(newEvent);
     }
 
     const addSaveEventFormEvent = function (action) {
