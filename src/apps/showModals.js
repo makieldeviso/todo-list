@@ -2,7 +2,6 @@ import { createModal } from "./createModal";
 import { addEventForm } from "./addEventForm";
 import { modalUX } from "./modalUX";
 import { addProjectForm } from "./addProjectForm";
-import { saveFormValues } from "./saveFormValues";
 
 const showModals = (function () {
     
@@ -27,7 +26,6 @@ const showModals = (function () {
         // Add additional event listeners upon show modal
         addEventForm.addEventFormEvent();
         addProjectForm.addProjectFormEvent();
-
     } 
 
     // Closes Modal, removes eventListeners to elements inside the modal then removes the modal in the DOM
@@ -45,18 +43,13 @@ const showModals = (function () {
         main.removeChild(addPromptModal);
     }
 
-    const saveEvent = function () {
-
-    }
-
-
     // Adds event listener to addButton
     const addButtonEvent = function () {
         const addButton = document.querySelector('button#add');
         addButton.addEventListener('click', showAddOptions);
     }
 
-    return { addButtonEvent }
+    return { addButtonEvent, closeModal }
 })();
 
 export { showModals };

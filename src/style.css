@@ -332,6 +332,14 @@ div.comp-container select {
     font-size: var(--common-font-size);
 }
 
+div.comp-container input.error,
+div.comp-container textarea.error,
+div.comp-container select.error {
+    border: 1px solid red;
+    box-shadow: 0 0 1px 2px rgba(255, 0, 0, 0.3);
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
 div.comp-container label {
     font-size: var(--common-font-size);
 }
