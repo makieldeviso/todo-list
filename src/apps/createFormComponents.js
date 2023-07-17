@@ -1,3 +1,5 @@
+import { formatting } from "./formatting";
+
 const createFormComponents = (function () {
 
     const createFormElement = function (assignId) {
@@ -71,7 +73,7 @@ const createFormComponents = (function () {
             newBtn.setAttribute('type', 'button');
             newBtn.setAttribute('value', btnValue);
             newBtn.dataset.id = btnValue;
-            newBtn.textContent = `${btnValue.slice(0, 1).toUpperCase()}${btnValue.slice(1)}`;
+            newBtn.textContent = formatting.toProper(btnValue);
 
             if (btnValue === 'mid') {
                 newBtn.dataset.selected = 'selected';

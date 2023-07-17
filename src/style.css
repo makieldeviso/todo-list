@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Pacifico&family=Play&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Pacifico&family=Play&display=swap');
 
 * {
     margin: 0;
@@ -13,15 +13,14 @@ button:hover {
 
 :root {
     --base-orange: #FFAB73;
-    --base-light-orange: #FFD384;
+    --base-blue: #9BCDD2;
     --base-yellow: #FFF9B0;
-    --base-pink: #FFAEC0;
+    --base-pink: #FFDEDE;
 
-    --dark-orange: #FF8400;
-    --dark-yellow: #FFD93D;
-    --dark-pink: #EE046C;
-    --darkest-color: #3E3E3E;
-    --off-white: #ECECEC;
+    --dark-orange: #FF8551;
+    --darkest-color: #212A3E;
+    --off-white: #FAF0E4;
+    --gray: #7F8487;
 
     --logo-size: calc(40px + 1vw);
 
@@ -43,6 +42,8 @@ button:hover {
 
 body {
     background-color: var(--off-white);
+    display: grid;
+    grid-template-rows: max-content 1fr max-content;
 }
 
 header {
@@ -50,14 +51,14 @@ header {
     min-width: var(--min-width);
     padding: var(--common-padding);
     width: 100%;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr max-content;
 }
 
 main {
     min-width: var(--min-width);
-    padding: var(--common-padding);
-    margin-top: var(--common-margin);
     overflow: hidden;
+    position: relative;
 }
 
 footer {
@@ -83,10 +84,38 @@ h1#page-title {
     color: var(--off-white);
     text-shadow: 0 0 3px var(--darkest-color);
     width: 100%;
-}   
+}  
+
+/* button#sidebar-btn {
+    width: calc(var(--logo-size) * 0.8);
+    height: calc(var(--logo-size) * 0.8);
+    border: none;
+    background-color: transparent;
+    fill: var(--off-white);  
+    align-self: center; 
+} */
+
+
 /* HEADER (end) */
 
 /* MAIN (start) */
+
+/* Sidebar slider (start)*/
+div#sidebar {
+    width: 100%;
+    padding-top: calc(var(--common-padding) * 2);
+    background-color: var(--off-white);
+    position: fixed;
+    left: 0;
+    transition: transform 0.2s ease-in-out;
+    z-index: 1;
+    height: 100%;
+}
+
+div#sidebar.hidden {
+    transform: translateX(-100%);
+}
+/* Sidebar slider (end)*/
 
 /* Categories (start) -  */
 div#events-cont {
@@ -95,7 +124,7 @@ div#events-cont {
     align-items: center;
     margin: auto;
     /* margin: var(--common-margin) 0; */
-    border-bottom: 3px dotted var(--base-light-orange);
+    border-bottom: 3px dotted var(--base-blue);
     padding-bottom: calc(var(--common-padding) * 2);
 }
 
@@ -140,7 +169,7 @@ div#someday {
 /* Priority Filter (start) - */
 div#priority-sum {
     margin-top: var(--common-margin);
-    border-bottom: 3px dotted var(--base-light-orange);
+    border-bottom: 3px dotted var(--base-blue);
     padding-bottom: calc(var(--common-padding) * 2);
 }
 
@@ -168,7 +197,7 @@ svg#low-icon {
 div#add-button {
     display: flex;
     justify-content: center;
-    width: 100%;
+    width: 100vw;
     overflow: hidden;
 
     position: fixed;
@@ -202,6 +231,180 @@ button#add svg {
 }
 /* Add (ends) */
 
+/* Todo List Display (start) */
+div#todo-display {
+    background-color: var(--off-white);
+    width: 100%;
+    /* height: 50vh; */
+    /* padding: var(--common-padding) 0; */
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* Action Btns (start) -- */
+div#action-btns {
+    width: 100%;
+    background-color: rgba(127, 132, 135, 0.3);
+    padding: 0 var(--common-padding);
+}
+
+button.action-btn {
+    width: calc(var(--logo-size) * 0.8);
+    padding: calc(var(--common-padding) * 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+}
+
+button.action-btn img {
+    width: 100%;
+}
+
+/* Action Btns (end) -- */
+
+div#item-display{
+    height: 85vh;
+    overflow-y:scroll;
+    display: flex;
+    flex-direction: column;
+    gap: var(--common-margin);
+    padding-top: var(--common-padding);
+    
+}
+
+
+
+div.event-preview {
+    display: grid;
+    grid-template-columns: 15px 1fr max-content;
+    grid-template-rows: repeat(3, max-content);
+    padding: var(--common-padding);
+    border: 1px solid var(--base-blue);
+    border-radius: 3px;
+    column-gap: var(--common-padding);
+    margin: 0 calc(var(--common-margin) * 0.5);
+
+    grid-template-areas: 
+        "marker title sched"
+        ". proj prio"
+        ". desc task";
+}
+
+div.event-preview[data-status="done"] {
+    background-color: rgb(232, 237, 232);
+}
+    
+
+div.marker {
+    grid-area: marker;
+    width: 100%;
+    height: 100%;
+    background-image: url('./assets/pending.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+div.event-preview[data-status="done"] div.marker {
+    background-image: url('./assets/done.png');
+}
+
+div.event-preview[data-status="done"] p.event-title {
+    color: #54B435;
+}
+
+p.event-title {
+    grid-area: title;
+    font-size: var(--header-font-size);
+    font-family: var(--header-font-style);
+    color: black;
+}
+
+p.event-desc{
+    grid-area: desc;
+    font-size: calc(var(--header-font-size) * 0.8);
+    color: var(--gray);
+}
+
+p.event-proj {
+    grid-area: proj;
+    font-size: calc(var(--header-font-size) * 0.8);
+    color: var(--gray);
+}
+
+p.event-prio {
+    grid-area: prio;
+    text-align: center;
+    font-size: calc(var(--header-font-size) * 0.6);
+    padding: 3px;
+    border: 1px solid black;
+    width: 40%;
+    min-width: max-content;
+    height: max-content;
+    justify-self: end;
+    align-self: center;
+    border-radius: 3px;
+    font-weight: bold;
+    filter: opacity(0.8);
+    margin-top: 5px;
+}
+
+p.event-prio.low {
+    color: red;
+    border-color: red;
+}
+
+p.event-prio.mid{
+    color: orange;
+    border-color: orange;
+}
+
+p.event-prio.high{
+    color: green;
+    border-color: green;
+}
+
+p.event-sched {
+    grid-area: sched;
+    text-align: right;
+    font-size: calc(var(--header-font-size) * 0.7);
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-weight: bold;
+}
+
+p.event-sched span {
+    display: flex;
+    width: var(--header-font-size);
+    height: 100%;
+    margin: auto;
+    background-image: url(./assets/calendar-alert.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+p.event-task-count {
+    grid-area: task;
+    text-align: right;
+    font-size: calc(var(--header-font-size) * 0.7);  
+    margin-top: 5px;
+}
+
+p.event-title, 
+p.event-desc {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+
+/* Todo List Display (end) */
 
 /* Add Prompt Modal (start) */
 
@@ -490,20 +693,31 @@ div.new-task {
     /* gap: calc(var(--common-margin) * 0.5); */
 }
 
-div.new-task svg.list-mark {
-    width: calc(20px + 0.5vw);
-    height: calc(20px + 0.5vw);
-    fill: var(--base-orange);
+div.new-task div.list-mark,
+div.new-task button {
+    width: calc(15px + 0.5vw);
+    height: calc(15px + 0.5vw);
     margin-left: var(--common-margin);
+    background-image: url('./assets/box-badge.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    align-self: center;
 }
 
 div.new-task button {
-    width: calc(20px + 0.5vw);
-    height: calc(20px + 0.5vw);
     border: none;
     background-color: transparent;
-    margin-left: calc(var(--common-margin) * 0.5);
 }
+
+div.new-task button.edit-task {
+    background-image: url('./assets/pencil.png');
+}
+
+div.new-task button.delete-task {
+    background-image: url('./assets/trash.png');
+}
+
 
 div.new-task button:active {
     transform: scale(0.8);

@@ -1,8 +1,11 @@
 import { memoryHandler } from "./memoryHandler";
 import { showModals } from "./showModals";
+import { addEventForm } from "./addEventForm";
+import { addTaskToEvent } from "./addTaskToEvent";
 
 const saveFormValues = (function () {
 
+    // Validates event form input fields
     const validateEventForm = function () {
         const titleInput = document.querySelector('#event-title');
         const schedInput = document.querySelector('#event-schedule');
@@ -31,10 +34,23 @@ const saveFormValues = (function () {
         // Execute validation using validateEmpty function
         inputsArray.forEach(input => validateEmpty(input));
 
+        // Scrolls the form to the first error found
+        const firstInstanceError = document.querySelector('.error');
+        if (firstInstanceError !== null) {
+            firstInstanceError.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+        }
+        
         return errors;
     };
 
+    // Saves the form values when save button is pressed
     const saveEventForm = function () {
+
+        // Validates form before saving
+        const validationErrors = validateEventForm();
+        if (validationErrors.length !== 0) {
+            return
+        }
 
         // Factory function to create initial event object
         const createEvent = function (title, description, schedule, projectTag, priority) {
@@ -58,10 +74,10 @@ const saveFormValues = (function () {
         )
             
         // Add tasks to the newEvent object
-        const tasks = document.querySelectorAll('#tasks-container input.new-task');
-        tasks.forEach(task => {
-            newEvent[`${task.dataset.id}`] = task.value;
-        })
+        const tasks = addTaskToEvent.getNewTasks();
+        newEvent['tasks'] = tasks;
+        // Refresh tasks for next batch/ new use 
+        addTaskToEvent.resetNewTasks();
 
         // Create an id for the newEvent object
         const eventId = function (object) {
@@ -75,12 +91,6 @@ const saveFormValues = (function () {
         }
         eventId(newEvent); // Executes event id maker
 
-        // Validates form before saving
-        const validationErrors = validateEventForm();
-        if (validationErrors.length !== 0) {
-            return
-        }
-
         // Save newEvent Object using the memory handler module
         memoryHandler.saveEvent(newEvent);
 
@@ -88,16 +98,25 @@ const saveFormValues = (function () {
         showModals.closeModal();
     }
 
+    // Clears input field
+    const clearEventForm = function () {
+        addEventForm.removeEventForm();
+        addEventForm.newEventForm();
+    }
+
+    // Adds event listener
     const addSaveEventFormEvent = function (action) {
         const saveEventBtn = document.querySelector('button#save-form-new-event');
-        const clearFormBtn = document.querySelector('button#clear-form-new-event');
+        const clearEventFormBtn = document.querySelector('button#clear-form-new-event');
 
         // Ensures if addTaskBtn exists
         if (saveEventBtn !== null) {
             if (action === true) {
                 saveEventBtn.addEventListener('click', saveEventForm);
+                clearEventFormBtn.addEventListener('click', clearEventForm);
             } else if (action === false) {
                 saveEventBtn.removeEventListener('click', saveEventForm);
+                clearEventFormBtn.removeEventListener('click', clearEventForm);
             }
         }
     }

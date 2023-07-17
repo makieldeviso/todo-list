@@ -1,5 +1,7 @@
 import { createFormComponents } from "./createFormComponents";
 import { modalUX } from "./modalUX";
+import { formatting } from "./formatting";
+import { addTaskToEvent } from "./addTaskToEvent";
 
 const addEventForm = (function () {
 
@@ -38,10 +40,10 @@ const addEventForm = (function () {
         return [title, description, schedule, addToProject];
     }
 
-    const addProjectOptions = function (value) {
+    const addProjectOptions = function (value) {    
         const newOption = document.createElement('option');
         newOption.setAttribute('value', value);
-        newOption.textContent = `${value.slice(0,1).toUpperCase()}${value.slice(1)}`;
+        newOption.textContent = formatting.toProper(value);
 
         const projectSelect = document.querySelector('select#event-project');
         projectSelect.appendChild(newOption);
@@ -103,6 +105,10 @@ const addEventForm = (function () {
     
         // Ensures that the form is present in the DOM
         if (form !== null) {
+            //Note: Reset tasks memory when removing event form
+            addTaskToEvent.resetNewTasks();
+
+            // Remove from from modal
             modalCont.removeChild(form);
         } else {
             return;
