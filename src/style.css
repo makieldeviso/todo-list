@@ -302,10 +302,13 @@ div.marker {
     grid-area: marker;
     width: 100%;
     height: 100%;
-    background-image: url('./assets/pending.png');
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
+}
+
+div.event-preview[data-status="pending"] div.marker {
+    background-image: url('./assets/pending.png');
 }
 
 div.event-preview[data-status="done"] div.marker {
@@ -377,7 +380,7 @@ p.event-sched {
     font-weight: bold;
 }
 
-p.event-sched span {
+p.event-sched span.sched-icon {
     display: flex;
     width: var(--header-font-size);
     height: 100%;

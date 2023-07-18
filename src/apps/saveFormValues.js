@@ -79,6 +79,9 @@ const saveFormValues = (function () {
         // Refresh tasks for next batch/ new use 
         addTaskToEvent.resetNewTasks();
 
+        // Add default status = pending to newEvent;
+        newEvent[`eventStatus`] = 'pending';
+
         // Create an id for the newEvent object
         const eventId = function (object) {
             const eventTitle = object.title;

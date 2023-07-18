@@ -116,7 +116,7 @@ const addTaskToEvent = (function () {
         // Focus to text box when edit button is clicked
         taskTextBox.focus();
     }
-
+    
     const deleteTask = function () {
         const buttonId = this.dataset.id;
 
