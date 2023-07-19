@@ -19,24 +19,24 @@ const eventsScript = (function () {
         return tasksArray.length;
     }
 
-    const getRemainingTasks = function (event) {
+    const getDoneTasks = function (event) {
         const tasksArray = taskArrayOfEvent(event);
-        const remainingTasks = tasksArray.filter(task => task.status === 'not done');
+        const doneTasks = tasksArray.filter(task => task.status === 'done');
 
-        return remainingTasks;
+        return doneTasks;
     }
 
-    const countRemainingTasks = function (event) {
-        const remainingTasks = getRemainingTasks(event);
+    const countDoneTasks = function (event) {
+        const doneTasks = getDoneTasks(event);
 
-        return remainingTasks.length;
+        return doneTasks.length;
     }
 
     return {
         taskArrayOfEvent,
         countTasksOfEvent,
-        getRemainingTasks,
-        countRemainingTasks,
+        getDoneTasks,
+        countDoneTasks,
     }
 
 })();

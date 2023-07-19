@@ -25,7 +25,7 @@ const displayContent = (function () {
     const showDisplay = function () {
         translateSidebar(true);
 
-        eventsDisplay.test();
+        eventsDisplay.displayEventsToDOM();
 
     }
 

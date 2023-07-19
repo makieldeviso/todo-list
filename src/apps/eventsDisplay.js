@@ -8,12 +8,9 @@ const eventsDisplay = (function () {
     const events = memoryHandler.getEvents();
 
     const test = function () {
-        const sched = events[0].schedule;
-        console.log(sched);
-        console.log(typeof sched);
-
-        const newSched = format(sched, "MMMM dd, yyyy");
-        console.log(typeof newSched);
+        console.log(events);
+        // console.log(document.querySelector('div#item-display'))
+        console.log(displayEventsToDOM());
     }
     
     // Event preview/ display  DOM maker
@@ -24,10 +21,12 @@ const eventsDisplay = (function () {
         newEvent.setAttribute('id', `${eventObj.eventId}`);
         newEvent.dataset.status = eventObj.eventStatus;
 
+        console.log(newEvent);
+
         // (1) (start)-
         // Add event marking to indicate if 'pending' or 'done'
-        const marker = document.createElement('div');
-        marker.setAttribute('class', 'marker');
+        const newMarker = document.createElement('div');
+        newMarker.setAttribute('class', 'marker');
         // (1) (end)-
 
         // (2-5) (start)-
@@ -41,6 +40,8 @@ const eventsDisplay = (function () {
                 newText.classList.add(`${text}`);
                 newText.textContent = formatting.toProper(text);
             }
+
+            return newText;
         }
 
         // Execute makeText and assign to variables
@@ -65,7 +66,7 @@ const eventsDisplay = (function () {
 
         // format schedule
         // Note: use date-fns
-        const dateString = format(eventObj.schedule, 'MMMM dd, yyyy');
+        const dateString = format(eventObj.schedule, 'MMM dd, yyyy');
 
         createSpan(newSched, 'sched-icon', '');
         createSpan(newSched, 'sched-date', dateString);
@@ -77,23 +78,40 @@ const eventsDisplay = (function () {
         newTaskCount.setAttribute('class', 'event-task-count');
 
         const tasks = eventObj.tasks; // this is Object
-        const remaining = eventsScript.countRemainingTasks(tasks);
+        const done = eventsScript.countDoneTasks(tasks);
         const total = eventsScript.countTasksOfEvent(tasks);
 
         // Execute create span with already available data
-        createSpan(newTaskCount, 'remain', `${remaining}`);
+        createSpan(newTaskCount, 'done', `${done}`);
         createSpan(newTaskCount, 'slash', '/');
         createSpan(newTaskCount, 'total', `${total}`);
         createSpan(newTaskCount, 'label', 'tasks');
         // (7) (end)-
 
+        // Append preview components to newEvent
+        const components = [newMarker, newTitle, newDesc, newProjTag, newPrio, newSched, newTaskCount];
+        components.forEach(comp => newEvent.appendChild(comp));
 
-
-        
+        return newEvent
     }
 
+    const displayEventsToDOM = function () {
+        const itemDisplay = document.querySelector('div#item-display');
+        const eventDisplays = document.querySelectorAll('div.event-preview');
+        const eventsInDOMArray = Array.from(eventDisplays);
 
-    return {test, createEventDisplay}
+        // Empty display before appending new set
+        eventsInDOMArray.forEach(event => itemDisplay.removeChild(event));
+
+        events.forEach(event => {
+            console.log(event);
+
+            const eventDisplay = createEventDisplay(event);
+            itemDisplay.appendChild(eventDisplay);
+        });
+    }
+
+    return {test, displayEventsToDOM}
 })();
 
 export {eventsDisplay}

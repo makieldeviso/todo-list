@@ -76,8 +76,6 @@ const addTaskToEvent = (function () {
 
         // Clears text box upon adding
         addTaskInput.value = '';
-
-        console.log(newTasks);
     }
 
     const editTask = function () {

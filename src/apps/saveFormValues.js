@@ -88,7 +88,16 @@ const saveFormValues = (function () {
             const eventSchedule = object.schedule.valueOf();
 
             const titleId = eventTitle.split(" ").map(word => `${word.toLowerCase()}`).join('');
-            const newEventId = `${titleId + eventSchedule}`;
+            let newEventId = `${titleId + eventSchedule}`;
+
+            // Double check and ensure no duplication of id
+            // If same title and due date is created add additional id indicator
+            const events = memoryHandler.getEvents();
+            const sameId = events.filter(event => event['eventId'].includes(newEventId));
+
+            if (sameId.length > 0) {
+                newEventId = `${titleId + eventSchedule}(${sameId.length + 1})`;
+            }
 
             object['eventId'] = newEventId;
         }

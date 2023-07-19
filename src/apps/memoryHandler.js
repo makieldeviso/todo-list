@@ -7,7 +7,7 @@ const memoryHandler = (function () {
             {
                 "title": "Ms. Dodo's Birthday",
                 "description": "60th Birthday, food committee",
-                "schedule": new Date("2023-07-20T00:00:00.000Z"),
+                "schedule": new Date("2023-12-20T00:00:00.000Z"),
                 "projectTag": "standalone",
                 "priority": "high",
                 "tasks": {
@@ -24,20 +24,18 @@ const memoryHandler = (function () {
                         "status": "done"
                     }
                 },
-                "eventId": "ms.dodo'sbirthday1689724800000"
+                "eventId": "ms.dodo'sbirthday1689724800000",
+                "eventStatus": 'done',
             },
     ];
 
 
     const saveEvent = function(newEvent) {
         events.push(newEvent);
-
-        console.log(placeholderEvents);
-        console.log(events);
     };
 
     const getEvents = function () {
-        return placeholderEvents
+        return events;
     }
 
 
