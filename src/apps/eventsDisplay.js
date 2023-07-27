@@ -2,12 +2,12 @@ import { memoryHandler } from "./memoryHandler";
 import { formatting } from "./formatting";
 import { eventsScript } from "./eventsScript";
 import { format } from 'date-fns'
+import { displayContent } from "./displayContent";
 
 const eventsDisplay = (function () {
 
-    const events = memoryHandler.getEvents();
-
     const test = function () {
+        const events = memoryHandler.getEvents();
         console.log(events);
         // console.log(document.querySelector('div#item-display'))
         console.log(displayEventsToDOM());
@@ -18,7 +18,7 @@ const eventsDisplay = (function () {
         
         const newEvent = document.createElement('div');
         newEvent.setAttribute('class', 'event-preview');
-        newEvent.setAttribute('id', `${eventObj.eventId}`);
+        newEvent.setAttribute('data-id', `${eventObj.eventId}`);
         newEvent.dataset.status = eventObj.eventStatus;
 
         console.log(newEvent);
@@ -92,7 +92,28 @@ const eventsDisplay = (function () {
         const components = [newMarker, newTitle, newDesc, newProjTag, newPrio, newSched, newTaskCount];
         components.forEach(comp => newEvent.appendChild(comp));
 
+        // Add event listener to newEvent
+        showFullEventToDOM(newEvent, true);
+
         return newEvent
+    }
+
+    const showFullEvent = function () {
+        const previewId = this.dataset.id;
+        const itemDisplay = document.querySelector('div#item-display');
+        console.log(previewId);
+
+        // Clear display panel
+        const eventPreviews = document.querySelectorAll('div.event-preview');
+        eventPreviews.forEach(preview => displayContent.removeDisplay(preview));
+
+        // 
+
+
+
+
+
+
     }
 
     const displayEventsToDOM = function () {
@@ -101,7 +122,9 @@ const eventsDisplay = (function () {
         const eventsInDOMArray = Array.from(eventDisplays);
 
         // Empty display before appending new set
-        eventsInDOMArray.forEach(event => itemDisplay.removeChild(event));
+        eventsInDOMArray.forEach(event => displayContent.removeDisplay(event));
+
+        const events = memoryHandler.getEvents();
 
         events.forEach(event => {
             console.log(event);
@@ -111,7 +134,17 @@ const eventsDisplay = (function () {
         });
     }
 
-    return {test, displayEventsToDOM}
+    const showFullEventToDOM = function (event, action) {
+        const eventPreview = event;
+
+        if (action === true) {
+            eventPreview.addEventListener('click', showFullEvent);
+        } else if (action === false) {
+            eventPreview.removeEventListener('click', showFullEvent);
+        }
+    }
+
+    return {test, displayEventsToDOM};
 })();
 
 export {eventsDisplay}

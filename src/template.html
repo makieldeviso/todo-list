@@ -64,19 +64,19 @@
                 <div id="high-prio" class="category">
                     <svg class="tab-icon" id="high-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>flag</title><path d="M14.4,6L14,4H5V21H7V14H12.6L13,16H20V6H14.4Z" /></svg>
                     <h3>High</h2>
-                    <p id="tasks-count" data-count="5">5</p>
+                    <p id="high-count" data-count="5">5</p>
                 </div>
 
                 <div id="medium-prio" class="category">
                     <svg class="tab-icon" id="medium-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>flag</title><path d="M14.4,6L14,4H5V21H7V14H12.6L13,16H20V6H14.4Z" /></svg>
                     <h3>Medium</h2>
-                    <p id="tasks-count" data-count="5">5</p>
+                    <p id="mid-count" data-count="5">5</p>
                 </div>
 
                 <div id="low-prio" class="category">
                     <svg class="tab-icon" id="low-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>flag</title><path d="M14.4,6L14,4H5V21H7V14H12.6L13,16H20V6H14.4Z" /></svg>
                     <h3>Low</h2>
-                    <p id="tasks-count" data-count="5">5</p>
+                    <p id="low-count" data-count="5">5</p>
                 </div>
             </div>
   
@@ -95,6 +95,41 @@
             </div>
 
             <div id="item-display">
+                <div class="event-fullview" data-id="123" data-status="done">
+                    <p class="fullview event-title">Title here</p>
+                    <p class="fullview event-desc">description here</p>
+                    <p class="fullview event-proj">Standalone</p>
+                    <p class="fullview event-sched">
+                        <span class="sched-icon"></span>
+                        <span class="sched-date">Dec 20, 2023</span>
+                    </p>
+                    <p class="fullview event-prio high">High</p>
+                    <div class="fullview tasks-list">
+                        <div class="task-header">
+                            <p class="task-label">Tasks</p>
+                            <p class="tasks-count" data-id="123">
+                                <span class="done">1</span>
+                                <span class="slash">/</span>
+                                <span class="total">3</span>
+                                <span class="label">tasks</span>
+                            </p>
+                        </div>
+                        
+                        <div class="task" data-id="task-1">
+                            <button class="check" data-id="task-1" value="undone"></button>
+                            <p class="task" data-id="task-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, voluptatem! Autem eveniet est accusamus unde perferendis exercitationem cum modi?</p>
+                        </div>
+    
+                        <div class="task" data-id="task-2">
+                            <button class="check" data-id="task-2" value="done"></button>
+                            <p class="task" data-id="task-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam nam est minima</p>
+                        </div>
+                    </div>
+                    
+
+                </div>
+
+
     
             </div> <!-- #item-display -->
         </div> <!-- #todo-display -->

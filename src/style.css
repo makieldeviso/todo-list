@@ -242,6 +242,15 @@ div#todo-display {
     position: relative;
 }
 
+div#item-display{
+    height: 85vh;
+    overflow-y:scroll;
+    display: flex;
+    flex-direction: column;
+    gap: var(--common-margin);
+    padding-top: var(--common-padding);
+}
+
 /* Action Btns (start) -- */
 div#action-btns {
     width: 100%;
@@ -262,21 +271,9 @@ button.action-btn {
 button.action-btn img {
     width: 100%;
 }
-
 /* Action Btns (end) -- */
 
-div#item-display{
-    height: 85vh;
-    overflow-y:scroll;
-    display: flex;
-    flex-direction: column;
-    gap: var(--common-margin);
-    padding-top: var(--common-padding);
-    
-}
-
-
-
+/*  Event Preview (start) --*/
 div.event-preview {
     display: grid;
     grid-template-columns: 15px 1fr max-content;
@@ -297,7 +294,6 @@ div.event-preview[data-status="done"] {
     background-color: rgb(232, 237, 232);
 }
     
-
 div.marker {
     grid-area: marker;
     width: 100%;
@@ -385,7 +381,7 @@ p.event-sched span.sched-icon {
     width: var(--header-font-size);
     height: 100%;
     margin: auto;
-    background-image: url(./assets/calendar-alert.png);
+    background-image: url('./assets/calendar-alert.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
@@ -413,12 +409,106 @@ p.event-desc {
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+/*  Event Preview (end) --*/
+
+/* Event Full view (start) -- */
+div.event-fullview {
+    padding: var(--common-padding);
+    display: grid;
+    row-gap: var(--common-margin);
+    grid-template-areas: 
+        "title title"
+        "desc desc"
+        "proj proj"
+        "sched prio"
+        "tasks tasks";
+    
+}
+
+p.fullview.event-title, p.fullview.event-desc {
+    display: block; /* removes limiting to 2 lines */
+}
+
+p.fullview.event-title {
+    font-size: calc(var(--header-font-size) * 1.3);
+}
+
+p.fullview.event-sched {
+    font-size: calc(var(--header-font-size) * 0.85);
+    gap: 5px;
+}
+
+p.fullview.event-sched span.sched-icon {
+    width: calc(var(--header-font-size) * 1.3);
+    margin: unset;
+}
+
+p.fullview.event-prio {
+    font-size: calc(var(--header-font-size) * 0.8);
+}
+
+div.fullview.tasks-list {
+    grid-area: tasks;
+    display: flex;
+    flex-direction: column;
+    gap: var(--common-margin);
+}
+
+div.task-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+}
+
+div.task-header p.task-label {
+    /* margin: var(--common-margin) 0 0 0; */
+    font-size: var(--header-font-size);
+    font-family: var(--header-font-style);
+}
+
+div.task-header p.tasks-count {
+    font-size: calc(var(--header-font-size) * 0.8);
+    justify-self: end;
+}
+
+div.fullview.tasks-list div.task {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 5px;
+}
+
+button.check {
+    width: calc(20px + 0.5vw);
+    height: calc(20px + 0.5vw);
+    border: none;
+    background-color: transparent;
+    margin-left: var(--common-margin);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    align-self: start;
+}
+
+button.check[value="undone"] {
+    background-image: url('./assets/box-blank.png');
+}
+
+button.check[value="done"] {
+    background-image: url('./assets/box-check.png');
+}
+
+div.fullview.tasks-list p.task {
+    font-size: calc(var(--header-font-size) * 0.85);
+}
+
+
+
+/* Event Full view (end) -- */
 
 
 /* Todo List Display (end) */
 
 /* Add Prompt Modal (start) */
-
 dialog#add-prompt {
     width: 95vw;
     height: 95vh;
@@ -660,7 +750,6 @@ div.save-cont {
     flex-direction: row;
     justify-content: center;
     gap: calc(var(--common-margin) * 2);
-    
 }
 
 button.clear-form,
@@ -742,10 +831,4 @@ div.new-task button:hover svg {
     fill: var(--dark-orange);
     transform: scale(1.1);
 }
-
-
-
-
-
-
 /* MAIN (end) */

@@ -1,8 +1,5 @@
 const memoryHandler = (function () {
 
-    const events = [];
-
-
     const placeholderEvents = [
             {
                 "title": "Ms. Dodo's Birthday",
@@ -28,6 +25,8 @@ const memoryHandler = (function () {
                 "eventStatus": 'done',
             },
     ];
+    
+    const events = [...placeholderEvents];
 
 
     const saveEvent = function(newEvent) {

@@ -29,12 +29,18 @@ const displayContent = (function () {
 
     }
 
+    const removeDisplay = function (item) {
+        const itemDisplay = document.querySelector('div#item-display');
+        itemDisplay.removeChild(item);
+    }
+
+
     const addSidebarEvents = function () {
         const eventsBtn = document.querySelector('div#events');
         eventsBtn.addEventListener('click', showDisplay);
     }
 
-    return {showDisplay, addSidebarEvents}
+    return {showDisplay, addSidebarEvents, removeDisplay}
 
 })();
 
