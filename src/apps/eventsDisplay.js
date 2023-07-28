@@ -101,17 +101,14 @@ const eventsDisplay = (function () {
     const showFullEvent = function () {
         const previewId = this.dataset.id;
         const itemDisplay = document.querySelector('div#item-display');
-        console.log(previewId);
 
         // Clear display panel
         const eventPreviews = document.querySelectorAll('div.event-preview');
         eventPreviews.forEach(preview => displayContent.removeDisplay(preview));
 
-        // 
-
-
-
-
+        //  Get event with the Id specified
+        const event = memoryHandler.getEvent(previewId);
+        console.log(event);
 
 
     }

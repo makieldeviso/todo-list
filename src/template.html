@@ -103,11 +103,15 @@
                         <span class="sched-icon"></span>
                         <span class="sched-date">Dec 20, 2023</span>
                     </p>
+
                     <p class="fullview event-prio high">High</p>
+
+                    <!-- tasks list (start)-->
                     <div class="fullview tasks-list">
+
                         <div class="task-header">
                             <p class="task-label">Tasks</p>
-                            <p class="tasks-count" data-id="123">
+                            <p class="tasks-count pending" data-id="123">
                                 <span class="done">1</span>
                                 <span class="slash">/</span>
                                 <span class="total">3</span>
@@ -115,15 +119,21 @@
                             </p>
                         </div>
                         
-                        <div class="task" data-id="task-1">
-                            <button class="check" data-id="task-1" value="undone"></button>
+                        <div class="task" data-id="123" data-number="task-1">
+                            <button class="check" data-id="task-1" value="pending"></button>
                             <p class="task" data-id="task-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, voluptatem! Autem eveniet est accusamus unde perferendis exercitationem cum modi?</p>
                         </div>
     
-                        <div class="task" data-id="task-2">
+                        <div class="task" data-id="123" data-number="task-2">
                             <button class="check" data-id="task-2" value="done"></button>
                             <p class="task" data-id="task-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam nam est minima</p>
                         </div>
+                    </div>
+                    <!-- tasks list (end)-->
+
+                    <div class="event-action">
+                        <button data-id="123" value="complete-event">Complete Event</button>
+
                     </div>
                     
 

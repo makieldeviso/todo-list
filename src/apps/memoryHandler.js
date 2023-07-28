@@ -24,6 +24,30 @@ const memoryHandler = (function () {
                 "eventId": "ms.dodo'sbirthday1689724800000",
                 "eventStatus": 'done',
             },
+
+            {
+                "title": "Do your thing",
+                "description": "Do your thing",
+                "schedule": new Date("2023-07-20T00:00:00.000Z"),
+                "projectTag": "standalone",
+                "priority": "mid",
+                "tasks": {
+                    "task-1": {
+                        "task": "Hello",
+                        "status": "done"
+                    },
+                    "task-2": {
+                        "task": "Hello World",
+                        "status": "done"
+                    },
+                    "task-3": {
+                        "task": "Hello World 123",
+                        "status": "done"
+                    }
+                },
+                "eventId": "doyourthing",
+                "eventStatus": 'pending',
+            },
     ];
     
     const events = [...placeholderEvents];
@@ -37,8 +61,16 @@ const memoryHandler = (function () {
         return events;
     }
 
+    const getEvent = function (id) {
+        const events = getEvents();
 
-    return {getEvents, saveEvent};
+        const requiredEvent = events.find(event => event.eventId === id);
+        return requiredEvent;
+    }
+
+
+
+    return {getEvents, saveEvent, getEvent};
 })();
 
 export {memoryHandler}

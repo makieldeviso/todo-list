@@ -421,7 +421,8 @@ div.event-fullview {
         "desc desc"
         "proj proj"
         "sched prio"
-        "tasks tasks";
+        "tasks tasks"
+        "btns btns";
     
 }
 
@@ -451,13 +452,16 @@ div.fullview.tasks-list {
     grid-area: tasks;
     display: flex;
     flex-direction: column;
-    gap: var(--common-margin);
+    gap: calc(var(--common-margin) * 0.5);
+    border: 2px solid var(--base-pink);
 }
 
 div.task-header {
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
+    background-color: var(--base-pink);
+    padding: var(--common-padding);
 }
 
 div.task-header p.task-label {
@@ -475,21 +479,23 @@ div.fullview.tasks-list div.task {
     display: grid;
     grid-template-columns: max-content 1fr;
     gap: 5px;
+    padding-bottom: var(--common-padding);
+    border-bottom: 1px solid var(--base-pink);
 }
 
 button.check {
-    width: calc(20px + 0.5vw);
-    height: calc(20px + 0.5vw);
+    width: calc(15px + 0.5vw);
+    height: calc(15px + 0.5vw);
     border: none;
     background-color: transparent;
-    margin-left: var(--common-margin);
+    margin-left: calc(var(--common-margin)*0.5);
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
     align-self: start;
 }
 
-button.check[value="undone"] {
+button.check[value="pending"] {
     background-image: url('./assets/box-blank.png');
 }
 
@@ -499,6 +505,25 @@ button.check[value="done"] {
 
 div.fullview.tasks-list p.task {
     font-size: calc(var(--header-font-size) * 0.85);
+}
+
+div.event-action {
+    grid-area: btns;
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+
+button[value="complete-event"] {
+    font-size: calc(var(--common-font-size) * 1.2);
+    padding: var(--common-padding);
+    border-radius: 5px;
+    border: 2px solid white;
+    background-color: green;
+    color: white;
+    box-shadow: 0 2px 2px 1px rgba(62, 62, 62, 0.3);
+    justify-self: center;
+    margin-top: var(--common-margin);
 }
 
 
