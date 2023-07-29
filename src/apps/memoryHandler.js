@@ -10,11 +10,11 @@ const memoryHandler = (function () {
                 "tasks": {
                     "task-1": {
                         "task": "Contact catering and order foods",
-                        "status": "not done"
+                        "status": "done"
                     },
                     "task-2": {
                         "task": "Get cake from bakeshop",
-                        "status": "not done"
+                        "status": "done"
                     },
                     "task-3": {
                         "task": "Buy fruits for salad at the market",
@@ -34,7 +34,7 @@ const memoryHandler = (function () {
                 "tasks": {
                     "task-1": {
                         "task": "Hello",
-                        "status": "done"
+                        "status": "pending"
                     },
                     "task-2": {
                         "task": "Hello World",
@@ -52,7 +52,6 @@ const memoryHandler = (function () {
     
     const events = [...placeholderEvents];
 
-
     const saveEvent = function(newEvent) {
         events.push(newEvent);
     };
@@ -68,9 +67,35 @@ const memoryHandler = (function () {
         return requiredEvent;
     }
 
+    const getEventForMod = function (id) {
+        const eventIndex = events.findIndex(event => event.eventId === id);
+        const eventObj = events[eventIndex];
 
+        return eventObj;
+    }
 
-    return {getEvents, saveEvent, getEvent};
+    const getEventTasks = function (id) {
+        const eventObj = getEventForMod(id);
+        const eventTasksList = eventObj.tasks;
+
+        return eventTasksList;
+    }
+
+    const changeTaskStatus = function (id, number, statusChange) {
+        const eventTasksList = getEventTasks(id);
+        
+        eventTasksList[`${number}`].status = statusChange;
+    }
+
+    const changeEventStatus = function (id) {
+        const eventObj = getEventForMod(id);
+        
+        eventObj.eventStatus = 'done';
+
+        console.log(eventObj);
+    }
+
+    return {getEvents, saveEvent, getEvent, changeTaskStatus, getEventTasks, changeEventStatus};
 })();
 
 export {memoryHandler}

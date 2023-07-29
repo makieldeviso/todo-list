@@ -28,6 +28,35 @@ const showModals = (function () {
         addProjectForm.addProjectFormEvent();
     } 
 
+    // Opens prompt before completing an event
+    const showEventCompletionPrompt = function () {
+        const eventId = this.dataset.id;
+
+        // Create prompt modal before completion
+        createModal.createEventCompletionPrompt(eventId);
+
+        const promptModal = document.querySelector('dialog#complete-event-prompt');
+        const closeBtn = document.querySelector('button#close-complete-event');
+
+        promptModal.showModal();
+
+        // Add eventListener to close-complete-event/ close modal button
+        closeBtn.addEventListener('click', closeCompletion);
+
+    }
+
+
+    const closeCompletion = function () {
+        // Closes modal
+        const completionPromptModal = document.querySelector('dialog#complete-event-prompt');
+        completionPromptModal.close();
+
+        // Removes modal from the DOM
+        const main = document.querySelector('main');
+        main.removeChild(completionPromptModal);
+    }
+
+
     // Closes Modal, removes eventListeners to elements inside the modal then removes the modal in the DOM
     const closeModal = function () {
         // Removes form and event listeners from elements inside modal
@@ -49,7 +78,12 @@ const showModals = (function () {
         addButton.addEventListener('click', showAddOptions);
     }
 
-    return { addButtonEvent, closeModal }
+    // Add event listener to event completion button
+    const addCompletionPromptEvent = function (button) {
+        button.addEventListener('click', showEventCompletionPrompt);
+    }
+
+    return { addButtonEvent, closeModal, addCompletionPromptEvent }
 })();
 
 export { showModals };

@@ -1,3 +1,6 @@
+import { eventsScript } from "./eventsScript";
+import { memoryHandler } from "./memoryHandler";
+
 const createModal = (function () {
     // Create modal and append to the 'main'
     const createNewModal = function (assignId) {
@@ -63,7 +66,48 @@ const createModal = (function () {
         modalCont.appendChild(container);
     }
 
-    return { createNewModal, createAddOptionsBtns }
+    // Creates event completion prompt
+    const createEventCompletionPrompt = function (eventId) {
+
+        const eventObj = memoryHandler.getEvent(eventId);
+        const totalTasks = eventsScript.countTasksOfEvent(eventObj.tasks);
+        const eventTasksCompleted = eventsScript.tasksCompleted(eventObj.tasks);
+
+        // Create dialog element with addition elements
+        createNewModal('complete-event');
+
+        const promptModal = document.querySelector('dialog#complete-event-prompt');
+        const modalCont = promptModal.querySelector('div.modal-cont');
+
+        const promptHeader = document.createElement('p');
+        promptHeader.setAttribute('class', 'completion-header');
+        promptHeader.textContent = 'Complete Event';
+
+        const content = document.createElement('div');
+        content.setAttribute('class', 'completion-content');
+
+        const reminder = document.createElement('p');
+        reminder.setAttribute('class', 'reminder');
+
+        // Conditional reminder depending on tasks status
+        if (totalTasks === 0) {
+            reminder.textContent = 'Mark this event as completed?';
+
+        } else if (eventTasksCompleted) {
+            reminder.textContent = 'You have accomplished all the task. Complete this event?';
+
+        } else if (!eventTasksCompleted) {
+            reminder.textContent = 'You have not yet accomplished all the tasks. Mark event as completed anyway?'
+        }
+
+        content.appendChild(reminder);
+
+        const components = [promptHeader, content]
+        components.forEach(comp => modalCont.appendChild(comp));
+
+    }
+
+    return { createNewModal, createAddOptionsBtns, createEventCompletionPrompt }
 
 })();
 

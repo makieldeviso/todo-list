@@ -72,7 +72,7 @@ const addTaskToEvent = (function () {
         // Create dynamic property assign;
         newTasks[newTaskId] = {
             task: newTaskValue,
-            status: 'not done'};
+            status: 'pending'};
 
         // Clears text box upon adding
         addTaskInput.value = '';
