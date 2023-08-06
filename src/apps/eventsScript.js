@@ -49,13 +49,12 @@ const eventsScript = (function () {
         return result;
     }
 
-
     return {
         taskArrayOfEvent,
         countTasksOfEvent,
         getDoneTasks,
         countDoneTasks,
-        tasksCompleted
+        tasksCompleted,
     }
 
 })();

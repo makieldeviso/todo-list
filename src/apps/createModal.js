@@ -100,11 +100,48 @@ const createModal = (function () {
             reminder.textContent = 'You have not yet accomplished all the tasks. Mark event as completed anyway?'
         }
 
-        content.appendChild(reminder);
+        // executable function
+        const createTwoChoiceBtn = function (btnProp) {
+            const btnsCont = document.createElement('div');
+            btnsCont.setAttribute('class', 'save-cont');
+            btnsCont.setAttribute('class', 'save-cont');
 
-        const components = [promptHeader, content]
+            const createBtn = function (eventId, assignClass, assignValue, label) {
+                const newBtn = document.createElement('button');
+                newBtn.setAttribute('class', assignClass);
+                newBtn.setAttribute('value', assignValue);
+                newBtn.dataset.id = eventId;
+                newBtn.textContent = label;
+
+                btnsCont.appendChild(newBtn);
+            }
+
+            createBtn(btnProp.eventId, btnProp.neg.class, btnProp.neg.value, btnProp.neg.label);
+            createBtn(btnProp.eventId, btnProp.pos.class, btnProp.pos.value, btnProp.pos.label);
+        
+            return btnsCont;
+        }
+
+        // Executes createTwoChoiceBtn
+        const confirmBtnsCont = createTwoChoiceBtn({
+            eventId: eventId,
+            pos: {
+                class: 'save',
+                value: 'confirm-complete',
+                label: 'Yes',
+                },
+            neg: {
+                class: 'clear',
+                value: 'dont-complete',
+                label: 'No',
+                }
+        });
+
+        content.appendChild(reminder); //Append reminder message to content div
+        content.appendChild(confirmBtnsCont); //Append buttons container to content div
+
+        const components = [promptHeader, content];
         components.forEach(comp => modalCont.appendChild(comp));
-
     }
 
     return { createNewModal, createAddOptionsBtns, createEventCompletionPrompt }

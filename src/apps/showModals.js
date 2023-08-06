@@ -2,6 +2,8 @@ import { createModal } from "./createModal";
 import { addEventForm } from "./addEventForm";
 import { modalUX } from "./modalUX";
 import { addProjectForm } from "./addProjectForm";
+import { memoryHandler } from "./memoryHandler";
+import { eventsDisplay } from "./eventsDisplay";
 
 const showModals = (function () {
     
@@ -37,12 +39,33 @@ const showModals = (function () {
 
         const promptModal = document.querySelector('dialog#complete-event-prompt');
         const closeBtn = document.querySelector('button#close-complete-event');
+        const dontCompleteBtn = document.querySelector('button[value="dont-complete"]');
+        const completeBtn = document.querySelector('button[value="confirm-complete"]');
 
         promptModal.showModal();
 
         // Add eventListener to close-complete-event/ close modal button
         closeBtn.addEventListener('click', closeCompletion);
 
+        // Add eventlistener to save and don't save buttons;
+        dontCompleteBtn.addEventListener('click', closeCompletion);
+       
+        // Note: When user confirm completion confirmEventCompletion which
+        // modifies event object, closes confirm modal then display new event full view
+        completeBtn.addEventListener('click', confirmEventCompletion);
+    }
+
+    const confirmEventCompletion = function () {
+        const eventId = this.dataset.id;
+
+        // Modify event object
+        memoryHandler.completeEvent(eventId);
+
+        // Close Modal
+        closeCompletion();
+
+        // Display new event full view
+        eventsDisplay.showFullEvent(eventId);
     }
 
 

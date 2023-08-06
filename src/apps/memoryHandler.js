@@ -22,7 +22,7 @@ const memoryHandler = (function () {
                     }
                 },
                 "eventId": "ms.dodo'sbirthday1689724800000",
-                "eventStatus": 'done',
+                "eventStatus": 'pending',
             },
 
             {
@@ -95,7 +95,21 @@ const memoryHandler = (function () {
         console.log(eventObj);
     }
 
-    return {getEvents, saveEvent, getEvent, changeTaskStatus, getEventTasks, changeEventStatus};
+     // Mark complete an event
+     const completeEvent = function (id) {
+        const eventObj = getEventForMod(id);
+
+        eventObj.eventStatus = 'done';
+        console.log(eventObj);
+    }
+
+    return {getEvents, 
+            saveEvent, 
+            getEvent, 
+            changeTaskStatus, 
+            getEventTasks, 
+            changeEventStatus,
+            completeEvent};
 })();
 
 export {memoryHandler}

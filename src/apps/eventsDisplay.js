@@ -291,8 +291,15 @@ const eventsDisplay = (function () {
     }
 
     
-    const showFullEvent = function () {
-        const previewId = this.dataset.id;
+    const showFullEvent = function (trigger) {
+        // Conditional to enable non-eventlistener trigger
+        let previewId;
+        if (typeof trigger === 'string') {
+            previewId = trigger
+        } else {
+            previewId = this.dataset.id;
+        }
+
         const itemDisplay = document.querySelector('div#item-display');
 
         // Clear display panel
@@ -341,7 +348,7 @@ const eventsDisplay = (function () {
         }
     }
 
-    return {test, displayEventsToDOM};
+    return {test, displayEventsToDOM, showFullEvent};
 })();
 
 export {eventsDisplay}

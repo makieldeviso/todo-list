@@ -139,6 +139,10 @@ div.category {
     align-items: center;
 }
 
+div.category:hover {
+    cursor: pointer;
+}
+
 div.category h3 {
     font-family: var(--header-font-style);
     font-size: calc(var(--common-font-size) * 1);
@@ -292,6 +296,10 @@ div.event-preview {
 
 div.event-preview[data-status="done"] {
     background-color: rgb(232, 237, 232);
+}
+
+div.event-preview:hover {
+    cursor: pointer;
 }
     
 div.marker {
@@ -538,8 +546,8 @@ div.event-action {
     grid-area: btns;
     display: grid;
     grid-template-columns: 1fr;
+    margin-top: var(--common-margin);
 }
-
 
 button[value="complete-event"] {
     font-size: calc(var(--common-font-size) * 1.2);
@@ -550,7 +558,6 @@ button[value="complete-event"] {
     color: white;
     box-shadow: 0 2px 2px 1px rgba(62, 62, 62, 0.3);
     justify-self: center;
-    margin-top: var(--common-margin);
 }
 
 div.event-action p.message {
@@ -560,9 +567,10 @@ div.event-action p.message {
     margin-top: var(--common-margin);
 }
 
+/* Completion prompt modal (start) --- */
 dialog#complete-event-prompt {
     width: 95vw;
-    height: 50vh;
+    /* height: 50vh; */
     margin: auto;
     border: 1px solid var(--base-orange);
     border-radius: 10px;
@@ -595,23 +603,26 @@ div.completion-content {
     padding: var(--common-padding);
     margin-top: var(--common-margin);
     border-radius: 10px;
-    overflow-y: scroll;
     background-color: white;
     border: none;
     box-shadow: 0 4px 3px 2px rgba(62, 62, 62, 0.3);
-}
 
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--common-margin) * 2);
+}
 
 p.reminder {
-    font-size: calc(var(--header-font-size) * 0.85);
+    font-size: calc(var(--header-font-size) * 1);
     text-align: center;
+    margin: var(--common-margin) 0;
 }
 
-
-
+div.completion-content div.save-cont {
+    margin: var(--common-margin) 0;
+}
+/* Completion prompt modal (end) --- */
 /* Event Full view (end) -- */
-
-
 /* Todo List Display (end) */
 
 /* Add Prompt Modal (start) */
@@ -858,8 +869,8 @@ div.save-cont {
     gap: calc(var(--common-margin) * 2);
 }
 
-button.clear-form,
-button.save-form {
+button.clear,
+button.save {
     width: 20vw;
     min-width: max-content;
     font-size: calc(var(--header-font-size) * 1.3);
@@ -871,7 +882,7 @@ button.save-form {
     box-shadow: 0 2px 2px 1px rgba(62, 62, 62, 0.3);
 }
 
-button.save-form {
+button.save{
     color: white;
     border-color: white;
     background-color: green;

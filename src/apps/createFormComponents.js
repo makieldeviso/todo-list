@@ -196,8 +196,8 @@ const createFormComponents = (function () {
         }
 
         // Execute addBtn function
-        addBtn('clear-form', dataId, 'Clear');
-        addBtn('save-form', dataId, 'Save');
+        addBtn('clear', dataId, 'Clear');
+        addBtn('save', dataId, 'Save');
 
         return container;
     }
