@@ -1,5 +1,6 @@
 import { eventsScript } from "./eventsScript";
 import { memoryHandler } from "./memoryHandler";
+import { modalUX } from "./modalUX";
 
 const createModal = (function () {
     // Create modal and append to the 'main'
@@ -66,6 +67,15 @@ const createModal = (function () {
         modalCont.appendChild(container);
     }
 
+    // Create Edit Event Banner 
+    const createBanner = function (bannerText) {
+        const banner = document.createElement('p');
+        banner.setAttribute('class', 'modal-banner');
+
+        banner.textContent = bannerText;
+        return banner
+    };
+
     // Creates event completion prompt
     const createEventCompletionPrompt = function (eventId) {
 
@@ -79,9 +89,7 @@ const createModal = (function () {
         const promptModal = document.querySelector('dialog#complete-event-prompt');
         const modalCont = promptModal.querySelector('div.modal-cont');
 
-        const promptHeader = document.createElement('p');
-        promptHeader.setAttribute('class', 'completion-header');
-        promptHeader.textContent = 'Complete Event';
+        const promptHeader = createBanner('Complete Event');
 
         const content = document.createElement('div');
         content.setAttribute('class', 'completion-content');
@@ -144,7 +152,7 @@ const createModal = (function () {
         components.forEach(comp => modalCont.appendChild(comp));
     }
 
-    return { createNewModal, createAddOptionsBtns, createEventCompletionPrompt }
+    return { createNewModal, createAddOptionsBtns, createEventCompletionPrompt, createBanner }
 
 })();
 

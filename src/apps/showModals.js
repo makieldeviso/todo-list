@@ -16,21 +16,25 @@ const showModals = (function () {
         
         const addPromptModal = document.querySelector('dialog#add-prompt');
         const closeBtn = document.querySelector('button#close-add');
+        const addOptionsBtns = document.querySelectorAll('div#add-options button');
 
         addPromptModal.showModal();
 
         // Add eventListener to close-add/ close modal button
         closeBtn.addEventListener('click', closeModal);
 
+        // Add UX related event to add options buttons
+        addOptionsBtns.forEach(btn => btn.addEventListener('click', modalUX.markAddOptionsBtn))
+
         // Opens modal with add new event form as default
-        addEventForm.newEventForm();
+        addEventForm.newEventForm('default');
 
         // Add additional event listeners upon show modal
         addEventForm.addEventFormEvent();
         addProjectForm.addProjectFormEvent();
     } 
 
-    // Opens prompt before completing an event
+    // Opens prompt before completing an event (start)
     const showEventCompletionPrompt = function () {
         const eventId = this.dataset.id;
 
@@ -68,7 +72,6 @@ const showModals = (function () {
         eventsDisplay.showFullEvent(eventId);
     }
 
-
     const closeCompletion = function () {
         // Closes modal
         const completionPromptModal = document.querySelector('dialog#complete-event-prompt');
@@ -77,6 +80,44 @@ const showModals = (function () {
         // Removes modal from the DOM
         const main = document.querySelector('main');
         main.removeChild(completionPromptModal);
+    }
+    // Opens prompt before completing an event (end)
+
+    // Show edit event form modal
+    const showEventEditModal = function (id, obj) {
+        const eventId = id;
+        const eventObj = obj;
+        
+        console.log(eventId);
+        console.log(eventObj);
+
+        // Creates modal first before showing
+        createModal.createNewModal('edit-event');
+        const editModal = document.querySelector('dialog#edit-event-prompt');
+        const modalCont = editModal.querySelector('div.modal-cont');
+        const closeBtn = editModal.querySelector('button.close-modal');
+
+        // Add Modal Banner
+        const editBanner = createModal.createBanner('Edit Event');
+        modalCont.appendChild(editBanner);
+
+        // Add default event form
+        addEventForm.newEventForm('edit-event');
+        
+        // Add close modal event listener
+        closeBtn.addEventListener('click', closeEventEdit);
+
+
+        // Show Modal created
+        editModal.showModal();
+
+
+    }
+
+    // Closes event edit modal
+    const closeEventEdit = function () {
+        const editEventModal = document.querySelector('dialog#edit-event-prompt');
+        editEventModal.close();
     }
 
 
@@ -106,7 +147,7 @@ const showModals = (function () {
         button.addEventListener('click', showEventCompletionPrompt);
     }
 
-    return { addButtonEvent, closeModal, addCompletionPromptEvent }
+    return { addButtonEvent, closeModal, addCompletionPromptEvent, showEventEditModal }
 })();
 
 export { showModals };

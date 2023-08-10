@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Pacifico&family=Play&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Borel&family=Play&family=Rubik&display=swap');
 
 * {
     margin: 0;
@@ -13,20 +13,21 @@ button:hover {
 
 :root {
     --base-orange: #FFAB73;
-    --base-blue: #9BCDD2;
+    --base-blue: #5F9DF7;
     --base-yellow: #FFF9B0;
     --base-pink: #FFDEDE;
 
-    --dark-orange: #FF8551;
+    --dark-orange: #FF731D;
+    --dark-blue: #1746A2;
     --darkest-color: #212A3E;
-    --off-white: #FAF0E4;
+    --off-white: #FFF7E9;
     --gray: #7F8487;
 
     --logo-size: calc(40px + 1vw);
 
-    --title-font-style: 'Pacifico', sans-serif;
-    --header-font-style: 'Play', sans-serif;
-    --common-font-style: 'Montserrat', sans-serif;
+    --title-font-style: 'Borel', sans-serif;
+    --header-font-style: 'Rubik', sans-serif;
+    --common-font-style: 'Rubik', sans-serif;
 
     --title-font-size: calc(1.3rem + 1vw);
     --header-font-size: calc(0.8rem + 1vw);
@@ -260,6 +261,8 @@ div#action-btns {
     width: 100%;
     background-color: rgba(127, 132, 135, 0.3);
     padding: 0 var(--common-padding);
+    display: grid;
+    grid-template-columns: 1fr max-content;
 }
 
 button.action-btn {
@@ -275,6 +278,35 @@ button.action-btn {
 button.action-btn img {
     width: 100%;
 }
+
+button.action-btn.edit {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    gap: 3px;
+    width: 100%;
+    margin: 5px 0;
+    box-shadow: 0 2px 2px 1px rgba(62, 62, 62, 0.3);
+
+    border-radius: 5px;
+    border: 2px solid white;
+    background-color: var(--dark-orange);
+   
+}
+
+button.action-btn.edit span.icon {
+    width: var(--header-font-size);
+    height: var(--header-font-size);
+    background-image: url('./assets/pencil.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+button.action-btn.edit span.text {
+    font-size: var(--header-font-size);
+    color: white;
+}
+
 /* Action Btns (end) -- */
 
 /*  Event Preview (start) --*/
@@ -284,7 +316,7 @@ div.event-preview {
     grid-template-rows: repeat(3, max-content);
     padding: var(--common-padding);
     border: 1px solid var(--base-blue);
-    border-radius: 3px;
+    border-radius: 10px;
     column-gap: var(--common-padding);
     margin: 0 calc(var(--common-margin) * 0.5);
 
@@ -381,7 +413,6 @@ p.event-sched {
     display: flex;
     align-items: center;
     gap: 3px;
-    font-weight: bold;
 }
 
 p.event-sched span.sched-icon {
@@ -404,6 +435,7 @@ p.event-task-count {
     justify-content: flex-end;
     align-items: center;
     gap: 3px;
+
 }
 
 p.event-task-count.done {
@@ -421,18 +453,19 @@ p.event-desc {
 
 /* Event Full view (start) -- */
 div.event-fullview {
-    padding: var(--common-padding);
+    padding: calc(var(--common-padding) * 2);
     display: grid;
-    row-gap: var(--common-margin);
-    grid-template-columns: max-content 1fr 1fr;
+    grid-template-columns: max-content max-content 1fr;
     grid-template-areas: 
         "status title title"
+        "desc-label desc-label desc-label"
         "desc desc desc"
+        "proj-label proj-label proj-label"
         "proj proj proj"
+        "sched-label sched-label sched-label"
         "sched sched prio"
         "tasks tasks tasks"
         "btns btns btns";
-    
 }
 
 div.event-status {
@@ -463,9 +496,30 @@ p.fullview.event-title {
     font-size: calc(var(--header-font-size) * 1.3);
 }
 
+p.fullview.label {
+    margin-top: calc(var(--common-margin) * 2);
+    margin-bottom: calc(var(--common-margin) * 0.3);
+    font-size: calc(var(--header-font-size) * 0.9);
+}
+
+p.fullview.desc-label {
+    grid-area: desc-label;
+}
+
+p.fullview.proj-label {
+    grid-area: proj-label;
+}
+
+p.fullview.sched-label {
+    grid-area: sched-label;
+}
+
 p.fullview.event-sched {
-    font-size: calc(var(--header-font-size) * 0.85);
-    gap: 5px;
+    font-size: calc(var(--header-font-size) * 1.2);
+}
+
+p.fullview.event-sched span.sched-date {
+    font-family: var(--header-font-style);
 }
 
 p.fullview.event-sched span.sched-icon {
@@ -475,6 +529,7 @@ p.fullview.event-sched span.sched-icon {
 
 p.fullview.event-prio {
     font-size: calc(var(--header-font-size) * 0.8);
+    margin: 0;
 }
 
 div.fullview.tasks-list {
@@ -482,15 +537,18 @@ div.fullview.tasks-list {
     display: flex;
     flex-direction: column;
     gap: calc(var(--common-margin) * 0.5);
-    border: 2px solid var(--base-pink);
+    border: 2px solid var(--base-orange);
+    border-radius: 10px;
+    margin-top: calc(var(--common-margin) * 2);
 }
 
 div.task-header {
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
-    background-color: var(--base-pink);
+    background-color: var(--base-orange);
     padding: var(--common-padding);
+    border-radius: 7.5px 7.5px 0 0;
 }
 
 div.task-header p.task-label {
@@ -504,6 +562,9 @@ div.task-header p.event-task-count {
     font-size: calc(var(--header-font-size) * 0.8);
     justify-self: end;
     margin: 0;
+    background-color: white;
+    padding: calc(var(--common-padding) * 0.8);
+    border-radius: 10px;
 }
 
 div.fullview.tasks-list div.task {
@@ -511,7 +572,7 @@ div.fullview.tasks-list div.task {
     grid-template-columns: max-content 1fr;
     gap: 5px;
     padding-bottom: var(--common-padding);
-    border-bottom: 1px solid var(--base-pink);
+    border-bottom: 1px solid var(--base-orange);
 }
 
 button.check {
@@ -535,7 +596,8 @@ button.check[value="done"] {
 }
 
 button.check[value="done"]~p.task {
-    opacity: 0.5;
+    transition: opacity ease-in-out 0.2s;
+    opacity: 0.3;
 }
 
 div.fullview.tasks-list p.task {
@@ -546,7 +608,7 @@ div.event-action {
     grid-area: btns;
     display: grid;
     grid-template-columns: 1fr;
-    margin-top: var(--common-margin);
+    margin-top: calc(var(--common-margin) * 3);
 }
 
 button[value="complete-event"] {
@@ -588,7 +650,7 @@ dialog#complete-event-prompt button.close-modal {
     grid-area: btn;
 }
 
-p.completion-header {
+p.modal-banner {
     grid-area: header;
     font-family: var(--header-font-style);
     font-size: calc(var(--header-font-size) * 1.3);
@@ -622,6 +684,45 @@ div.completion-content div.save-cont {
     margin: var(--common-margin) 0;
 }
 /* Completion prompt modal (end) --- */
+
+/* Edit modal (start)  --- */
+dialog#edit-event-prompt {
+    width: 95vw;
+    height: 95vh;
+    margin: auto;
+    border: 1px solid var(--base-orange);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+dialog#edit-event-prompt div.modal-cont {
+    grid-template-columns: 1fr max-content;
+    grid-template-rows: max-content 1fr;
+    grid-template-areas:
+        "banner exit-btn"
+        "form form";
+}
+
+dialog#edit-event-prompt p.modal-banner {
+    grid-area: banner;
+}
+
+dialog#edit-event-prompt  button.close-modal{
+    grid-area: exit-btn;
+}
+
+dialog#edit-event-prompt  form#event-form{
+    grid-area: form;
+}
+
+/* Edit modal (end)  --- */
+
+
+
+
+
+
+
 /* Event Full view (end) -- */
 /* Todo List Display (end) */
 

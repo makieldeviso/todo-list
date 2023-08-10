@@ -22,28 +22,16 @@ const modalUX = (function () {
         defaultBtn.dataset.selected = 'selected';
     }
 
-    // "Add" Options buttons UX
-    const addOptionsBtns = function (action) {
+    // UX for changing add options button  
+    const markAddOptionsBtn = function () {
         const optionsBtns = document.querySelectorAll('div#add-options button');
-        const newEventBtn = document.querySelector('button#new-event');
+        const selectedBtn = this;
 
-        const markBtn = function () {
-            const selectedBtn = this;
+        // Ensures other buttons are closed
+        closeBtns(optionsBtns);
 
-            // Ensures other buttons are closed
-            closeBtns(optionsBtns);
-
-            // Change UI for selected Btn
-            selectedBtn.dataset.selected = 'selected';
-        }
-
-        if (action === true) {
-            optionsBtns.forEach(btn => btn.addEventListener('click', markBtn));
-
-        } else if (action === false) {
-            setDefaultBtn(optionsBtns, newEventBtn); // Sets newEventBtn on modal closing
-            optionsBtns.forEach(btn => btn.removeEventListener('click', markBtn));
-        }
+        // Change UI for selected Btn
+        selectedBtn.dataset.selected = 'selected';
     }
 
     // UX for select event priority
@@ -75,7 +63,6 @@ const modalUX = (function () {
     const addModalUX = function () {
 
         // Reminder: true argument to add eventListeners, false means remove
-        addOptionsBtns(true);
         addPriorityBtnEvent(true);
         addTaskToEvent.addNewTaskEvent(true);
         saveFormValues.addSaveEventFormEvent(true);
@@ -85,13 +72,12 @@ const modalUX = (function () {
     const removeModalUX = function () {
 
         // Reminder: false to remove eventListeners
-        addOptionsBtns(false);
         addPriorityBtnEvent(false);
         addTaskToEvent.addNewTaskEvent(false);
         saveFormValues.addSaveEventFormEvent(false);
     }
 
-    return { addModalUX, removeModalUX }
+    return { addModalUX, removeModalUX, markAddOptionsBtn }
 })();
 
 export { modalUX };

@@ -49,6 +49,11 @@ const eventsScript = (function () {
         return result;
     }
 
+    // Count number of events
+    // const countEvents = function (events) {
+        
+    // }
+
     return {
         taskArrayOfEvent,
         countTasksOfEvent,

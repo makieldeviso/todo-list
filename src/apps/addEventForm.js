@@ -49,7 +49,15 @@ const addEventForm = (function () {
         projectSelect.appendChild(newOption);
     }
 
-    const newEventForm = function() {
+    const newEventForm = function(trigger) {
+
+        console.log(trigger);
+        const buttonClick = this.value === 'new-event';
+        let assignDataId = 'new-event';
+        if (trigger === 'default' || buttonClick ) {
+           assignDataId = 'new-event';
+        }   
+
         const modalCont = document.querySelector('div.modal-cont');
         // Conditions when executing newEventForm
         const projectForm = document.querySelector('form#project-form');
@@ -57,7 +65,6 @@ const addEventForm = (function () {
 
         // If add Event Form is existing, cancel execution
         if (existingForm !== null) {
-            console.log('nope');
             return;
         }
 

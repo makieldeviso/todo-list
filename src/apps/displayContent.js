@@ -30,7 +30,10 @@ const displayContent = (function () {
         if (action === 'event-fullview') {
             // Close/ remove event full view
             const eventFullView = document.querySelector('div.event-fullview');
+            const editBtn = document.querySelector('button[value="edit-event"]');
+
             removeDisplay(eventFullView);
+            removeActionBtn(editBtn);
 
             // Return to event preview
             showDisplay();
@@ -48,6 +51,17 @@ const displayContent = (function () {
         eventsDisplay.displayEventsToDOM();
     }
 
+    const removeActionBtn = function (...btns) {
+        const actionBtnsRibbon = document.querySelector('div#action-btns');
+
+        const btnsArray = btns; 
+        btnsArray.forEach(btn => {
+            if (btn !== null) {
+                actionBtnsRibbon.removeChild(btn);
+            }
+        });
+    }
+
     const removeDisplay = function (item) {
         const itemDisplay = document.querySelector('div#item-display');
         itemDisplay.removeChild(item);
@@ -63,7 +77,7 @@ const displayContent = (function () {
         backBtn.addEventListener('click', backSideBar);
     }
 
-    return {showDisplay, addSidebarEvents, removeDisplay, backBtnEvents}
+    return {showDisplay, addSidebarEvents, removeDisplay, backBtnEvents, removeActionBtn}
 
 })();
 

@@ -5,6 +5,7 @@ import { format } from 'date-fns'
 import { displayContent } from "./displayContent";
 import { createModal } from "./createModal";
 import { showModals } from "./showModals";
+import { eventEditForm } from "./eventEditForm";
 
 const eventsDisplay = (function () {
 
@@ -98,28 +99,37 @@ const eventsDisplay = (function () {
         console.log(memoryHandler.getEvents());
     }
 
-    // Mark event/ eventObj as completed
-    // Note: Event listener linked function
-    // const completeEvent = function () {
-    //     const eventId = this.dataset.id;
-
-    //     // Create prompt modal before completion
-        
-
-
-    //     memoryHandler.changeEventStatus(eventId);
-
-        
-    // }
-
-
     // Event Full View Maker
     const createEventFullView = function (eventObj) {
+        // Create edit button appended on the action buttons ribbon (start) -
+        const actionRibbon = document.querySelector('div#action-btns');
+
+        // Ensures no existing action buttons
+        const existingEditBtn = document.querySelector('button[value="edit-event"]');
+        if (existingEditBtn !== null) {
+            displayContent.removeActionBtn(existingEditBtn);
+        }
+
+        // Conditional don't add edit button if event is completed
+        if (eventObj.eventStatus !== 'done') {
+            const editEventBtn = document.createElement('button');
+            editEventBtn.setAttribute('class', 'action-btn edit');
+            editEventBtn.setAttribute('value', 'edit-event');
+            editEventBtn.dataset.id = eventObj.eventId;
+            editEventBtn.addEventListener('click', eventEditForm.showEditEventForm);
+
+            createSpan(editEventBtn, 'icon', '');
+            createSpan(editEventBtn, 'text', 'Edit');
+
+            actionRibbon.appendChild(editEventBtn);
+        }
+        // Create edit button appended on the action buttons ribbon (end) -
+
         // Create event full view container
         const newFullEvent = document.createElement('div');
         newFullEvent.setAttribute('class', "event-fullview");
-        newFullEvent.dataset.id = `${eventObj.eventId}`;
-        newFullEvent.dataset.status = `${eventObj.eventStatus}`;
+        newFullEvent.dataset.id = eventObj.eventId;
+        newFullEvent.dataset.status = eventObj.eventStatus;
 
         // Create status marker
         const statusMarker = document.createElement('div');
@@ -127,12 +137,18 @@ const eventsDisplay = (function () {
 
         // Create event title, description, project
         const title = makeText('fullview event-title', eventObj.title);
+
+        const descLabel = makeText('fullview desc-label label ', 'Description:');
         const desc = makeText('fullview event-desc', eventObj.description);
+
+        const projLabel = makeText('fullview proj-label label', 'Project:');
         const proj = makeText('fullview event-proj', eventObj.projectTag);
+
         const prio = makeText('event-prio', eventObj.priority);
         prio.classList.add('fullview');
 
         // Create sched (start) --
+        const schedLabel = makeText('fullview sched-label label', 'Schedule:');
         const sched = document.createElement('p');
         sched.setAttribute('class', 'fullview event-sched');
 
@@ -235,7 +251,8 @@ const eventsDisplay = (function () {
 
         // Create action btns (end) --
 
-        const fullviewComponents = [statusMarker, title, desc, proj, sched, prio, tasksListCont, actionBtnsCont];
+        // Note: components must be arranged according to order inside the array
+        const fullviewComponents = [statusMarker, title, descLabel, desc, projLabel, proj, schedLabel, sched, prio, tasksListCont, actionBtnsCont];
         fullviewComponents.forEach(component => newFullEvent.appendChild(component));
 
         return newFullEvent;
@@ -293,6 +310,7 @@ const eventsDisplay = (function () {
     
     const showFullEvent = function (trigger) {
         // Conditional to enable non-eventlistener trigger
+        // If trigger is string means non-eventlistener
         let previewId;
         if (typeof trigger === 'string') {
             previewId = trigger
@@ -305,9 +323,10 @@ const eventsDisplay = (function () {
         // Clear display panel
         const eventPreviews = document.querySelectorAll('div.event-preview');
         eventPreviews.forEach(preview => displayContent.removeDisplay(preview));
-
+        
+        // Ensures the event full view is refreshed when changes is applied
         const eventFullViews = document.querySelectorAll('div.event-fullview');
-        eventFullViews.forEach(preview => displayContent.removeDisplay(preview));
+        eventFullViews.forEach(fullview => displayContent.removeDisplay(fullview));
 
         // Add attribute to back-button
         const backBtn = document.querySelector('button#back-sidebar');
