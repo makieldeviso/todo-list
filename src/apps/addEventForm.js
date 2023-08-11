@@ -51,12 +51,13 @@ const addEventForm = (function () {
 
     const newEventForm = function(trigger) {
 
-        console.log(trigger);
         const buttonClick = this.value === 'new-event';
         let assignDataId = 'new-event';
         if (trigger === 'default' || buttonClick ) {
            assignDataId = 'new-event';
-        }   
+        } else {
+            assignDataId = trigger;
+        }
 
         const modalCont = document.querySelector('div.modal-cont');
         // Conditions when executing newEventForm
@@ -79,18 +80,18 @@ const addEventForm = (function () {
         // Add form components
         // Note: creates multiple from array of objects
         const newBasicComps = eventFormComp().map(comp => {
-           const component = createFormComponents.createBasicComponent(comp, 'new-event');
+           const component = createFormComponents.createBasicComponent(comp, assignDataId);
            return component;
         }); 
 
         // Add Priority
-        const newPriority = createFormComponents.createPriorityBtns('new-event');
+        const newPriority = createFormComponents.createPriorityBtns(assignDataId);
 
         // Add task
-        const newTaskAdder = createFormComponents.createTaskAdder('new-event');
+        const newTaskAdder = createFormComponents.createTaskAdder(assignDataId);
 
         // Add Save and Clear Buttons
-        const newSaveBtns = createFormComponents.createSaveFormBtns('new-event');
+        const newSaveBtns = createFormComponents.createSaveFormBtns(assignDataId);
 
         // Appends the components to the parent form
         const allComp = [...newBasicComps, newPriority, newTaskAdder, newSaveBtns];

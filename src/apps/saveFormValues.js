@@ -118,9 +118,9 @@ const saveFormValues = (function () {
 
     // Adds event listener
     const addSaveEventFormEvent = function (action) {
-        const saveEventBtn = document.querySelector('button#save-form-new-event');
-        const clearEventFormBtn = document.querySelector('button#clear-form-new-event');
-
+        const saveEventBtn = document.querySelector('button.save[data-id="new-event"]');
+        const clearEventFormBtn = document.querySelector('button.clear[data-id="new-event"]');
+        
         // Ensures if addTaskBtn exists
         if (saveEventBtn !== null) {
             if (action === true) {

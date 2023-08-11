@@ -12,10 +12,19 @@ const addTaskToEvent = (function () {
         return saveTasks;
     }
 
-    const addNewTask = function () {
+    const addNewTask = function (trigger) {
         const tasksCont = document.querySelector('div#tasks-container');
         const addTaskInput = document.querySelector('input#add-task-input');
-        const newTaskValue = addTaskInput.value;
+        const adderBtn = document.querySelector('button#add-task-btn');
+        
+        // Note: conditional to enable execution from non-eventlistener
+        let newTaskValue;
+        const buttonClicked = this === adderBtn;
+        if (buttonClicked) {
+            newTaskValue = addTaskInput.value;
+        } else {
+            newTaskValue = trigger;
+        }
 
         // Validate empty text box, does not add new task
         if (newTaskValue === '') {
@@ -159,7 +168,7 @@ const addTaskToEvent = (function () {
         }
     }
 
-    return { addNewTaskEvent, getNewTasks, resetNewTasks };
+    return { addNewTaskEvent, getNewTasks, resetNewTasks, addNewTask };
 })();
 
 export { addTaskToEvent };

@@ -4,6 +4,7 @@ import { modalUX } from "./modalUX";
 import { addProjectForm } from "./addProjectForm";
 import { memoryHandler } from "./memoryHandler";
 import { eventsDisplay } from "./eventsDisplay";
+import { saveFormValues } from "./saveFormValues";
 
 const showModals = (function () {
     
@@ -88,9 +89,6 @@ const showModals = (function () {
         const eventId = id;
         const eventObj = obj;
         
-        console.log(eventId);
-        console.log(eventObj);
-
         // Creates modal first before showing
         createModal.createNewModal('edit-event');
         const editModal = document.querySelector('dialog#edit-event-prompt');
@@ -101,8 +99,10 @@ const showModals = (function () {
         const editBanner = createModal.createBanner('Edit Event');
         modalCont.appendChild(editBanner);
 
-        // Add default event form
+        // Add default event form and assign data-id
         addEventForm.newEventForm('edit-event');
+        const editForm = document.querySelector('form#event-form');
+        editForm.dataset.id = eventId;
         
         // Add close modal event listener
         closeBtn.addEventListener('click', closeEventEdit);
@@ -116,8 +116,13 @@ const showModals = (function () {
 
     // Closes event edit modal
     const closeEventEdit = function () {
+        // Closes modal
         const editEventModal = document.querySelector('dialog#edit-event-prompt');
         editEventModal.close();
+
+         // Removes modal from the DOM
+        const main = document.querySelector('main');
+        main.removeChild(editEventModal);
     }
 
 

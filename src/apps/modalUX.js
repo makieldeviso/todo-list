@@ -45,7 +45,7 @@ const modalUX = (function () {
             // Ensures only one container is marked
             closeBtns(prioBtns);
         
-            // Marks container with checked radio
+            // Marks container with checked
             thisPrioBtn.setAttribute('data-selected', 'selected');
         }
 
@@ -77,7 +77,7 @@ const modalUX = (function () {
         saveFormValues.addSaveEventFormEvent(false);
     }
 
-    return { addModalUX, removeModalUX, markAddOptionsBtn }
+    return { addModalUX, removeModalUX, markAddOptionsBtn, closeBtns }
 })();
 
 export { modalUX };
