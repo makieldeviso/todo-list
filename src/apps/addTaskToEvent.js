@@ -97,17 +97,17 @@ const addTaskToEvent = (function () {
     }
 
     const editTask = function () {
-        const editButton = this;
-        const editButtonId =  this.dataset.id;
+        const editBtn = this;
+        const editBtnId =  this.dataset.id;
 
         // Change icon while awaiting edit
-        editButton.classList.add('wait-save');
+        editBtn.classList.add('wait-save');
 
-        const taskTextBox = document.querySelector(`input[data-id='${editButtonId}']`);
+        const taskTextBox = document.querySelector(`input[data-id='${editBtnId}']`);
         taskTextBox.disabled = false;
 
         // Refer to tasks array to get value of the task for edit
-        const taskValue = newTasks[`${editButtonId}`];
+        const taskValue = newTasks[`${editBtnId}`];
 
         // Ensures that the cursor is at the end of the text
         // Note: event listener linked function
@@ -119,31 +119,27 @@ const addTaskToEvent = (function () {
         // Note: event listener linked function
         const saveEdit = function (key) {
             // Assign new value to the edited task
-            newTasks[`${editButtonId}`].task = taskTextBox.value;
+            newTasks[`${editBtnId}`].task = taskTextBox.value;
 
             //Disables text box upon save
             taskTextBox.disabled = true;
 
             // Remove changed icon
-            editButton.classList.remove('wait-save');
+            editBtn.classList.remove('wait-save');
 
             // Remove focus and blur events on save
             taskTextBox.removeEventListener('focus', cursorEnd);
             taskTextBox.removeEventListener('blur', saveEdit);
 
             // Return the editTask linked function  to this button
-            // Then remove save function
-            // Note: setTimeout trick to defer these functions  
+            // Note: setTimeout trick to defer these function
             setTimeout(() => {
-                editButton.addEventListener('click', editTask); 
-                editButton.removeEventListener('click', saveEdit);
-            }, 0);
+                editBtn.addEventListener('click', editTask); 
+            }, 100);
         }
 
         // Temporarily disable linked edit function on this button
-        // Then add mew event listener that saves edit on this button
-        editButton.removeEventListener('click', editTask); 
-        editButton.addEventListener('click', saveEdit);
+        editBtn.removeEventListener('click', editTask); 
 
         // Add focus and blur events to the text Box
         taskTextBox.addEventListener('focus', cursorEnd);

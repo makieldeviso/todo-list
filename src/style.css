@@ -991,6 +991,12 @@ button.save{
 }
 
 /* New task (start) */
+div#tasks-container{
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--common-margin) * 0.8);
+}
+
 div#tasks-container input.new-task {
     border: none;
     border-bottom: 1px solid var(--darkest-color);
