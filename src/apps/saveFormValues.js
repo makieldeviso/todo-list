@@ -2,6 +2,7 @@ import { memoryHandler } from "./memoryHandler";
 import { showModals } from "./showModals";
 import { addEventForm } from "./addEventForm";
 import { addTaskToEvent } from "./addTaskToEvent";
+import { eventsDisplay } from "./eventsDisplay";
 
 const saveFormValues = (function () {
 
@@ -45,6 +46,8 @@ const saveFormValues = (function () {
 
     // Saves the form values when save button is pressed
     const saveEventForm = function () {
+        const saveType = this.getAttribute('id');
+        const eventForModId = this.dataset.event;
 
         // Validates form before saving
         const validationErrors = validateEventForm();
@@ -104,10 +107,23 @@ const saveFormValues = (function () {
         eventId(newEvent); // Executes event id maker
 
         // Save newEvent Object using the memory handler module
-        memoryHandler.saveEvent(newEvent);
-
+        // If save button was from edit event
+        // This replaces the old eventObj with new eventObj
+        if (eventForModId === undefined) {
+            memoryHandler.saveEvent(newEvent);
+        } else {
+            memoryHandler.replaceEvent(eventForModId, newEvent);
+        }
+        
         // Closes modal upon successful save
-        showModals.closeModal();
+        // If edit event modal is open, upon closing show full display of new event
+        if (saveType === 'save-new-event') {
+            showModals.closeModal();
+            
+        } else if (saveType === 'save-edit-event') {
+            showModals.closeEventEdit();
+            eventsDisplay.showFullEvent(newEvent.eventId);
+        }
     }
 
     // Clears input field
@@ -133,7 +149,21 @@ const saveFormValues = (function () {
         }
     }
 
-    return { addSaveEventFormEvent }
+    // Adds event edit listener
+    const addEditEventSaveEvent = function (action) {
+        const saveEventBtn = document.querySelector('button.save[data-id="edit-event"]');
+        
+        // Ensures if addTaskBtn exists
+        if (saveEventBtn !== null) {
+            if (action === true) {
+                saveEventBtn.addEventListener('click', saveEventForm);
+            } else if (action === false) {
+                saveEventBtn.removeEventListener('click', saveEventForm);
+            }
+        }
+    }
+
+    return { addSaveEventFormEvent, addEditEventSaveEvent}
 })();
 
 export {saveFormValues}

@@ -103,13 +103,24 @@ const memoryHandler = (function () {
         console.log(eventObj);
     }
 
+    const replaceEvent = function (id, obj) {
+        const eventForModIndex = events.findIndex(event => event.eventId === id);
+        
+        events.splice(eventForModIndex, 1, obj);
+
+        console.log(getEvents());
+
+    }
+
+
     return {getEvents, 
             saveEvent, 
             getEvent, 
             changeTaskStatus, 
             getEventTasks, 
             changeEventStatus,
-            completeEvent};
+            completeEvent,
+            replaceEvent};
 })();
 
 export {memoryHandler}

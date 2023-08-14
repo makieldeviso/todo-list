@@ -5,6 +5,7 @@ import { addProjectForm } from "./addProjectForm";
 import { memoryHandler } from "./memoryHandler";
 import { eventsDisplay } from "./eventsDisplay";
 import { saveFormValues } from "./saveFormValues";
+import { addTaskToEvent } from "./addTaskToEvent";
 
 const showModals = (function () {
     
@@ -120,9 +121,14 @@ const showModals = (function () {
         const editEventModal = document.querySelector('dialog#edit-event-prompt');
         editEventModal.close();
 
+        // Resets tasks memory 
+        addTaskToEvent.resetNewTasks();
+
          // Removes modal from the DOM
         const main = document.querySelector('main');
         main.removeChild(editEventModal);
+
+        
     }
 
 
@@ -152,7 +158,11 @@ const showModals = (function () {
         button.addEventListener('click', showEventCompletionPrompt);
     }
 
-    return { addButtonEvent, closeModal, addCompletionPromptEvent, showEventEditModal }
+    return { addButtonEvent, 
+            closeModal, 
+            addCompletionPromptEvent, 
+            showEventEditModal,
+            closeEventEdit }
 })();
 
 export { showModals };

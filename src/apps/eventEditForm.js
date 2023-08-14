@@ -5,6 +5,8 @@ import { showModals } from "./showModals";
 import { format, formatDistance } from 'date-fns'
 import { modalUX } from "./modalUX";
 import { addTaskToEvent } from "./addTaskToEvent";
+import { saveFormValues } from "./saveFormValues";
+import eachMinuteOfIntervalWithOptions from "date-fns/esm/fp/eachMinuteOfIntervalWithOptions/index.js";
 
 const eventEditForm = (function () {
     
@@ -12,8 +14,6 @@ const eventEditForm = (function () {
     const assignInitEventValues = function (id, obj) {
         const eventId = id;
         const eventObj = obj;
-
-        console.log(eventObj);
 
         const editForm = document.querySelector(`form#event-form[data-id="${eventId}"]`);
 
@@ -40,14 +40,13 @@ const eventEditForm = (function () {
         priorityBtnSelected.dataset.selected = 'selected';
 
         const tasksObj = eventObj.tasks;
-        console.log(tasksObj);
 
         for (const individualTask in tasksObj) {
-            addTaskToEvent.addNewTask(tasksObj[individualTask].task);
+            const task = tasksObj[individualTask].task;
+            const status = tasksObj[individualTask].status;
+            addTaskToEvent.addNewTask(task, status);
         }
-
     }
-
 
 
     // Initiate event edit modal with form
@@ -56,13 +55,22 @@ const eventEditForm = (function () {
         const eventObj = memoryHandler.getEvent(eventId);
 
         // Note: pass eventId and eventObj as argument to showModals module
+        // This create an event form with necessary attribute values
         showModals.showEventEditModal(eventId, eventObj);
 
+        // Assign values to the form fields according to the saved event properties
         assignInitEventValues(eventId, eventObj);
 
+        // Note: edit event actually replaces the old event obj
+        // Add current event ID to save button as data-event
+        const saveBtn = document.querySelector('button#save-edit-event');
+        saveBtn.dataset.event = eventId;
+
+        // Add event listener to save button for saving edits
+        saveFormValues.addEditEventSaveEvent(true);
+
+        
     }
-
-
 
     return {showEditEventForm}
 })();

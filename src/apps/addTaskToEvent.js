@@ -12,18 +12,24 @@ const addTaskToEvent = (function () {
         return saveTasks;
     }
 
-    const addNewTask = function (trigger) {
+    const addNewTask = function (taskValue, taskStatus) {
         const tasksCont = document.querySelector('div#tasks-container');
         const addTaskInput = document.querySelector('input#add-task-input');
         const adderBtn = document.querySelector('button#add-task-btn');
         
         // Note: conditional to enable execution from non-eventlistener
         let newTaskValue;
+        let newTaskStatus;
+        let newTaskMark;
         const buttonClicked = this === adderBtn;
         if (buttonClicked) {
             newTaskValue = addTaskInput.value;
+            newTaskStatus = 'pending';
+            newTaskMark = 'new';
         } else {
-            newTaskValue = trigger;
+            newTaskValue = taskValue;
+            newTaskStatus = taskStatus;
+            newTaskMark = taskStatus;
         }
 
         // Validate empty text box, does not add new task
@@ -41,8 +47,11 @@ const addTaskToEvent = (function () {
         newTaskCont.setAttribute('class', 'new-task');
         
         // Create task marker
-        const newTaskMarker = document.createElement('div');
+        const newTaskMarker = document.createElement('button');
+        newTaskMarker.setAttribute('type', 'button');
         newTaskMarker.setAttribute('class', 'list-mark');
+        newTaskMarker.dataset.status = newTaskMark;
+        newTaskMarker.addEventListener('click', changeTaskStatus);
 
         // Creates the input text box
         const newTaskText = document.createElement('input');
@@ -81,14 +90,18 @@ const addTaskToEvent = (function () {
         // Create dynamic property assign;
         newTasks[newTaskId] = {
             task: newTaskValue,
-            status: 'pending'};
+            status: newTaskStatus};
 
         // Clears text box upon adding
         addTaskInput.value = '';
     }
 
     const editTask = function () {
+        const editButton = this;
         const editButtonId =  this.dataset.id;
+
+        // Change icon while awaiting edit
+        editButton.classList.add('wait-save');
 
         const taskTextBox = document.querySelector(`input[data-id='${editButtonId}']`);
         taskTextBox.disabled = false;
@@ -104,21 +117,37 @@ const addTaskToEvent = (function () {
         
         // Saves the edit
         // Note: event listener linked function
-        const saveEdit = function () {
+        const saveEdit = function (key) {
             // Assign new value to the edited task
             newTasks[`${editButtonId}`].task = taskTextBox.value;
 
             //Disables text box upon save
             taskTextBox.disabled = true;
 
+            // Remove changed icon
+            editButton.classList.remove('wait-save');
+
             // Remove focus and blur events on save
             taskTextBox.removeEventListener('focus', cursorEnd);
             taskTextBox.removeEventListener('blur', saveEdit);
+
+            // Return the editTask linked function  to this button
+            // Then remove save function
+            // Note: setTimeout trick to defer these functions  
+            setTimeout(() => {
+                editButton.addEventListener('click', editTask); 
+                editButton.removeEventListener('click', saveEdit);
+            }, 0);
         }
+
+        // Temporarily disable linked edit function on this button
+        // Then add mew event listener that saves edit on this button
+        editButton.removeEventListener('click', editTask); 
+        editButton.addEventListener('click', saveEdit);
 
         // Add focus and blur events to the text Box
         taskTextBox.addEventListener('focus', cursorEnd);
-        taskTextBox.addEventListener('blur', saveEdit);
+        taskTextBox.addEventListener('blur', saveEdit);  
 
         // Focus to text box when edit button is clicked
         taskTextBox.focus();
@@ -167,6 +196,21 @@ const addTaskToEvent = (function () {
             }
         }
     }
+
+    const changeTaskStatus = function () {
+        // console.log(this.dataset.status);
+        const taskForMod = newTasks[`${this.dataset.id}`];
+        const taskStatus = taskForMod.status;   
+
+        if (taskStatus === 'pending') {
+            this.dataset.status = 'done';
+            taskForMod.status = 'done';
+        } else if (taskStatus === 'done') {
+            this.dataset.status = 'pending';
+            taskForMod.status = 'pending';
+        }
+    }
+
 
     return { addNewTaskEvent, getNewTasks, resetNewTasks, addNewTask };
 })();

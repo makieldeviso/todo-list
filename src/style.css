@@ -1011,25 +1011,36 @@ div.new-task {
     /* gap: calc(var(--common-margin) * 0.5); */
 }
 
-div.new-task div.list-mark,
 div.new-task button {
     width: calc(15px + 0.5vw);
     height: calc(15px + 0.5vw);
     margin-left: var(--common-margin);
-    background-image: url('./assets/box-badge.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
     align-self: center;
-}
-
-div.new-task button {
     border: none;
     background-color: transparent;
 }
 
+div.new-task button.list-mark[data-status="new"] {
+    background-image: url('./assets/box-badge.png');
+}
+
+div.new-task button.list-mark[data-status="pending"] {
+    background-image: url('./assets/box-blank.png');
+}
+
+div.new-task button.list-mark[data-status="done"] {
+    background-image: url('./assets/box-check.png');
+}
+
 div.new-task button.edit-task {
     background-image: url('./assets/pencil.png');
+}
+
+div.new-task button.edit-task.wait-save {
+    background-image: url('./assets/save.png');
 }
 
 div.new-task button.delete-task {
@@ -1038,6 +1049,7 @@ div.new-task button.delete-task {
 
 
 div.new-task button:active {
+    transition: transform 0.1s ease-in-out;
     transform: scale(0.8);
 }
 
