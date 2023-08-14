@@ -1,3 +1,5 @@
+import { differenceInCalendarDays } from 'date-fns';
+
 const memoryHandler = (function () {
 
     const placeholderEvents = [
@@ -100,6 +102,24 @@ const memoryHandler = (function () {
         const eventObj = getEventForMod(id);
 
         eventObj.eventStatus = 'done';
+
+        // add property completion
+        const completionDate = new Date();
+        const schedule = eventObj.schedule;
+        const deadlineAlert =  differenceInCalendarDays(schedule, completionDate);
+
+        let completionRemark;
+
+        if (deadlineAlert === 0 ) {
+            completionRemark = 'on-time';
+        } else if (deadlineAlert > 0) {
+            completionRemark = 'early';
+        } else if (deadlineAlert < 0) {
+            completionRemark = 'done-overdue';
+        }
+
+        eventObj.completion = completionRemark;
+
         console.log(eventObj);
     }
 

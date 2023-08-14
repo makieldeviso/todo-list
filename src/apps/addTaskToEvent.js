@@ -135,7 +135,7 @@ const addTaskToEvent = (function () {
             // Note: setTimeout trick to defer these function
             setTimeout(() => {
                 editBtn.addEventListener('click', editTask); 
-            }, 100);
+            }, 200);
         }
 
         // Temporarily disable linked edit function on this button

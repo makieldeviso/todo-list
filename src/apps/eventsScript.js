@@ -1,4 +1,6 @@
 import { memoryHandler } from "./memoryHandler";
+import { format } from 'date-fns';
+import { differenceInCalendarDays } from 'date-fns' 
 
 const eventsScript = (function () {
 
@@ -49,10 +51,26 @@ const eventsScript = (function () {
         return result;
     }
 
-    // Count number of events
-    // const countEvents = function (events) {
+    // Check dates/ deadline
+    const checkDeadline = function (dateToCheck) {
+        const today = new Date();
         
-    // }
+        const daysApart = differenceInCalendarDays(dateToCheck, today);
+
+        let deadlineAlert;
+
+        if (daysApart < 0) {
+            deadlineAlert = 'overdue';
+        } else if (daysApart === 0) {
+            deadlineAlert = 'today';
+        } else if (daysApart > 0 && daysApart < 7) {
+            deadlineAlert = 'upcoming';
+        } else if (daysApart > 7) {
+            deadlineAlert = 'far';
+        }
+
+        return deadlineAlert;
+    } 
 
     return {
         taskArrayOfEvent,
@@ -60,6 +78,7 @@ const eventsScript = (function () {
         getDoneTasks,
         countDoneTasks,
         tasksCompleted,
+        checkDeadline,
     }
 
 })();

@@ -426,6 +426,31 @@ p.event-sched span.sched-icon {
     background-size: contain;
 }
 
+p.event-sched span.sched-icon.overdue {
+    background-image: url('./assets/calendar-overdue.png');
+}
+
+p.event-sched span.sched-icon.overdue~span {
+    color: red;
+}
+
+p.event-sched span.sched-icon.today {
+    background-image: url('./assets/calendar-today.png');
+}
+
+/* if completed */
+p.event-sched span.sched-icon.early{
+    background-image: url('./assets/calendar-early.png');
+}
+
+p.event-sched span.sched-icon.on-time{
+    background-image: url('./assets/calendar-on-time.png');
+}
+
+p.event-sched span.sched-icon.done-overdue{
+    background-image: url('./assets/calendar-done-overdue.png');
+}
+
 p.event-task-count {
     grid-area: task;
     text-align: right;

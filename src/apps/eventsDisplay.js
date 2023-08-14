@@ -1,7 +1,7 @@
 import { memoryHandler } from "./memoryHandler";
 import { formatting } from "./formatting";
 import { eventsScript } from "./eventsScript";
-import { format } from 'date-fns'
+import { format } from 'date-fns';
 import { displayContent } from "./displayContent";
 import { createModal } from "./createModal";
 import { showModals } from "./showModals";
@@ -273,7 +273,7 @@ const eventsDisplay = (function () {
         // (1) (end)-
 
         // (2-5) (start)-
-        // Execute makeText and assign to variables
+        // Execute makeText and assign to variables  
         const newTitle = makeText('event-title', eventObj.title);
         const newDesc = makeText('event-desc', eventObj.description);
         const newProjTag = makeText('event-proj', eventObj.projectTag);
@@ -287,8 +287,15 @@ const eventsDisplay = (function () {
         // format schedule
         // Note: use date-fns
         const dateString = format(eventObj.schedule, 'MMM dd, yyyy');
+        const deadlineAlert = eventsScript.checkDeadline(eventObj.schedule);
 
-        createSpan(newSched, 'sched-icon', '');
+        // Checks if event was already completed
+        if (eventObj.completion === undefined) {
+            createSpan(newSched, `sched-icon ${deadlineAlert}`, '');
+        } else {
+            createSpan(newSched, `sched-icon ${eventObj.completion}`, '');
+        }
+
         createSpan(newSched, 'sched-date', dateString);
         // (6) (end)-
 
