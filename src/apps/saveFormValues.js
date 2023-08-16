@@ -3,6 +3,7 @@ import { showModals } from "./showModals";
 import { addEventForm } from "./addEventForm";
 import { addTaskToEvent } from "./addTaskToEvent";
 import { eventsDisplay } from "./eventsDisplay";
+import { onLoadScreen } from "./onLoadScreen";
 
 const saveFormValues = (function () {
 
@@ -124,6 +125,9 @@ const saveFormValues = (function () {
             showModals.closeEventEdit();
             eventsDisplay.showFullEvent(newEvent.eventId);
         }
+
+        // Execute other display events counters
+        onLoadScreen.displayEventsCount();
     }
 
     // Clears input field

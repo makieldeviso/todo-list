@@ -6,7 +6,7 @@ const memoryHandler = (function () {
             {
                 "title": "Ms. Dodo's Birthday",
                 "description": "60th Birthday, food committee",
-                "schedule": new Date("2023-12-20T00:00:00.000Z"),
+                "schedule": new Date(),
                 "projectTag": "standalone",
                 "priority": "high",
                 "tasks": {
@@ -93,9 +93,13 @@ const memoryHandler = (function () {
         const eventObj = getEventForMod(id);
         
         eventObj.eventStatus = 'done';
-
-        console.log(eventObj);
     }
+
+    const countEvents = function () {
+        const eventsCount = getEvents().length;
+        return eventsCount;
+    }
+
 
      // Mark complete an event
      const completeEvent = function (id) {
@@ -119,17 +123,12 @@ const memoryHandler = (function () {
         }
 
         eventObj.completion = completionRemark;
-
-        console.log(eventObj);
     }
 
     const replaceEvent = function (id, obj) {
         const eventForModIndex = events.findIndex(event => event.eventId === id);
         
         events.splice(eventForModIndex, 1, obj);
-
-        console.log(getEvents());
-
     }
 
 
@@ -139,6 +138,7 @@ const memoryHandler = (function () {
             changeTaskStatus, 
             getEventTasks, 
             changeEventStatus,
+            countEvents,
             completeEvent,
             replaceEvent};
 })();
