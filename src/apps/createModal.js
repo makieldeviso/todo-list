@@ -16,13 +16,8 @@ const createModal = (function () {
         closeBtn.setAttribute('value', `close-${assignId}`);
         closeBtn.setAttribute('id', `close-${assignId}`);
 
-        const closeBtnIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        closeBtnIcon.setAttribute('viewBox', '0 0 24 24');
-        closeBtnIcon.innerHTML = '<title>close</title><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path>';
-        closeBtn.appendChild(closeBtnIcon);
-
         // Assemble the modal parts
-        modalCont.appendChild(closeBtn);
+        modalCont.appendChild(closeBtn);    
         newModal.appendChild(modalCont);
 
         // Append modal to the 'main'
@@ -47,12 +42,12 @@ const createModal = (function () {
                 newBtn.dataset.selected = 'selected';
             }
 
-            const btnIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-            btnIcon.setAttribute('viewBox', '0 0 24 24');
-            btnIcon.innerHTML = '<title>plus</title><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"></path>'
+            const btnIcon = document.createElement('span');
+            btnIcon.classList.add('add-icon');
             newBtn.appendChild(btnIcon);
 
             const btnLabel = document.createElement('span');
+            btnLabel.classList.add('add-label');
             btnLabel.textContent = label;
             newBtn.appendChild(btnLabel);
 

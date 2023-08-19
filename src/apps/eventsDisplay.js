@@ -6,15 +6,9 @@ import { displayContent } from "./displayContent";
 import { createModal } from "./createModal";
 import { showModals } from "./showModals";
 import { eventEditForm } from "./eventEditForm";
+import { eventDelete } from "./eventDelete";
 
 const eventsDisplay = (function () {
-
-    const test = function () {
-        // const events = memoryHandler.getEvents();
-        // console.log(events);
-        // // console.log(document.querySelector('div#item-display'))
-        // console.log(displayEventsToDOM());
-    }
 
     // Reusable p text maker function
     const makeText = function (assignClass, text) {
@@ -60,6 +54,28 @@ const eventsDisplay = (function () {
         } 
 
         return newTaskCounter;
+    }
+
+    // Reusable action buttons maker
+    // Note: auto append to action btn ribbon
+    const createActionBtn = function (assignClass, assignValue, eventId, linkedFunc, text) {
+        const actionRibbon = document.querySelector('div#action-btns');
+
+        // Condition check to detect if button exist 
+        const existingBtn = document.querySelector(`button.action-btn.${assignClass}`);
+
+        if (existingBtn === null) {
+            const newBtn = document.createElement('button');
+            newBtn.setAttribute('class', `action-btn ${assignClass}`);
+            newBtn.setAttribute('value', assignValue);
+            newBtn.dataset.id = eventId;
+            newBtn.addEventListener('click', linkedFunc);
+
+            createSpan(newBtn, 'icon', '');
+            createSpan(newBtn, 'text', text);
+
+            actionRibbon.appendChild(newBtn);
+        } 
     }
 
     // Changes status of task of an event
@@ -112,18 +128,14 @@ const eventsDisplay = (function () {
 
         // Conditional don't add edit button if event is completed
         if (eventObj.eventStatus !== 'done') {
-            const editEventBtn = document.createElement('button');
-            editEventBtn.setAttribute('class', 'action-btn edit');
-            editEventBtn.setAttribute('value', 'edit-event');
-            editEventBtn.dataset.id = eventObj.eventId;
-            editEventBtn.addEventListener('click', eventEditForm.showEditEventForm);
-
-            createSpan(editEventBtn, 'icon', '');
-            createSpan(editEventBtn, 'text', 'Edit');
-
-            actionRibbon.appendChild(editEventBtn);
+            createActionBtn('edit', 'edit-event', eventObj.eventId, eventEditForm.showEditEventForm, 'Edit');
         }
         // Create edit button appended on the action buttons ribbon (end) -
+
+        // Create delete button appended on the action buttons ribbon (start) -
+
+        createActionBtn('delete', 'delete-event', eventObj.eventId, eventDelete.showDeletePrompt, 'Delete');
+        // Create delete button appended on the action buttons ribbon (end) -
 
         // Create event full view container
         const newFullEvent = document.createElement('div');
@@ -374,7 +386,7 @@ const eventsDisplay = (function () {
         }
     }
 
-    return {test, displayEventsToDOM, showFullEvent};
+    return {displayEventsToDOM, showFullEvent};
 })();
 
 export {eventsDisplay}

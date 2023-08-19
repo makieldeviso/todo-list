@@ -262,47 +262,66 @@ div#action-btns {
     background-color: rgba(127, 132, 135, 0.3);
     padding: 0 var(--common-padding);
     display: grid;
-    grid-template-columns: 1fr max-content;
+    grid-template-columns: 1fr max-content max-content;
+    gap: 5px;
 }
 
 button.action-btn {
-    width: calc(var(--logo-size) * 0.8);
+    min-width: max-content;
     padding: calc(var(--common-padding) * 0.8);
+    margin: 5px 0;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+button.action-btn.back {
+    width: max-content;
     background-color: transparent;
     border: none;
+    border: 2px solid transparent;
 }
-
-button.action-btn img {
-    width: 100%;
-}
-
-button.action-btn.edit {
+  
+button.action-btn.edit,
+button.action-btn.delete {    
+    width: calc(80px + 0.5vw);
+    
     display: grid;
     grid-template-columns: max-content max-content;
     gap: 3px;
-    width: 100%;
-    margin: 5px 0;
     box-shadow: 0 2px 2px 1px rgba(62, 62, 62, 0.3);
 
     border-radius: 5px;
     border: 2px solid white;
     background-color: var(--dark-orange);
-   
 }
 
-button.action-btn.edit span.icon {
+button.action-btn span.icon {
     width: var(--header-font-size);
     height: var(--header-font-size);
-    background-image: url('./assets/pencil.png');
+    
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
 }
 
-button.action-btn.edit span.text {
+button.action-btn.back span.icon {
+    width: calc(var(--header-font-size) * 1.2);
+    height: calc(var(--header-font-size) * 1.2);
+    background-image: url('./assets/back.png');
+}
+
+button.action-btn.edit span.icon {
+    background-image: url('./assets/pencil-white.png');
+}
+
+button.action-btn.delete span.icon {
+    background-image: url('./assets/trash-white.png');
+}
+
+
+button.action-btn.edit span.text,
+button.action-btn.delete span.text {
     font-size: var(--header-font-size);
     color: white;
 }
@@ -792,11 +811,16 @@ button.close-modal {
     border: 2px solid white;
     background-color: var(--dark-orange);
     box-shadow: 0 2px 2px 1px rgba(62, 62, 62, 0.3);
+
+    background-image: url('./assets/close.png');
+    background-size: 70%;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-button.close-modal svg {
+/* button.close-modal svg {
     fill: white;
-}
+} */
 
 div#add-options button[data-selected="selected"] {
     border: 2px solid var(--dark-orange);
@@ -807,8 +831,18 @@ div#add-options button[data-selected="selected"] {
     transition: all 0.2s ease-in-out;
 }
 
-div#add-options button[data-selected="selected"] svg {
-    fill: var(--dark-orange);
+div#add-options button span.add-icon {
+    width: var(--header-font-size);
+    height: var(--header-font-size);
+    margin: auto;
+    background-image: url('./assets/add.png');
+    background-size: 70%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+div#add-options button[data-selected="selected"] span.add-icon {
+    background-image: url('./assets/add-selected.png');
 }
 
 div#add-options {
@@ -832,16 +866,11 @@ div#add-options button {
     box-shadow: 0 2px 2px 1px rgba(62, 62, 62, 0.3);
 }
 
-div#add-options button span {
+div#add-options button span.add-label {
     font-family: var(--header-font-style);
     font-size: var(--header-font-size);
 }
 
-div#add-options button svg {
-    width: var(--header-font-size);
-    margin: auto;
-    fill: white;
-}
 
 /* form (start) */
 div.modal-cont form {

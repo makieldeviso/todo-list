@@ -31,9 +31,12 @@ const displayContent = (function () {
             // Close/ remove event full view
             const eventFullView = document.querySelector('div.event-fullview');
             const editBtn = document.querySelector('button[value="edit-event"]');
+            const deleteBtn = document.querySelector('button[value="delete-event"]');
 
             removeDisplay(eventFullView);
-            removeActionBtn(editBtn);
+
+            // Note: removeActionBtn accepts multiple buttons argument
+            removeActionBtn(editBtn, deleteBtn);
 
             // Return to event preview
             showDisplay();

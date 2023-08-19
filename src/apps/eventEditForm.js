@@ -69,7 +69,6 @@ const eventEditForm = (function () {
         // Add event listener to save button for saving edits
         saveFormValues.addEditEventSaveEvent(true);
 
-        
     }
 
     return {showEditEventForm}
