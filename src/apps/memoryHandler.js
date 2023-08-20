@@ -131,6 +131,12 @@ const memoryHandler = (function () {
         events.splice(eventForModIndex, 1, obj);
     }
 
+    const deleteEvent = function (id) {
+        const eventForModIndex = events.findIndex(event => event.eventId === id);
+        
+        events.splice(eventForModIndex, 1);
+    }
+
 
     return {getEvents, 
             saveEvent, 
@@ -140,7 +146,8 @@ const memoryHandler = (function () {
             changeEventStatus,
             countEvents,
             completeEvent,
-            replaceEvent};
+            replaceEvent,
+            deleteEvent};
 })();
 
 export {memoryHandler}

@@ -54,9 +54,9 @@ const eventEditForm = (function () {
         const eventId = this.dataset.id;
         const eventObj = memoryHandler.getEvent(eventId);
 
-        // Note: pass eventId and eventObj as argument to showModals module
+        // Note: pass eventId as argument to showModals module
         // This create an event form with necessary attribute values
-        showModals.showEventEditModal(eventId, eventObj);
+        showModals.showEventEditModal(eventId);
 
         // Assign values to the form fields according to the saved event properties
         assignInitEventValues(eventId, eventObj);

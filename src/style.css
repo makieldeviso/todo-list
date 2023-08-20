@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Borel&family=Play&family=Rubik&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Play&family=Rubik&display=swap');
 
 * {
     margin: 0;
@@ -25,7 +25,7 @@ button:hover {
 
     --logo-size: calc(40px + 1vw);
 
-    --title-font-style: 'Borel', sans-serif;
+    --title-font-style: 'Pacifico', sans-serif;
     --header-font-style: 'Rubik', sans-serif;
     --common-font-style: 'Rubik', sans-serif;
 
@@ -673,8 +673,9 @@ div.event-action p.message {
     margin-top: var(--common-margin);
 }
 
-/* Completion prompt modal (start) --- */
-dialog#complete-event-prompt {
+/* Completion and delete prompt modal (start) --- */
+dialog#complete-event-prompt,
+dialog#delete-event-prompt {
     width: 95vw;
     /* height: 50vh; */
     margin: auto;
@@ -682,7 +683,8 @@ dialog#complete-event-prompt {
     border-radius: 10px;
 }
 
-dialog#complete-event-prompt div.modal-cont {
+dialog#complete-event-prompt div.modal-cont,
+dialog#delete-event-prompt div.modal-cont {
     display: grid;
     grid-template-rows: max-content 1fr;
     grid-template-areas:
@@ -690,7 +692,8 @@ dialog#complete-event-prompt div.modal-cont {
         "content content" ;
 }
 
-dialog#complete-event-prompt button.close-modal {
+dialog#complete-event-prompt button.close-modal,
+dialog#delete-event-prompt button.close-modal {
     grid-area: btn;
 }
 
@@ -704,7 +707,8 @@ p.modal-banner {
     text-align: center;
 }
 
-div.completion-content {
+div.completion-content,
+div.delete-content {
     grid-area: content;
     padding: var(--common-padding);
     margin-top: var(--common-margin);
@@ -724,7 +728,8 @@ p.reminder {
     margin: var(--common-margin) 0;
 }
 
-div.completion-content div.save-cont {
+div.completion-content div.save-cont,
+div.delete-content div.save-cont {
     margin: var(--common-margin) 0;
 }
 /* Completion prompt modal (end) --- */

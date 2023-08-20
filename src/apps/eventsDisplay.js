@@ -133,7 +133,6 @@ const eventsDisplay = (function () {
         // Create edit button appended on the action buttons ribbon (end) -
 
         // Create delete button appended on the action buttons ribbon (start) -
-
         createActionBtn('delete', 'delete-event', eventObj.eventId, eventDelete.showDeletePrompt, 'Delete');
         // Create delete button appended on the action buttons ribbon (end) -
 

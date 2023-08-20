@@ -6,6 +6,8 @@ import { memoryHandler } from "./memoryHandler";
 import { eventsDisplay } from "./eventsDisplay";
 import { saveFormValues } from "./saveFormValues";
 import { addTaskToEvent } from "./addTaskToEvent";
+import { displayContent } from "./displayContent";
+import { onLoadScreen } from "./onLoadScreen";
 
 const showModals = (function () {
     
@@ -72,6 +74,8 @@ const showModals = (function () {
 
         // Display new event full view
         eventsDisplay.showFullEvent(eventId);
+
+        console.log(memoryHandler.getEvents());
     }
 
     const closeCompletion = function () {
@@ -85,10 +89,9 @@ const showModals = (function () {
     }
     // Opens prompt before completing an event (end)
 
-    // Show edit event form modal
-    const showEventEditModal = function (id, obj) {
+    // Show edit event form modal 
+    const showEventEditModal = function (id) {
         const eventId = id;
-        const eventObj = obj;
         
         // Creates modal first before showing
         createModal.createNewModal('edit-event');
@@ -108,11 +111,8 @@ const showModals = (function () {
         // Add close modal event listener
         closeBtn.addEventListener('click', closeEventEdit);
 
-
         // Show Modal created
         editModal.showModal();
-
-
     }
 
     // Closes event edit modal
@@ -127,10 +127,62 @@ const showModals = (function () {
          // Removes modal from the DOM
         const main = document.querySelector('main');
         main.removeChild(editEventModal);
-
-        
     }
 
+    // Show event delete prompt modal (start) - 
+    const showEventDeletePrompt = function (id) {
+        const eventId = id;
+
+        // Create prompt modal before completion
+        createModal.createEventDeletePrompt(eventId);
+
+        const promptModal = document.querySelector('dialog#delete-event-prompt');
+        const closeBtn = document.querySelector('button#close-delete-event');
+        const dontDeleteBtn = document.querySelector('button[value="dont-delete"]');
+        const deleteBtn = document.querySelector('button[value="confirm-delete"]');
+
+        promptModal.showModal();
+
+        // Add eventListener to close-delete-event/ close modal button
+        closeBtn.addEventListener('click', closeEventDelete);
+
+        // Add eventlistener to delete and don't delete buttons;
+        dontDeleteBtn.addEventListener('click', closeEventDelete);
+       
+        // Note: When user confirm deletion confirmEventDeletion which
+        // modifies event object, closes confirm modal then display new event preview
+        deleteBtn.addEventListener('click', confirmEventDelete);
+    }
+
+    const confirmEventDelete = function () {
+        const eventId = this.dataset.id;
+
+        // Modify event object
+        memoryHandler.deleteEvent(eventId);
+
+        // Close Modal
+        closeEventDelete();
+
+        // Removes current event full view in the DOM
+        displayContent.clearItemDisplay('event-fullview');
+
+        // Display events preview window
+        eventsDisplay.displayEventsToDOM();
+
+        // Execute onload/ sidebar counters
+        onLoadScreen.displayEventsCount();
+    }
+
+    const closeEventDelete = function () {
+        // Closes modal
+        const deletePromptModal = document.querySelector('dialog#delete-event-prompt');
+        deletePromptModal.close();
+
+        // Removes modal from the DOM
+        const main = document.querySelector('main');
+        main.removeChild(deletePromptModal);
+    }
+    // Show event delete prompt modal (end) - 
 
     // Closes Modal, removes eventListeners to elements inside the modal then removes the modal in the DOM
     const closeModal = function () {
@@ -162,7 +214,8 @@ const showModals = (function () {
             closeModal, 
             addCompletionPromptEvent, 
             showEventEditModal,
-            closeEventEdit }
+            closeEventEdit,
+            showEventDeletePrompt }
 })();
 
 export { showModals };

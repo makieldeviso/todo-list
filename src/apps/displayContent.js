@@ -80,7 +80,7 @@ const displayContent = (function () {
         backBtn.addEventListener('click', backSideBar);
     }
 
-    return {showDisplay, addSidebarEvents, removeDisplay, backBtnEvents, removeActionBtn}
+    return {showDisplay, addSidebarEvents, removeDisplay, backBtnEvents, removeActionBtn, clearItemDisplay}
 
 })();
 

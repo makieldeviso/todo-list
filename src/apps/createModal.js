@@ -62,6 +62,29 @@ const createModal = (function () {
         modalCont.appendChild(container);
     }
 
+    // Executable function, Creates two choice btns
+    // Note: Parameter requires object
+    const createTwoChoiceBtn = function (btnProp) {
+        const btnsCont = document.createElement('div');
+        btnsCont.setAttribute('class', 'save-cont');
+        btnsCont.setAttribute('class', 'save-cont');
+
+        const createBtn = function (eventId, assignClass, assignValue, label) {
+            const newBtn = document.createElement('button');
+            newBtn.setAttribute('class', assignClass);
+            newBtn.setAttribute('value', assignValue);
+            newBtn.dataset.id = eventId;
+            newBtn.textContent = label;
+
+            btnsCont.appendChild(newBtn);
+        }
+
+        createBtn(btnProp.eventId, btnProp.neg.class, btnProp.neg.value, btnProp.neg.label);
+        createBtn(btnProp.eventId, btnProp.pos.class, btnProp.pos.value, btnProp.pos.label);
+    
+        return btnsCont;
+    }
+
     // Create Edit Event Banner 
     const createBanner = function (bannerText) {
         const banner = document.createElement('p');
@@ -69,7 +92,7 @@ const createModal = (function () {
 
         banner.textContent = bannerText;
         return banner
-    };
+    }
 
     // Creates event completion prompt
     const createEventCompletionPrompt = function (eventId) {
@@ -103,28 +126,6 @@ const createModal = (function () {
             reminder.textContent = 'You have not yet accomplished all the tasks. Mark event as completed anyway?'
         }
 
-        // executable function
-        const createTwoChoiceBtn = function (btnProp) {
-            const btnsCont = document.createElement('div');
-            btnsCont.setAttribute('class', 'save-cont');
-            btnsCont.setAttribute('class', 'save-cont');
-
-            const createBtn = function (eventId, assignClass, assignValue, label) {
-                const newBtn = document.createElement('button');
-                newBtn.setAttribute('class', assignClass);
-                newBtn.setAttribute('value', assignValue);
-                newBtn.dataset.id = eventId;
-                newBtn.textContent = label;
-
-                btnsCont.appendChild(newBtn);
-            }
-
-            createBtn(btnProp.eventId, btnProp.neg.class, btnProp.neg.value, btnProp.neg.label);
-            createBtn(btnProp.eventId, btnProp.pos.class, btnProp.pos.value, btnProp.pos.label);
-        
-            return btnsCont;
-        }
-
         // Executes createTwoChoiceBtn
         const confirmBtnsCont = createTwoChoiceBtn({
             eventId: eventId,
@@ -147,7 +148,59 @@ const createModal = (function () {
         components.forEach(comp => modalCont.appendChild(comp));
     }
 
-    return { createNewModal, createAddOptionsBtns, createEventCompletionPrompt, createBanner }
+    // Creates event delete prompt
+    const createEventDeletePrompt = function (eventId) {
+
+        const eventObj = memoryHandler.getEvent(eventId);
+
+        const eventStatus = eventObj.eventStatus;
+
+
+        // Create dialog element with addition elements
+        createNewModal('delete-event');
+
+        const promptModal = document.querySelector('dialog#delete-event-prompt');
+        const modalCont = promptModal.querySelector('div.modal-cont');
+
+        const promptHeader = createBanner('Delete Event');
+
+        const content = document.createElement('div');
+        content.setAttribute('class', 'delete-content');
+
+        const reminder = document.createElement('p');
+        reminder.setAttribute('class', 'reminder');
+
+        // Conditional reminder depending on tasks status
+        if (eventStatus === 'pending') {
+            reminder.textContent = 'You have not yet completed this event. Are you sure you want to delete event?';
+
+        } else if (eventStatus === 'done') {
+            reminder.textContent = 'Good job! You have already completed this event. Confirm event deletion?';
+        }
+
+        // Executes createTwoChoiceBtn
+        const confirmBtnsCont = createTwoChoiceBtn({
+            eventId: eventId,
+            pos: {
+                class: 'save',
+                value: 'confirm-delete',
+                label: 'Yes',
+                },
+            neg: {
+                class: 'clear',
+                value: 'dont-delete',
+                label: 'No',
+                }
+        });
+
+        content.appendChild(reminder); //Append reminder message to content div
+        content.appendChild(confirmBtnsCont); //Append buttons container to content div
+
+        const components = [promptHeader, content];
+        components.forEach(comp => modalCont.appendChild(comp));
+    }
+
+    return { createNewModal, createAddOptionsBtns, createEventCompletionPrompt, createBanner, createEventDeletePrompt }
 
 })();
 
