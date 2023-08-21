@@ -5,7 +5,7 @@ import { addTaskToEvent } from "./addTaskToEvent";
 import { eventsDisplay } from "./eventsDisplay";
 import { onLoadScreen } from "./onLoadScreen";
 
-const saveFormValues = (function () {
+const saveFormValuesEvent = (function () {
 
     // Validates event form input fields
     const validateEventForm = function () {
@@ -141,8 +141,8 @@ const saveFormValues = (function () {
         const clearBtn = btnsCont.querySelector('button#clear-new-event');
         const saveBtn = btnsCont.querySelector('button#save-new-event');
 
-        clearBtn.addEventListener('click', saveFormValues.clearEventForm);
-        saveBtn.addEventListener('click', saveFormValues.saveEventForm);
+        clearBtn.addEventListener('click', clearEventForm);
+        saveBtn.addEventListener('click', saveEventForm);
     }
 
     // Adds event edit listener
@@ -162,4 +162,4 @@ const saveFormValues = (function () {
     return { addSaveEventFormEvent, addEditEventSaveEvent, clearEventForm, saveEventForm}
 })();
 
-export {saveFormValues}
+export {saveFormValuesEvent}

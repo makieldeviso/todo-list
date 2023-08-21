@@ -1,4 +1,6 @@
 import { createFormComponents } from "./createFormComponents";
+import { saveFormValuesProject } from "./saveFormValuesProject";
+import { addEventToProject } from "./addEventToProject";
 
 
 const addProjectForm = (function () {
@@ -57,14 +59,19 @@ const addProjectForm = (function () {
         // Add form components
         // Note: creates multiple from array of objects
         const newBasicComps = projectFormComp().map(comp => {
-            const component = createFormComponents.createBasicComponent(comp, 'project-form');
+            const component = createFormComponents.createBasicComponent(comp, 'new-project');
             return component;
          }); 
 
+        //  Add event adder components then add linked event listeners to respective components 
+        const newEventAdder = createFormComponents.createEventAdder('new-project');
+        const eventAdderBtn = newEventAdder.querySelector('button#add-event-btn');
+        addEventToProject.addEventToProjectEvent(eventAdderBtn);
 
-        const newEventAdder = createFormComponents.createEventAdder('project-form');
 
-        const newSaveBtns = createFormComponents.createSaveFormBtns('project-form');
+        // Add save/ clear buttons and corresponding event listeners
+        const newSaveBtns = createFormComponents.createSaveFormBtns('new-project');
+        saveFormValuesProject.addSaveProjectFormEvent(newSaveBtns);
 
         // Appends the components to the parent form
         const allComp = [...newBasicComps, newEventAdder, newSaveBtns];

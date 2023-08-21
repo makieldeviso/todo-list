@@ -1,4 +1,6 @@
 import { formatting } from "./formatting";
+import { memoryHandler } from "./memoryHandler";
+import { saveFormValuesProject } from "./saveFormValuesProject";
 
 const createFormComponents = (function () {
 
@@ -164,9 +166,41 @@ const createFormComponents = (function () {
 
         // Create dropdown select event
         const eventSelect = document.createElement('select');
-        eventSelect.setAttribute('id', 'add-event-select');
+        eventSelect.setAttribute('id', 'add-event-select'); 
+
+        // Create options for events select (start) -
+        // addOption function is reusable executable
+        const addOption = function (event) {
+            const eventOption = document.createElement('option');
+            let optionValue;
+            let optionText;
+            if (event === '') {
+                optionValue = '';
+                optionText = '-- Select event to Add in your project. --';
+
+            } else {
+                optionValue = event.eventId;
+                optionText = event.title;
+            }
+
+            eventOption.setAttribute('value', optionValue);
+            eventOption.textContent = optionText;
+            eventSelect.appendChild(eventOption);
+        }
+
+        // Create blank value first then refer to saved events to add more options
+        addOption('');
         
-        // Create add event btn
+        const events = memoryHandler.getEvents();
+        events.forEach(event => {
+            const eventOption = document.createElement('option');
+            eventOption.setAttribute('value', event.eventId);
+            eventOption.textContent = event.title;
+            eventSelect.appendChild(eventOption);
+        });
+        // Create options for events select (end) -
+
+        // Create add event btn then link corresponding evenListener
         const addEventBtn = adderBtn('add-event-btn');
 
         const inputParts = [eventSelect, addEventBtn];

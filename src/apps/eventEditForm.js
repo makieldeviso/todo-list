@@ -5,7 +5,7 @@ import { showModals } from "./showModals";
 import { format, formatDistance } from 'date-fns'
 import { modalUX } from "./modalUX";
 import { addTaskToEvent } from "./addTaskToEvent";
-import { saveFormValues } from "./saveFormValues";
+import { saveFormValuesEvent } from "./saveFormValuesEvent";
 import eachMinuteOfIntervalWithOptions from "date-fns/esm/fp/eachMinuteOfIntervalWithOptions/index.js";
 
 const eventEditForm = (function () {
@@ -67,7 +67,7 @@ const eventEditForm = (function () {
         saveBtn.dataset.event = eventId;
 
         // Add event listener to save button for saving edits
-        saveFormValues.addEditEventSaveEvent(true);
+        saveFormValuesEvent.addEditEventSaveEvent(true);
 
     }
 

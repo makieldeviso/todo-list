@@ -2,7 +2,7 @@ import { createFormComponents } from "./createFormComponents";
 import { modalUX } from "./modalUX";
 import { formatting } from "./formatting";
 import { addTaskToEvent } from "./addTaskToEvent";
-import { saveFormValues } from "./saveFormValues";
+import { saveFormValuesEvent } from "./saveFormValuesEvent";
 
 const addEventForm = (function () {
 
@@ -93,7 +93,7 @@ const addEventForm = (function () {
 
         // Add Save and Clear Buttons and respective event listeners
         const newSaveBtns = createFormComponents.createSaveFormBtns(assignDataId);
-        saveFormValues.addSaveEventFormEvent(newSaveBtns);
+        saveFormValuesEvent.addSaveEventFormEvent(newSaveBtns);
         
         // Appends the components to the parent form
         const allComp = [...newBasicComps, newPriority, newTaskAdder, newSaveBtns];

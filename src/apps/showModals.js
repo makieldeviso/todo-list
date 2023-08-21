@@ -4,7 +4,7 @@ import { modalUX } from "./modalUX";
 import { addProjectForm } from "./addProjectForm";
 import { memoryHandler } from "./memoryHandler";
 import { eventsDisplay } from "./eventsDisplay";
-import { saveFormValues } from "./saveFormValues";
+import { saveFormValues } from "./saveFormValuesEvent";
 import { addTaskToEvent } from "./addTaskToEvent";
 import { displayContent } from "./displayContent";
 import { onLoadScreen } from "./onLoadScreen";
