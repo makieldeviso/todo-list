@@ -2,6 +2,7 @@ import { createFormComponents } from "./createFormComponents";
 import { modalUX } from "./modalUX";
 import { formatting } from "./formatting";
 import { addTaskToEvent } from "./addTaskToEvent";
+import { saveFormValues } from "./saveFormValues";
 
 const addEventForm = (function () {
 
@@ -90,9 +91,10 @@ const addEventForm = (function () {
         // Add task
         const newTaskAdder = createFormComponents.createTaskAdder(assignDataId);
 
-        // Add Save and Clear Buttons
+        // Add Save and Clear Buttons and respective event listeners
         const newSaveBtns = createFormComponents.createSaveFormBtns(assignDataId);
-
+        saveFormValues.addSaveEventFormEvent(newSaveBtns);
+        
         // Appends the components to the parent form
         const allComp = [...newBasicComps, newPriority, newTaskAdder, newSaveBtns];
         allComp.forEach(component => eventForm.appendChild(component));
@@ -116,7 +118,7 @@ const addEventForm = (function () {
             //Note: Reset tasks memory when removing event form
             addTaskToEvent.resetNewTasks();
 
-            // Remove from from modal
+            // Remove form from modal
             modalCont.removeChild(form);
         } else {
             return;

@@ -65,7 +65,6 @@ const modalUX = (function () {
         // Reminder: true argument to add eventListeners, false means remove
         addPriorityBtnEvent(true);
         addTaskToEvent.addNewTaskEvent(true);
-        saveFormValues.addSaveEventFormEvent(true);
     }
 
     // Compiled function to remove all listeners and UX
@@ -74,7 +73,6 @@ const modalUX = (function () {
         // Reminder: false to remove eventListeners
         addPriorityBtnEvent(false);
         addTaskToEvent.addNewTaskEvent(false);
-        saveFormValues.addSaveEventFormEvent(false);
     }
 
     return { addModalUX, removeModalUX, markAddOptionsBtn, closeBtns }

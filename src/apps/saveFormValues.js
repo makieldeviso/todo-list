@@ -131,33 +131,25 @@ const saveFormValues = (function () {
     }
 
     // Clears input field
-    const clearEventForm = function () {
+    const clearEventForm = async function () {
         addEventForm.removeEventForm();
-        addEventForm.newEventForm();
+        addEventForm.newEventForm('new-event');
     }
 
     // Adds event listener
-    const addSaveEventFormEvent = function (action) {
-        const saveEventBtn = document.querySelector('button.save[data-id="new-event"]');
-        const clearEventFormBtn = document.querySelector('button.clear[data-id="new-event"]');
-        
-        // Ensures if addTaskBtn exists
-        if (saveEventBtn !== null) {
-            if (action === true) {
-                saveEventBtn.addEventListener('click', saveEventForm);
-                clearEventFormBtn.addEventListener('click', clearEventForm);
-            } else if (action === false) {
-                saveEventBtn.removeEventListener('click', saveEventForm);
-                clearEventFormBtn.removeEventListener('click', clearEventForm);
-            }
-        }
+    const addSaveEventFormEvent = function (btnsCont) { 
+        const clearBtn = btnsCont.querySelector('button#clear-new-event');
+        const saveBtn = btnsCont.querySelector('button#save-new-event');
+
+        clearBtn.addEventListener('click', saveFormValues.clearEventForm);
+        saveBtn.addEventListener('click', saveFormValues.saveEventForm);
     }
 
     // Adds event edit listener
     const addEditEventSaveEvent = function (action) {
         const saveEventBtn = document.querySelector('button.save[data-id="edit-event"]');
-        
-        // Ensures if addTaskBtn exists
+    
+        // Ensures if addTaskBtn exists 
         if (saveEventBtn !== null) {
             if (action === true) {
                 saveEventBtn.addEventListener('click', saveEventForm);
@@ -167,7 +159,7 @@ const saveFormValues = (function () {
         }
     }
 
-    return { addSaveEventFormEvent, addEditEventSaveEvent}
+    return { addSaveEventFormEvent, addEditEventSaveEvent, clearEventForm, saveEventForm}
 })();
 
 export {saveFormValues}
