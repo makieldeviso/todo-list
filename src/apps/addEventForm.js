@@ -85,15 +85,16 @@ const addEventForm = (function () {
            return component;
         }); 
 
-        // Add Priority
+        // Add Priority and respective event listeners
         const newPriority = createFormComponents.createPriorityBtns(assignDataId);
+        modalUX.addPriorityBtnEvent(newPriority);
 
         // Add task
         const newTaskAdder = createFormComponents.createTaskAdder(assignDataId);
 
         // Add Save and Clear Buttons and respective event listeners
         const newSaveBtns = createFormComponents.createSaveFormBtns(assignDataId);
-        saveFormValuesEvent.addSaveEventFormEvent(newSaveBtns);
+        saveFormValuesEvent.addSaveEventFormEvent(newSaveBtns, assignDataId);
         
         // Appends the components to the parent form
         const allComp = [...newBasicComps, newPriority, newTaskAdder, newSaveBtns];

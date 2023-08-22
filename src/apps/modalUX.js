@@ -35,8 +35,8 @@ const modalUX = (function () {
     }
 
     // UX for select event priority
-    const addPriorityBtnEvent = function (action) {
-        const prioBtns = document.querySelectorAll('button.prio-btn');
+    const addPriorityBtnEvent = function (btnsContainer) {
+        const prioBtns = btnsContainer.querySelectorAll('button.prio-btn');
 
         const markBtn = function () {
             const prioButnId = this.dataset.id;
@@ -49,13 +49,7 @@ const modalUX = (function () {
             thisPrioBtn.setAttribute('data-selected', 'selected');
         }
 
-        // Conditional for adding and removing eventListeners
-        if (action === true) {
-            prioBtns.forEach(btn => btn.addEventListener('click', markBtn));
-
-        } else if (action === false) {
-            prioBtns.forEach(btn => btn.removeEventListener('click', markBtn));
-        }
+        prioBtns.forEach(btn => btn.addEventListener('click', markBtn));
     }
 
 
@@ -63,7 +57,6 @@ const modalUX = (function () {
     const addModalUX = function () {
 
         // Reminder: true argument to add eventListeners, false means remove
-        addPriorityBtnEvent(true);
         addTaskToEvent.addNewTaskEvent(true);
     }
 
@@ -71,11 +64,10 @@ const modalUX = (function () {
     const removeModalUX = function () {
 
         // Reminder: false to remove eventListeners
-        addPriorityBtnEvent(false);
         addTaskToEvent.addNewTaskEvent(false);
     }
 
-    return { addModalUX, removeModalUX, markAddOptionsBtn, closeBtns }
+    return { addModalUX, removeModalUX, markAddOptionsBtn, closeBtns, addPriorityBtnEvent }
 })();
 
 export { modalUX };

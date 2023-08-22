@@ -137,9 +137,9 @@ const saveFormValuesEvent = (function () {
     }
 
     // Adds event listener
-    const addSaveEventFormEvent = function (btnsCont) { 
-        const clearBtn = btnsCont.querySelector('button#clear-new-event');
-        const saveBtn = btnsCont.querySelector('button#save-new-event');
+    const addSaveEventFormEvent = function (btnsCont, assignDataId) { 
+        const clearBtn = btnsCont.querySelector(`button#clear-${assignDataId}`);
+        const saveBtn = btnsCont.querySelector(`button#save-${assignDataId}`);
 
         clearBtn.addEventListener('click', clearEventForm);
         saveBtn.addEventListener('click', saveEventForm);

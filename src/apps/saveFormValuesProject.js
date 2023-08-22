@@ -71,22 +71,6 @@ const saveFormValuesProject = (function () {
         console.log(newProject);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // Clear project form
     const clearProjectForm = function () {
         console.log('clear project! - test');

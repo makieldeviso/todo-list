@@ -46,6 +46,7 @@ const eventEditForm = (function () {
             const status = tasksObj[individualTask].status;
             addTaskToEvent.addNewTask(task, status);
         }
+
     }
 
 
@@ -66,9 +67,12 @@ const eventEditForm = (function () {
         const saveBtn = document.querySelector('button#save-edit-event');
         saveBtn.dataset.event = eventId;
 
-        // Add event listener to save button for saving edits
-        saveFormValuesEvent.addEditEventSaveEvent(true);
-
+        // Removes clear button from form
+        // Note: creating edit form actually utilizes same function as adding new form, 
+        // thus clear button exist initially, must remove for edit event form
+        const saveBtnsCont = document.querySelector('div.save-cont');
+        const clearBtn = document.querySelector('button#clear-edit-event');
+        saveBtnsCont.removeChild(clearBtn);
     }
 
     return {showEditEventForm}

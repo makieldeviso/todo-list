@@ -48,7 +48,7 @@ const addProjectForm = (function () {
             return;
         }
 
-        // Removes event form if it exist
+        // Removes event form if it exists  
         if (eventForm !== null) {
             modalCont.removeChild(eventForm);
         }
@@ -63,6 +63,10 @@ const addProjectForm = (function () {
             return component;
          }); 
 
+        //  Add priority tag
+        const newPrioBtns = createFormComponents.createPriorityBtns('new-project');
+
+
         //  Add event adder components then add linked event listeners to respective components 
         const newEventAdder = createFormComponents.createEventAdder('new-project');
         const eventAdderBtn = newEventAdder.querySelector('button#add-event-btn');
@@ -74,7 +78,7 @@ const addProjectForm = (function () {
         saveFormValuesProject.addSaveProjectFormEvent(newSaveBtns);
 
         // Appends the components to the parent form
-        const allComp = [...newBasicComps, newEventAdder, newSaveBtns];
+        const allComp = [...newBasicComps, newPrioBtns, newEventAdder, newSaveBtns];
         allComp.forEach(component => projectForm.appendChild(component));
 
         // Appends the form to the modal Cont
