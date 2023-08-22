@@ -1,5 +1,5 @@
 import { memoryHandler } from "./memoryHandler";
-
+import { eventsDisplay } from "./eventsDisplay";
 
 const addEventToProject = (function () {
     let newProjectEvents = {};
@@ -30,15 +30,14 @@ const addEventToProject = (function () {
         newEventCont.setAttribute('data-id', 'event-1');
         newEventCont.setAttribute('class', 'event-link-project');
 
-        // Create icon
-        const eventIcon = document.createElement('div');
-        eventIcon.setAttribute('class', 'event-icon');
+        // Create event preview
+        // Note: this utilizes same function as event preview creator form eventsDisplay module
+        const newEventPreview = eventsDisplay.createEventDisplay(eventObj);
+        newEventPreview.classList.add('event-project')
 
-        // Create event title
-        const eventTitle = document.createElement('p');
-        eventTitle.setAttribute('class','project-event');
-        eventTitle.textContent = eventObj.title;
-        
+        // Note: Remove showFullEvent linked function to newEventCont
+        newEventPreview.removeEventListener('click', eventsDisplay.showFullEvent);
+
         //Create unlink button
         const unlinkButton = document.createElement('button');
         unlinkButton.setAttribute('type', 'button');
@@ -46,11 +45,12 @@ const addEventToProject = (function () {
         unlinkButton.dataset.id = eventObj.eventId;
 
         //Append components to newEventCont
-        const components = [eventIcon, eventTitle, unlinkButton];
+        const components = [newEventPreview, unlinkButton];
         components.forEach(comp => newEventCont.appendChild(comp));
 
-        //Append newEventCont to eventsCont
+        // //Append newEventCont to eventsCont
         eventsCont.appendChild(newEventCont);
+
     }
 
     const addEvent = function () {

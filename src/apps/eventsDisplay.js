@@ -385,7 +385,7 @@ const eventsDisplay = (function () {
         }
     }
 
-    return {displayEventsToDOM, showFullEvent};
+    return {displayEventsToDOM, showFullEvent, createEventDisplay};
 })();
 
 export {eventsDisplay}

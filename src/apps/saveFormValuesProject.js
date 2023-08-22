@@ -50,8 +50,8 @@ const saveFormValuesProject = (function () {
         }
 
         // Factory function to create initial project object
-        const createProject = function (title, description, deadline) {
-            return {title, description, deadline}
+        const createProject = function (title, description, deadline, priority) {
+            return {title, description, deadline, priority}
         }
 
         // Reusable DOM value getter function
@@ -61,11 +61,11 @@ const saveFormValuesProject = (function () {
         }
 
         // Execute createEvent with valueGet
-
         const newProject = createProject (
             valueGet('#project-title'), 
             valueGet('#project-desc'),
-            new Date(valueGet('#project-deadline'))
+            new Date(valueGet('#project-deadline')),
+            valueGet('button.prio-btn[data-selected="selected"]')
         );
 
         console.log(newProject);

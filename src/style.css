@@ -1126,4 +1126,41 @@ div.new-task button:hover svg {
     fill: var(--dark-orange);
     transform: scale(1.1);
 }
+/* New task (end) */
+
+/* New event to project (start) */
+div#events-container {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--common-margin) * 0.8);
+}
+
+div.event-link-project {
+    display: grid;
+    grid-template-columns: 1fr max-content;
+}
+
+button.unlink-event {
+    width: calc(25px + 1vw);
+    height: calc(25px + 1vw);
+    border: 1px solid var(--base-blue);
+    border-left: unset;
+    border-radius: 0 10px 10px 0;
+    background-color: transparent;
+
+    background-image: url('./assets/close-orange.png');
+    background-size: 70%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+div.event-preview.event-project {
+    border-radius: 10px 0 10px 10px;
+    margin-right: 0;
+    padding-right: calc(var(--common-padding) * 2);
+}
+
+
+/* New event to project (end) */
+
 /* MAIN (end) */
