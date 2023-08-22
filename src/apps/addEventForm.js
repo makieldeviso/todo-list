@@ -86,7 +86,7 @@ const addEventForm = (function () {
         }); 
 
         // Add Priority and respective event listeners
-        const newPriority = createFormComponents.createPriorityBtns(assignDataId);
+        const newPriority = createFormComponents.createPriorityBtns(assignDataId, 'Event Priority');
         modalUX.addPriorityBtnEvent(newPriority);
 
         // Add task

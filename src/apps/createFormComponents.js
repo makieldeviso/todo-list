@@ -56,13 +56,13 @@ const createFormComponents = (function () {
             return container;
     }
 
-    const createPriorityBtns = function (dataId) {
+    const createPriorityBtns = function (dataId, assignLabel) {
         // Creates container - parent
         const container = createContainer('comp-container', dataId);
 
         //Create p as label
         const label = document.createElement('p');
-        label.textContent = 'Event Priority:'
+        label.textContent = `${assignLabel}:`;
 
         //Create another container for the buttons
         const btnCont = document.createElement('div');

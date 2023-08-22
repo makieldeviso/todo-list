@@ -1,6 +1,7 @@
 import { createFormComponents } from "./createFormComponents";
 import { saveFormValuesProject } from "./saveFormValuesProject";
 import { addEventToProject } from "./addEventToProject";
+import { modalUX } from "./modalUX";
 
 
 const addProjectForm = (function () {
@@ -64,8 +65,8 @@ const addProjectForm = (function () {
          }); 
 
         //  Add priority tag
-        const newPrioBtns = createFormComponents.createPriorityBtns('new-project');
-
+        const newPrioBtns = createFormComponents.createPriorityBtns('new-project', 'Project Priority');
+        modalUX.addPriorityBtnEvent(newPrioBtns);
 
         //  Add event adder components then add linked event listeners to respective components 
         const newEventAdder = createFormComponents.createEventAdder('new-project');
