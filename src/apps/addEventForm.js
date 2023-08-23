@@ -83,7 +83,7 @@ const addEventForm = (function () {
         const newBasicComps = eventFormComp().map(comp => {
            const component = createFormComponents.createBasicComponent(comp, assignDataId);
            return component;
-        }); 
+        });    
 
         // Add Priority and respective event listeners
         const newPriority = createFormComponents.createPriorityBtns(assignDataId, 'Event Priority');
@@ -91,6 +91,8 @@ const addEventForm = (function () {
 
         // Add task
         const newTaskAdder = createFormComponents.createTaskAdder(assignDataId);
+        // Reset tasks memory
+        addTaskToEvent.resetNewTasks();
 
         // Add Save and Clear Buttons and respective event listeners
         const newSaveBtns = createFormComponents.createSaveFormBtns(assignDataId);
@@ -116,11 +118,9 @@ const addEventForm = (function () {
     
         // Ensures that the form is present in the DOM
         if (form !== null) {
-            //Note: Reset tasks memory when removing event form
-            addTaskToEvent.resetNewTasks();
-
             // Remove form from modal
             modalCont.removeChild(form);
+            
         } else {
             return;
         }

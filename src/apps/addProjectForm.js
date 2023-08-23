@@ -72,6 +72,8 @@ const addProjectForm = (function () {
         const newEventAdder = createFormComponents.createEventAdder('new-project');
         const eventAdderBtn = newEventAdder.querySelector('button#add-event-btn');
         addEventToProject.addEventToProjectEvent(eventAdderBtn);
+        // Resets newProjectEvents stored temporary linked events
+        addEventToProject.resetProjectEvents();
 
 
         // Add save/ clear buttons and corresponding event listeners

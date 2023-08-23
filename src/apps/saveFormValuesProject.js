@@ -1,3 +1,5 @@
+import { addEventToProject } from "./addEventToProject";
+
 const saveFormValuesProject = (function () {
 
     // Validates project form input fields
@@ -69,6 +71,7 @@ const saveFormValuesProject = (function () {
         );
 
         console.log(newProject);
+        console.log(addEventToProject.getProjectEvents());
     }
 
     // Clear project form

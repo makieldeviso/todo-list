@@ -121,9 +121,6 @@ const showModals = (function () {
         const editEventModal = document.querySelector('dialog#edit-event-prompt');
         editEventModal.close();
 
-        // Resets tasks memory 
-        addTaskToEvent.resetNewTasks();
-
          // Removes modal from the DOM
         const main = document.querySelector('main');
         main.removeChild(editEventModal);

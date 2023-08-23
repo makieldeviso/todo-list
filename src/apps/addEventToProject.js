@@ -12,6 +12,16 @@ const addEventToProject = (function () {
         return newProjectEvents;
     }
 
+    // const getFinalEvents = function () {
+    //     // Save final events to variable
+    //     const getFinalEvents = getProjectEvents();
+
+    //     // Reset newProjectEvents
+    //     resetProjectEvents();
+
+    //     return getFinalEvents;
+    // }
+
     const getEventsCount = function () {
         const eventsCount = Object.keys(getProjectEvents()).length;
         return eventsCount;
@@ -102,9 +112,6 @@ const addEventToProject = (function () {
 
         // Reactivate option from the selection
         eventOption.disabled = false;
-
-        console.log(newProjectEvents);
-
     }
 
 
@@ -113,7 +120,7 @@ const addEventToProject = (function () {
         adderBtn.addEventListener('click', addEvent);
     }
 
-    return {addEvent, addEventToProjectEvent}
+    return {addEvent, addEventToProjectEvent, getProjectEvents, resetProjectEvents}
 
 })();
 

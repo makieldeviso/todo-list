@@ -6,7 +6,6 @@ import { format, formatDistance } from 'date-fns'
 import { modalUX } from "./modalUX";
 import { addTaskToEvent } from "./addTaskToEvent";
 import { saveFormValuesEvent } from "./saveFormValuesEvent";
-import eachMinuteOfIntervalWithOptions from "date-fns/esm/fp/eachMinuteOfIntervalWithOptions/index.js";
 
 const eventEditForm = (function () {
     
@@ -46,7 +45,6 @@ const eventEditForm = (function () {
             const status = tasksObj[individualTask].status;
             addTaskToEvent.addNewTask(task, status);
         }
-
     }
 
 
