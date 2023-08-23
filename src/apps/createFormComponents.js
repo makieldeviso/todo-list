@@ -192,7 +192,8 @@ const createFormComponents = (function () {
         addOption('');
         
         const events = memoryHandler.getEvents();
-        events.forEach(event => {
+        const standaloneEvents = events.filter((eventObj) => eventObj.projectTag === 'standalone');
+        standaloneEvents.forEach(event => {
             const eventOption = document.createElement('option');
             eventOption.setAttribute('value', event.eventId);
             eventOption.textContent = event.title;
