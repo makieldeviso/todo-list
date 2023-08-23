@@ -1,4 +1,6 @@
 import { addEventToProject } from "./addEventToProject";
+import { memoryHandler } from "./memoryHandler";
+import { showModals } from "./showModals";
 
 const saveFormValuesProject = (function () {
 
@@ -70,8 +72,47 @@ const saveFormValuesProject = (function () {
             valueGet('button.prio-btn[data-selected="selected"]')
         );
 
-        console.log(newProject);
-        console.log(addEventToProject.getProjectEvents());
+        // Add eventLinks object as property to newProject
+        newProject['eventLinks'] = addEventToProject.getProjectEvents();
+
+        // Create an id for the newProject object
+        const projectId = function (object) {
+            const projectTitle = object.title;
+            const projectDeadline = object.deadline.valueOf();
+
+            const titleId = projectTitle.split(" ").map(word => `${word.toLowerCase()}`).join('');
+            let newProjectId = `${titleId + projectDeadline}`;
+
+            // Double check and ensure no duplication of id
+            // If same title and due date is created add additional id indicator
+            const projects = memoryHandler.getProjects();
+            const sameId = projects.filter(project => project['projectId'].includes(newProjectId));
+
+            if (sameId.length > 0) {
+                newProjectId = `${titleId + projectDeadline}(${sameId.length + 1})`;
+            }
+
+            object['projectId'] = newProjectId;
+        }
+        projectId(newProject); // Executes project id maker
+
+        // Save the project in array memory
+        memoryHandler.saveProject(newProject);
+
+        // Link events to the project
+        linkEventsToProject(newProject);
+
+        // Close Modal
+        showModals.closeModal();
+    }
+
+    // Link events to project
+    const linkEventsToProject = function (projectObj) {
+        const projectEventsKeys = Object.keys(projectObj.eventLinks); //Array;
+
+        projectEventsKeys.forEach((key) => {
+            memoryHandler.linkEventToProject(projectObj.eventLinks[key], projectObj.projectId);
+        });
     }
 
     // Clear project form

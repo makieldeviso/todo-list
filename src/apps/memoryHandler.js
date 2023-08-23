@@ -1,7 +1,7 @@
 import { differenceInCalendarDays } from 'date-fns';
 
 const memoryHandler = (function () {
-
+    // Events (start) -
     const placeholderEvents = [
             {
                 "title": "Ms. Dodo's Birthday",
@@ -100,7 +100,6 @@ const memoryHandler = (function () {
         return eventsCount;
     }
 
-
      // Mark complete an event
      const completeEvent = function (id) {
         const eventObj = getEventForMod(id);
@@ -137,8 +136,40 @@ const memoryHandler = (function () {
         events.splice(eventForModIndex, 1);
     }
 
+    const linkEventToProject = function (eventId, projectId) {
+        const eventForMod = getEventForMod(eventId);
+        console.log(eventId);
 
-    return {getEvents, 
+        eventForMod.projectTag = projectId;
+    }
+
+
+
+// Events (end) -
+
+// Projects (start) -
+
+const projects = [];
+
+const saveProject = function (projectObj) {
+    projects.push(projectObj);
+}
+
+const getProjects = function () {
+    return projects;
+}
+
+
+
+
+
+// Projects (end) -
+
+
+
+    return {
+        // Events
+            getEvents, 
             saveEvent, 
             getEvent, 
             changeTaskStatus, 
@@ -147,7 +178,13 @@ const memoryHandler = (function () {
             countEvents,
             completeEvent,
             replaceEvent,
-            deleteEvent};
+            deleteEvent,
+            linkEventToProject,
+
+        // Projects
+            saveProject,
+            getProjects,
+        };
 })();
 
 export {memoryHandler}

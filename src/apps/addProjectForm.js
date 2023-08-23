@@ -75,7 +75,6 @@ const addProjectForm = (function () {
         // Resets newProjectEvents stored temporary linked events
         addEventToProject.resetProjectEvents();
 
-
         // Add save/ clear buttons and corresponding event listeners
         const newSaveBtns = createFormComponents.createSaveFormBtns('new-project');
         saveFormValuesProject.addSaveProjectFormEvent(newSaveBtns);
@@ -86,20 +85,20 @@ const addProjectForm = (function () {
 
         // Appends the form to the modal Cont
         modalCont.appendChild(projectForm);
-        }
+    }
 
-        const removeProjectForm = function () {
-            const modalCont = document.querySelector('div.modal-cont');
-            const form = document.querySelector('form#project-form');
-            modalCont.removeChild(form);
-        }
-    
-        const addProjectFormEvent = function() {
-            const newEventBtn = document.querySelector('button#new-project');
-            newEventBtn.addEventListener('click', newProjectForm);
-        }
-    
-        return { newProjectForm, addProjectFormEvent, removeProjectForm }
+    const removeProjectForm = function () {
+        const modalCont = document.querySelector('div.modal-cont');
+        const form = document.querySelector('form#project-form');
+        modalCont.removeChild(form);
+    }
+
+    const addProjectFormEvent = function() {
+        const newEventBtn = document.querySelector('button#new-project');
+        newEventBtn.addEventListener('click', newProjectForm);
+    }
+
+    return { newProjectForm, addProjectFormEvent, removeProjectForm }
 
 })();
 

@@ -157,7 +157,7 @@ const createFormComponents = (function () {
 
         //  Create empty tasks container - lvl-1 child
         const eventsCont = document.createElement('div');
-        eventsCont.setAttribute('id', 'events-container');
+        eventsCont.setAttribute('id', 'events-link-container');
 
         // Create add task input container - lvl-1 child, - lvl-2 parent 
         const inputCont = document.createElement('div');

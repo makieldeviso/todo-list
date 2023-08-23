@@ -30,7 +30,7 @@ const addEventToProject = (function () {
     const addEventsToDOM = function (obj) {
         const eventObj = obj;
 
-        const eventsCont = document.querySelector('div#events-container');
+        const eventsCont = document.querySelector('div#events-link-container');
 
         // Create new event container div
         const newEventCont = document.createElement('div');
@@ -88,8 +88,8 @@ const addEventToProject = (function () {
         // Note: this data set is assigned to the close button in the DOM element creation
         const eventObjLink = this.dataset.id;
 
-        const eventsCont = document.querySelector('div#events-container');
-        const eventPreview = document.querySelector(`div[data-id="${eventObjLink}"]`);
+        const eventsCont = document.querySelector('div#events-link-container');
+        const eventPreview = document.querySelector(`div[data-id="${eventObjLink}"].event-link-project`);
         const eventOption = document.querySelector(`option[value="${eventObjLink}"]`);
 
         // Save current events obj
