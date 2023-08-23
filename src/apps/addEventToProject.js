@@ -17,9 +17,6 @@ const addEventToProject = (function () {
         return eventsCount;
     }
 
-    const createEventObj = function () {
-    }
-
     const addEventsToDOM = function (obj) {
         const eventObj = obj;
 
@@ -27,22 +24,23 @@ const addEventToProject = (function () {
 
         // Create new event container div
         const newEventCont = document.createElement('div');
-        newEventCont.setAttribute('data-id', 'event-1');
+        newEventCont.setAttribute('data-id', `${eventObj.eventId}`);
         newEventCont.setAttribute('class', 'event-link-project');
 
         // Create event preview
         // Note: this utilizes same function as event preview creator form eventsDisplay module
         const newEventPreview = eventsDisplay.createEventDisplay(eventObj);
-        newEventPreview.classList.add('event-project')
+        newEventPreview.classList.add('event-project');
 
         // Note: Remove showFullEvent linked function to newEventCont
         newEventPreview.removeEventListener('click', eventsDisplay.showFullEvent);
 
-        //Create unlink button
+        //Create unlink button, then add eventListener
         const unlinkButton = document.createElement('button');
         unlinkButton.setAttribute('type', 'button');
         unlinkButton.setAttribute('class', 'unlink-event');
         unlinkButton.dataset.id = eventObj.eventId;
+        unlinkButton.addEventListener('click', unlinkEvent);
 
         //Append components to newEventCont
         const components = [newEventPreview, unlinkButton];
@@ -50,7 +48,6 @@ const addEventToProject = (function () {
 
         // //Append newEventCont to eventsCont
         eventsCont.appendChild(newEventCont);
-
     }
 
     const addEvent = function () {
@@ -67,16 +64,49 @@ const addEventToProject = (function () {
         const eventObj = memoryHandler.getEvents().find((event) => event.eventId === eventSelect.value );
 
         // Create an event identifier object
+        // Save an event Id to an object
         newProjectEvents[`event-${getEventsCount() + 1}`] = eventSelect.value;
-        console.log(getProjectEvents());
 
         // Disables the selected event from choices, the turn the select to default value
         defaultOption.selected = true;
         eventOption.disabled = true;
 
-
         addEventsToDOM(eventObj);
     }
+
+    const unlinkEvent = function () {
+        // Note: this data set is assigned to the close button in the DOM element creation
+        const eventObjLink = this.dataset.id;
+
+        const eventsCont = document.querySelector('div#events-container');
+        const eventPreview = document.querySelector(`div[data-id="${eventObjLink}"]`);
+        const eventOption = document.querySelector(`option[value="${eventObjLink}"]`);
+
+        // Save current events obj
+        const currentEvents = getProjectEvents();
+
+        const eventKeys = Object.keys(currentEvents);
+        const remainingEvents = eventKeys.filter((key) => currentEvents[`${key}`] !== eventObjLink)
+
+        // Create new eventsLink Obj based on remainingEvents
+        const newEventObj = {}
+        for (let i = 0; i < remainingEvents.length; i++) {
+            newEventObj[`event-${i + 1}`] = currentEvents[`${remainingEvents[i]}`];
+        }
+
+        // Reassign newProjectEvents with new event object
+        newProjectEvents = newEventObj;
+
+        // Remove event preview from the DOM
+        eventsCont.removeChild(eventPreview);
+
+        // Reactivate option from the selection
+        eventOption.disabled = false;
+
+        console.log(newProjectEvents);
+
+    }
+
 
     const addEventToProjectEvent = function (btn) {
         const adderBtn = btn;
