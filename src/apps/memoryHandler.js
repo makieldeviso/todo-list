@@ -159,9 +159,10 @@ const getProjects = function () {
     return projects;
 }
 
-
-
-
+const getProject = function (id) {
+    const projectObj = getProjects().find(obj => obj.projectId === id);
+    return projectObj
+}
 
 // Projects (end) -
 
@@ -184,6 +185,7 @@ const getProjects = function () {
         // Projects
             saveProject,
             getProjects,
+            getProject,
         };
 })();
 

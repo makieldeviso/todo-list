@@ -1,6 +1,7 @@
 import { memoryHandler } from "./memoryHandler";
 import { formatting } from "./formatting";
 import { eventsScript } from "./eventsScript";
+import { projectScripts } from "./projectsScript";
 import { format } from 'date-fns';
 import { displayContent } from "./displayContent";
 import { createModal } from "./createModal";
@@ -76,6 +77,18 @@ const eventsDisplay = (function () {
 
             actionRibbon.appendChild(newBtn);
         } 
+    }
+
+    const getEventProjectTitle = function (obj) {
+        let projectTitle;
+
+        if (obj.projectTag === 'standalone') {
+            projectTitle = 'Standalone';
+        } else {
+            projectTitle = projectScripts.getProperty(obj.projectTag, 'title')
+        }
+
+        return projectTitle;
     }
 
     // Changes status of task of an event
@@ -287,7 +300,7 @@ const eventsDisplay = (function () {
         // Execute makeText and assign to variables  
         const newTitle = makeText('event-title', eventObj.title);
         const newDesc = makeText('event-desc', eventObj.description);
-        const newProjTag = makeText('event-proj', eventObj.projectTag);
+        const newProjTag = makeText('event-proj', getEventProjectTitle(eventObj));
         const newPrio = makeText('event-prio', eventObj.priority);
         // (2-5) (end)-
 
