@@ -166,7 +166,7 @@ const eventsDisplay = (function () {
         const desc = makeText('fullview event-desc', eventObj.description);
 
         const projLabel = makeText('fullview proj-label label', 'Project:');
-        const proj = makeText('fullview event-proj', eventObj.projectTag);
+        const proj = makeText('fullview event-proj', getEventProjectTitle(eventObj));
 
         const prio = makeText('event-prio', eventObj.priority);
         prio.classList.add('fullview');
