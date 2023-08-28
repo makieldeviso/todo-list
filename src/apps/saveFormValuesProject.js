@@ -96,6 +96,10 @@ const saveFormValuesProject = (function () {
         }
         projectId(newProject); // Executes project id maker
 
+        //Add default project status
+        newProject['projectStatus'] = 'pending';
+
+
         // Save the project in array memory
         memoryHandler.saveProject(newProject);
 

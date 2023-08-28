@@ -1,7 +1,7 @@
 import { memoryHandler } from "./memoryHandler";
 import { formatting } from "./formatting";
 import { eventsScript } from "./eventsScript";
-import { projectScripts } from "./projectsScript";
+import { projectsScripts } from "./projectsScripts";
 import { format } from 'date-fns';
 import { displayContent } from "./displayContent";
 import { createModal } from "./createModal";
@@ -25,7 +25,7 @@ const eventsDisplay = (function () {
         return newText;
     }
 
-    // Reusable create and append span to newTaskCount function
+    // Reusable create and append span function
     const createSpan = function (parentP, assignClass, text) {
         const newSpan = document.createElement('span');
         newSpan.setAttribute('class', assignClass);
@@ -85,7 +85,7 @@ const eventsDisplay = (function () {
         if (obj.projectTag === 'standalone') {
             projectTitle = 'Standalone';
         } else {
-            projectTitle = projectScripts.getProperty(obj.projectTag, 'title')
+            projectTitle = projectsScripts.getProperty(obj.projectTag, 'title')
         }
 
         return projectTitle;

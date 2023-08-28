@@ -7,7 +7,7 @@ const memoryHandler = (function () {
                 "title": "Ms. Dodo's Birthday",
                 "description": "60th Birthday, food committee",
                 "schedule": new Date(),
-                "projectTag": "standalone",
+                "projectTag": "newprojecttest1693267200000",
                 "priority": "high",
                 "tasks": {
                     "task-1": {
@@ -138,7 +138,6 @@ const memoryHandler = (function () {
 
     const linkEventToProject = function (eventId, projectId) {
         const eventForMod = getEventForMod(eventId);
-        console.log(eventId);
 
         eventForMod.projectTag = projectId;
     }
@@ -148,11 +147,25 @@ const memoryHandler = (function () {
 // Events (end) -
 
 // Projects (start) -
+const placeholderProjects = [
+    {
+        "title": "New Project Test",
+        "description": "Project Test Description",
+        "deadline": new Date(),
+        "priority": "high",
+        "eventLinks": {"event-1": "ms.dodo'sbirthday1689724800000"},
+        "projectId": "newprojecttest1693267200000",
+        "projectStatus": 'pending'
+    }
 
-const projects = [];
+];
+
+const projects = [...placeholderProjects];
 
 const saveProject = function (projectObj) {
     projects.push(projectObj);
+    console.log(projectObj);
+    console.log(projects);
 }
 
 const getProjects = function () {

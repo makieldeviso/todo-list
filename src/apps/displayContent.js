@@ -1,4 +1,6 @@
 import { eventsDisplay } from "./eventsDisplay";
+import { projectsDisplay } from "./projectsDisplay";
+import { memoryHandler } from "./memoryHandler";
 
 const displayContent = (function () {
 
@@ -17,7 +19,7 @@ const displayContent = (function () {
         // if false recur using backSideBar function
         const backAction = this.dataset.action;
 
-        if (backAction === 'event-preview') {
+        if (backAction === 'events-previews') {
             translateSidebar(false);
 
         } else if (backAction === 'event-fullview') {
@@ -39,19 +41,40 @@ const displayContent = (function () {
             removeActionBtn(editBtn, deleteBtn);
 
             // Return to event preview
-            showDisplay();
+            showDisplay('events-previews');
         }
     }
 
     // Note: button event triggered function
-    const showDisplay = function () {
+    const showDisplay = function (action) {
         const backBtn = document.querySelector('button#back-sidebar');
-        translateSidebar(true);
         
         // Add action attribute to back button
-        backBtn.dataset.action = "event-preview";
+        // Note: this function can be linked with eventListener or not
+        let assignAction;
+        if (typeof action === 'string') {
+            assignAction = action;
 
-        eventsDisplay.displayEventsToDOM();
+        } else {
+            assignAction = `${this.getAttribute('id')}-previews`;
+        }
+        
+        console.log(assignAction);
+        backBtn.dataset.action = assignAction;
+
+        if (assignAction === 'events-previews') {
+            eventsDisplay.displayEventsToDOM();
+            translateSidebar(true);
+
+        } else if (assignAction === 'projects-previews') {
+            console.log(memoryHandler.getProjects());
+            projectsDisplay.displayProjectsToDOM();
+            translateSidebar(true);
+
+        } else {
+            return; //!!!!!!!!!!!!! TEMPORARY RETURN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        }
+        
     }
 
     const removeActionBtn = function (...btns) {
@@ -71,8 +94,8 @@ const displayContent = (function () {
     }
 
     const addSidebarEvents = function () {
-        const eventsBtn = document.querySelector('div#events');
-        eventsBtn.addEventListener('click', showDisplay);
+        const eventsBtn = document.querySelectorAll('div.category');
+        eventsBtn.forEach(btn => btn.addEventListener('click', showDisplay));
     }
 
     const backBtnEvents = function () {
