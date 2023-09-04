@@ -19,8 +19,9 @@ const displayContent = (function () {
         // if false recur using backSideBar function
         const backAction = this.dataset.action;
 
-        if (backAction === 'events-previews') {
+        if (backAction === 'events-previews' || backAction === 'projects-previews') {
             translateSidebar(false);
+            clearItemDisplay(backAction);
 
         } else if (backAction === 'event-fullview') {
             clearItemDisplay(backAction);
@@ -28,8 +29,22 @@ const displayContent = (function () {
     }
 
     const clearItemDisplay = function (action) {
+        
+        // Reusable function
+        const clearPreview = function (previewSelector) {
+            // Note: previewSelector parameter is string used for querySelector
+            const displays = document.querySelectorAll(`div.${previewSelector}`);
 
-        if (action === 'event-fullview') {
+            displays.forEach(preview => removeDisplay(preview));
+        }
+
+        if (action === 'projects-previews') {
+            clearPreview('project-preview');
+
+        } else if (action === 'events-previews') {
+            clearPreview('event-preview');
+            
+        } else if (action === 'event-fullview') {
             // Close/ remove event full view
             const eventFullView = document.querySelector('div.event-fullview');
             const editBtn = document.querySelector('button[value="edit-event"]');
@@ -43,6 +58,7 @@ const displayContent = (function () {
             // Return to event preview
             showDisplay('events-previews');
         }
+
     }
 
     // Note: button event triggered function

@@ -375,11 +375,6 @@ const eventsDisplay = (function () {
 
     const displayEventsToDOM = function () {
         const itemDisplay = document.querySelector('div#item-display');
-        const eventDisplays = document.querySelectorAll('div.event-preview');
-        const eventsInDOMArray = Array.from(eventDisplays);
-
-        // Empty display before appending new set
-        eventsInDOMArray.forEach(event => displayContent.removeDisplay(event));
 
         const events = memoryHandler.getEvents();
 

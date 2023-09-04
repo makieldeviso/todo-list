@@ -2,6 +2,7 @@ import { formatting } from "./formatting";
 import { format } from 'date-fns';
 import { projectsScripts } from "./projectsScripts";
 import { memoryHandler } from "./memoryHandler";
+import { displayContent } from "./displayContent";
 
 const projectsDisplay = (function () {
 
@@ -111,12 +112,7 @@ const projectsDisplay = (function () {
 
     const displayProjectsToDOM = function () {
         const itemDisplay = document.querySelector('div#item-display');
-        const projectDisplays = document.querySelectorAll('div.project-preview');
-        const projectsInDOMArray = Array.from(projectDisplays);
-
-        // Empty display before appending new set
-        projectsInDOMArray.forEach(project => displayContent.removeDisplay(project));
-
+        
         const projects = memoryHandler.getProjects();
 
         projects.forEach(project => {
