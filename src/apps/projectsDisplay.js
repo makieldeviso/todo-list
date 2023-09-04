@@ -28,8 +28,33 @@ const projectsDisplay = (function () {
         parentP.appendChild(newSpan);
     }
 
+    // Reusable task counter creator function
+    const createEventCounter = function (project) {
+        const newEventCounter = document.createElement('p');
+        newEventCounter.setAttribute('class', 'project-event-count pending');
+        newEventCounter.dataset.id = project.projectId;
+
+        const events = project.eventLinks; // this is Object
+        const done = projectsScripts.countDoneEvents(project);
+        const total = projectsScripts.countEventsOfProject(project);
+
+        createSpan(newEventCounter, 'done', `${done}`);
+        createSpan(newEventCounter, 'slash', '/');
+        createSpan(newEventCounter, 'total', `${total}`);
+        createSpan(newEventCounter, 'label', 'events');
+
+        if (done === total) {
+            newEventCounter.classList.remove('pending');
+            newEventCounter.classList.add('done');
+        } 
+
+        return newEventCounter;
+    }
+
     // Event preview/ display  DOM maker
     const createProjectPreview = function (projectObj) {
+
+        projectsScripts.countDoneEvents(projectObj)
         
         const newProject = document.createElement('div');
         newProject.setAttribute('class', 'project-preview');
@@ -51,8 +76,8 @@ const projectsDisplay = (function () {
         // (2-5) (end)-
 
         // (6) (start)-
-        const newSched = document.createElement('p');
-        newSched.setAttribute('class', 'project-deadline');
+        const newDeadline = document.createElement('p');
+        newDeadline.setAttribute('class', 'project-deadline');
 
         // format schedule
         // Note: use date-fns
@@ -61,21 +86,21 @@ const projectsDisplay = (function () {
 
         // Checks if event was already completed
         if (projectObj.completion === undefined) {
-            createSpan(newSched, `sched-icon ${deadlineAlert}`, '');
+            createSpan(newDeadline, `deadline-icon ${deadlineAlert}`, '');
         } else {
-            createSpan(newSched, `sched-icon ${projectObj.completion}`, '');
+            createSpan(newDeadline, `deadline-icon ${projectObj.completion}`, '');
         }
 
-        createSpan(newSched, 'sched-date', dateString);
+        createSpan(newDeadline, 'deadline-date', dateString);
         // (6) (end)-
 
         // (7) (start)-
         // Create task count p
-        // const newTaskCount = createTaskCounter(projectObj);
+        const newEventCount = createEventCounter(projectObj);
         // (7) (end)-
 
         // Append preview components to newProject
-        const components = [newMarker, newTitle, newDesc, newPrio, newSched];
+        const components = [newMarker, newTitle, newDesc, newPrio, newDeadline, newEventCount];
         components.forEach(comp => newProject.appendChild(comp));
 
         // Add event listener to newProject

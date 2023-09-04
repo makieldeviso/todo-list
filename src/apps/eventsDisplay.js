@@ -131,6 +131,7 @@ const eventsDisplay = (function () {
     // Event Full View Maker
     const createEventFullView = function (eventObj) {
         // Create edit button appended on the action buttons ribbon (start) -
+        console.log(eventObj);
         const actionRibbon = document.querySelector('div#action-btns');
 
         // Ensures no existing action buttons

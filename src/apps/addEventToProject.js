@@ -12,16 +12,6 @@ const addEventToProject = (function () {
         return newProjectEvents;
     }
 
-    // const getFinalEvents = function () {
-    //     // Save final events to variable
-    //     const getFinalEvents = getProjectEvents();
-
-    //     // Reset newProjectEvents
-    //     resetProjectEvents();
-
-    //     return getFinalEvents;
-    // }
-
     const getEventsCount = function () {
         const eventsCount = Object.keys(getProjectEvents()).length;
         return eventsCount;

@@ -31,7 +31,7 @@ const memoryHandler = (function () {
                 "title": "Do your thing",
                 "description": "Do your thing",
                 "schedule": new Date("2023-07-20T00:00:00.000Z"),
-                "projectTag": "standalone",
+                "projectTag": "newprojecttest1693267200000",
                 "priority": "mid",
                 "tasks": {
                     "task-1": {
@@ -48,7 +48,7 @@ const memoryHandler = (function () {
                     }
                 },
                 "eventId": "doyourthing",
-                "eventStatus": 'pending',
+                "eventStatus": 'done',
             },
     ];
     
@@ -153,8 +153,18 @@ const placeholderProjects = [
         "description": "Project Test Description",
         "deadline": new Date(),
         "priority": "high",
-        "eventLinks": {"event-1": "ms.dodo'sbirthday1689724800000"},
+        "eventLinks": {"event-1": "ms.dodo'sbirthday1689724800000", "event-2": "doyourthing"},
         "projectId": "newprojecttest1693267200000",
+        "projectStatus": 'pending'
+    },
+
+    {
+        "title": "New Project Test-2",
+        "description": "Project Test Description-2",
+        "deadline": new Date(),
+        "priority": "high",
+        "eventLinks": {},
+        "projectId": "newprojecttest1693267200001",
         "projectStatus": 'pending'
     }
 

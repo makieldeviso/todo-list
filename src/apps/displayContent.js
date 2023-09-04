@@ -67,7 +67,6 @@ const displayContent = (function () {
             translateSidebar(true);
 
         } else if (assignAction === 'projects-previews') {
-            console.log(memoryHandler.getProjects());
             projectsDisplay.displayProjectsToDOM();
             translateSidebar(true);
 
