@@ -774,10 +774,13 @@ div.project-preview {
     grid-template-columns: 15px 1fr max-content;
     grid-template-rows: repeat(3, max-content);
     padding: var(--common-padding);
-    border: 1px solid var(--base-blue);
+    border: 2px solid var(--base-yellow);
+    box-shadow: 
+        0 0 1px 2px rgba(33, 42, 62, 0.2);
     border-radius: 10px;
     column-gap: var(--common-padding);
     margin: 0 calc(var(--common-margin) * 0.5);
+    background-color: var(--dark-orange);
 
     grid-template-areas: 
         "marker title sched"
@@ -786,7 +789,8 @@ div.project-preview {
 }
  
 div.project-preview[data-status="done"] {
-    background-color: rgb(232, 237, 232);
+    background-color: var(--darkest-color);
+    border-color: #54B435;
 }
 
 div.project-preview:hover {
@@ -803,7 +807,7 @@ div.marker {
 }
 
 div.project-preview[data-status="pending"] div.marker {
-    background-image: url('./assets/pending.png');
+    background-image: url('./assets/pending-white.png');
 }
 
 div.project-preview[data-status="done"] div.marker {
@@ -818,13 +822,13 @@ p.project-title {
     grid-area: title;
     font-size: var(--header-font-size);
     font-family: var(--header-font-style);
-    color: black;
+    color: white;
 }
 
 p.project-desc{
     grid-area: desc;
     font-size: calc(var(--header-font-size) * 0.8);
-    color: var(--gray);
+    color: var(--base-yellow);
 }
 
 p.project-prio {
@@ -832,7 +836,8 @@ p.project-prio {
     text-align: center;
     font-size: calc(var(--header-font-size) * 0.6);
     padding: 3px;
-    border: 1px solid black;
+    border: 2px solid black;
+    box-shadow: 0 0 2px 1px var(--base-yellow);
     width: 40%;
     min-width: max-content;
     height: max-content;
@@ -840,8 +845,8 @@ p.project-prio {
     align-self: center;
     border-radius: 3px;
     font-weight: bold;
-    filter: opacity(0.8);
     margin-top: 5px;
+    background-color: var(--off-white);
 }
 
 p.project-prio.low {
@@ -866,6 +871,8 @@ p.project-deadline {
     display: flex;
     align-items: center;
     gap: 3px;
+    padding: 0 var(--common-padding);
+    color: white;
 }
 
 p.project-deadline span.deadline-icon {
@@ -913,11 +920,11 @@ p.project-event-count {
     justify-content: flex-end;
     align-items: center;
     gap: 3px;
-
+    color: white;
 }
 
 p.project-event-count.done {
-    color: #54B435;
+    color: var(--base-yellow);
 }
 
 p.event-title, 

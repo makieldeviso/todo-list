@@ -38,7 +38,6 @@ const projectsScripts = (function () {
     }
 
 
-
     const countEventsOfProject = function (project) {
         const projectEvents = getProperty(project.projectId, 'eventLinks');
         const eventsKeys = Object.keys(projectEvents);

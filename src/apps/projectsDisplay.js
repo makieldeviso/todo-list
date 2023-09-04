@@ -105,9 +105,17 @@ const projectsDisplay = (function () {
         components.forEach(comp => newProject.appendChild(comp));
 
         // Add event listener to newProject
-        // showFullEventToDOM(newProject, true);
+        newProject.addEventListener('click', showFullProject);
 
         return newProject
+    }
+
+    const showFullProject = function () {
+        const projectId = this.dataset.id;
+
+        const projectObj = memoryHandler.getProject(projectId);
+
+        console.log(projectObj);
     }
 
     const displayProjectsToDOM = function () {

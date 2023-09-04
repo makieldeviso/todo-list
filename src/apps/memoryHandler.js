@@ -155,7 +155,7 @@ const placeholderProjects = [
         "priority": "high",
         "eventLinks": {"event-1": "ms.dodo'sbirthday1689724800000", "event-2": "doyourthing"},
         "projectId": "newprojecttest1693267200000",
-        "projectStatus": 'pending'
+        "projectStatus": 'done'
     },
 
     {
