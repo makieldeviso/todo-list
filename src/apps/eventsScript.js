@@ -72,6 +72,13 @@ const eventsScript = (function () {
         return deadlineAlert;
     } 
 
+    // Return an event object property
+    const getProperty = function (id, property) {
+        const eventObj = memoryHandler.getEvent(id);
+
+        return eventObj[property];
+    }
+
     return {
         taskArrayOfEvent,
         countTasksOfEvent,
@@ -79,6 +86,7 @@ const eventsScript = (function () {
         countDoneTasks,
         tasksCompleted,
         checkDeadline,
+        getProperty,
     }
 
 })();

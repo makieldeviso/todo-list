@@ -341,17 +341,33 @@ const eventsDisplay = (function () {
 
     
     const showFullEvent = function (trigger) {
+        const itemDisplay = document.querySelector('div#item-display');
+        const backBtn = document.querySelector('button#back-sidebar');
+
         // Conditional to enable non-eventlistener trigger
         // If trigger is string means non-eventlistener
+        
         let previewId;
         if (typeof trigger === 'string') {
             previewId = trigger
+
         } else {
             previewId = this.dataset.id;
+
+            // If event fullview is accessed through the project view'
+            if (this.dataset.mode === 'project-view') {
+                const projectFullView = document.querySelector('div.project-fullview');
+                itemDisplay.removeChild(projectFullView);
+                
+                // Adds additional data set to the back button
+                backBtn.dataset.mode = this.dataset.mode;
+
+                // Add an id link of the project to the back button
+                backBtn.dataset.link = eventsScript.getProperty(previewId, 'projectTag');
+            }
+
         }
-
-        const itemDisplay = document.querySelector('div#item-display');
-
+         
         // Clear display panel
         const eventPreviews = document.querySelectorAll('div.event-preview');
         eventPreviews.forEach(preview => displayContent.removeDisplay(preview));
@@ -361,7 +377,6 @@ const eventsDisplay = (function () {
         eventFullViews.forEach(fullview => displayContent.removeDisplay(fullview));
 
         // Add attribute to back-button
-        const backBtn = document.querySelector('button#back-sidebar');
         backBtn.dataset.action = 'event-fullview';
 
         //  Get event with the Id specified

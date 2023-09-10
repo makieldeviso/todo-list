@@ -326,7 +326,7 @@ const projectsDisplay = (function () {
     }
 
 
-    return {displayProjectsToDOM};
+    return {displayProjectsToDOM, showFullProject};
 
 
 

@@ -24,11 +24,25 @@ const displayContent = (function () {
             clearItemDisplay(backAction);
 
         } else if (backAction === 'event-fullview' || backAction === 'project-fullview') {
-            clearItemDisplay(backAction);
+            
+            const mode = this.dataset.mode;
+            const projectLink = this.dataset.link;
+
+            if (mode !== undefined) {
+                clearItemDisplay(backAction, mode, projectLink);
+
+                // Removes the additional datasets after executing clearItemDisplay function
+                this.removeAttribute('data-mode');
+                this.removeAttribute('data-link');
+            
+            } else {
+                clearItemDisplay(backAction);
+            }
+
         }
     }
 
-    const clearItemDisplay = function (action) {
+    const clearItemDisplay = function (action, option, link) {
         
         // Reusable function
         const clearPreview = function (previewSelector) {
@@ -55,9 +69,15 @@ const displayContent = (function () {
             // Note: removeActionBtn accepts multiple buttons argument
             removeActionBtn(editBtn, deleteBtn);
 
-            // Return to event preview
-            showDisplay('events-previews');
-            
+            // Show corresponding display, depending of the mode and action
+            if (option === 'project-view') {
+                projectsDisplay.showFullProject(link);
+
+            } else {
+                // Return to event preview
+                showDisplay('events-previews');
+            }
+  
         } else if (action === 'project-fullview') {
             // Close/ remove event full view
             const projectFullView = document.querySelector('div.project-fullview');
