@@ -23,7 +23,7 @@ const displayContent = (function () {
             translateSidebar(false);
             clearItemDisplay(backAction);
 
-        } else if (backAction === 'event-fullview') {
+        } else if (backAction === 'event-fullview' || backAction === 'project-fullview') {
             clearItemDisplay(backAction);
         }
     }
@@ -57,8 +57,24 @@ const displayContent = (function () {
 
             // Return to event preview
             showDisplay('events-previews');
-        }
+            
+        } else if (action === 'project-fullview') {
+            // Close/ remove event full view
+            const projectFullView = document.querySelector('div.project-fullview');
+            const editBtn = document.querySelector('button[value="edit-project"]');
+            const deleteBtn = document.querySelector('button[value="delete-project"]');
 
+            console.log(action);
+
+            // removeDisplay(projectFullView);
+
+            // // Note: removeActionBtn accepts multiple buttons argument
+            // removeActionBtn(editBtn, deleteBtn);
+
+            // Return to event preview
+            showDisplay('projects-previews');
+
+        }
     }
 
     // Note: button event triggered function

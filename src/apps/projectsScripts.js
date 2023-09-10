@@ -57,7 +57,7 @@ const projectsScripts = (function () {
 
 
 
-    return {getProperty, checkDeadline, countEventsOfProject, countDoneEvents}
+    return {getProperty, checkDeadline, countEventsOfProject, countDoneEvents, getProjectEvents}
 
 })();
 

@@ -338,6 +338,7 @@ div.event-preview {
     border-radius: 10px;
     column-gap: var(--common-padding);
     margin: 0 calc(var(--common-margin) * 0.5);
+    background-color: var(--off-white);
 
     grid-template-areas: 
         "marker title sched"
@@ -510,7 +511,7 @@ div.event-fullview {
         "sched sched prio"
         "tasks tasks tasks"
         "btns btns btns";
-}
+}   
 
 div.event-status {
     grid-area: status;
@@ -783,7 +784,7 @@ div.project-preview {
     background-color: var(--dark-orange);
 
     grid-template-areas: 
-        "marker title sched"
+        "marker title deadline"
         ". desc prio"
         ". . event";
 }
@@ -865,7 +866,7 @@ p.project-prio.high{
 }
 
 p.project-deadline {
-    grid-area: sched;
+    grid-area: deadline;
     text-align: right;
     font-size: calc(var(--header-font-size) * 0.7);
     display: flex;
@@ -1328,3 +1329,284 @@ div.event-preview.event-project {
 /* New event to project (end) */
 
 /* MAIN (end) */
+
+
+
+
+
+/* Project Full view (start) -- */
+div.project-fullview {
+    padding: calc(var(--common-padding) * 2);
+    display: grid;
+    grid-template-columns: max-content max-content 1fr;
+    grid-template-areas: 
+        "status title title"
+        "desc-label desc-label desc-label"
+        "desc desc desc"
+        "deadline-label deadline-label deadline-label"
+        "deadline deadline prio"
+        "events events events"
+        "btns btns btns";
+
+    background-color: #f5d5c1;
+}   
+
+div.project-status {
+    grid-area: status;
+    width: var(--header-font-size);
+    height: var(--header-font-size);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    align-self: start;
+    margin:5px 5px 0 0;
+}
+
+div.project-fullview[data-status="done"] div.project-status {
+    background-image: url('./assets/done.png');
+}
+
+div.project-fullview[data-status="pending"] div.project-status {
+    background-image: url('./assets/pending.png');
+}
+
+p.fullview.project-title, p.fullview.project-desc {
+    display: block; /* removes limiting to 2 lines */
+}
+
+p.fullview.project-title {
+    color: black;
+    font-size: calc(var(--header-font-size) * 1.3);
+}
+
+p.fullview.project-desc {
+    color: var(--gray);
+}
+
+p.fullview.label {
+    margin-top: calc(var(--common-margin) * 2);
+    margin-bottom: calc(var(--common-margin) * 0.3);
+    font-size: calc(var(--header-font-size) * 0.9);
+}
+
+p.fullview.desc-label {
+    grid-area: desc-label;
+}
+
+p.fullview.deadline-label {
+    grid-area: deadline-label;
+}
+
+p.fullview.project-deadline {
+    font-size: calc(var(--header-font-size) * 1.2);
+    padding: 0;
+}
+
+p.fullview.project-deadline span.deadline-date {
+    grid-area: deadline;
+    color: black;
+    font-family: var(--header-font-style);
+}
+
+p.fullview.project-deadline span.deadline-icon {
+    width: calc(var(--header-font-size) * 1.3);
+    margin: unset;
+}
+
+p.fullview.project-prio {
+    font-size: calc(var(--header-font-size) * 0.8);
+    margin: 0;
+}
+
+div.fullview.events-list {
+    grid-area: events;
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--common-margin) * 0.5);
+    border: 2px solid var(--base-orange);
+    border-radius: 10px;
+    margin-top: calc(var(--common-margin) * 2);
+}
+
+div.event-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    background-color: var(--base-orange);
+    padding: var(--common-padding);
+    border-radius: 7.5px 7.5px 0 0;
+}
+
+div.event-header p.event-label {
+    /* margin: var(--common-margin) 0 0 0; */
+    font-size: var(--header-font-size);
+    font-family: var(--header-font-style);
+}
+
+div.event-header p.project-event-count {
+    grid-area: unset;
+    font-size: calc(var(--header-font-size) * 0.8);
+    justify-self: end;
+    margin: 0;
+    background-color: white;
+    padding: calc(var(--common-padding) * 0.8);
+    border-radius: 10px;
+    color: black;
+}
+
+div.fullview.events-list div.event {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 5px;
+    padding-bottom: var(--common-padding);
+    border-bottom: 1px solid var(--base-orange);
+}
+
+button.check {
+    width: calc(15px + 0.5vw);
+    height: calc(15px + 0.5vw);
+    border: none;
+    background-color: transparent;
+    margin-left: calc(var(--common-margin)*0.5);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    align-self: start;
+}
+
+button.check[value="pending"] {
+    background-image: url('./assets/box-blank.png');
+}
+
+button.check[value="done"] {
+    background-image: url('./assets/box-check.png');
+}
+
+button.check[value="done"]~p.task {
+    transition: opacity ease-in-out 0.2s;
+    opacity: 0.3;
+}
+
+div.fullview.events-list p.task {
+    font-size: calc(var(--header-font-size) * 0.85);
+}
+
+div.project-action {
+    grid-area: btns;
+    display: grid;
+    grid-template-columns: 1fr;
+    margin-top: calc(var(--common-margin) * 3);
+}
+
+button[value="complete-project"] {
+    font-size: calc(var(--common-font-size) * 1.2);
+    padding: var(--common-padding);
+    border-radius: 5px;
+    border: 2px solid white;
+    background-color: green;
+    color: white;
+    box-shadow: 0 2px 2px 1px rgba(62, 62, 62, 0.3);
+    justify-self: center;
+}
+
+div.project-action p.message {
+    font-family: var(--header-font-style);
+    font-size: calc(var(--header-font-size) * 1);
+    text-align: center;
+    margin-top: var(--common-margin);
+}
+
+/* Completion and delete prompt modal (start) --- */
+dialog#complete-event-prompt,
+dialog#delete-event-prompt {
+    width: 95vw;
+    /* height: 50vh; */
+    margin: auto;
+    border: 1px solid var(--base-orange);
+    border-radius: 10px;
+}
+
+dialog#complete-event-prompt div.modal-cont,
+dialog#delete-event-prompt div.modal-cont {
+    display: grid;
+    grid-template-rows: max-content 1fr;
+    grid-template-areas:
+        "header btn"
+        "content content" ;
+}
+
+dialog#complete-event-prompt button.close-modal,
+dialog#delete-event-prompt button.close-modal {
+    grid-area: btn;
+}
+
+p.modal-banner {
+    grid-area: header;
+    font-family: var(--header-font-style);
+    font-size: calc(var(--header-font-size) * 1.3);
+    color: white;
+    align-self: center;
+    justify-self: center;
+    text-align: center;
+}
+
+div.completion-content,
+div.delete-content {
+    grid-area: content;
+    padding: var(--common-padding);
+    margin-top: var(--common-margin);
+    border-radius: 10px;
+    background-color: white;
+    border: none;
+    box-shadow: 0 4px 3px 2px rgba(62, 62, 62, 0.3);
+
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--common-margin) * 2);
+}
+
+p.reminder {
+    font-size: calc(var(--header-font-size) * 1);
+    text-align: center;
+    margin: var(--common-margin) 0;
+}
+
+div.completion-content div.save-cont,
+div.delete-content div.save-cont {
+    margin: var(--common-margin) 0;
+}
+/* Completion prompt modal (end) --- */
+
+/* Edit modal (start)  --- */
+dialog#edit-event-prompt {
+    width: 95vw;
+    height: 95vh;
+    margin: auto;
+    border: 1px solid var(--base-orange);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+dialog#edit-event-prompt div.modal-cont {
+    grid-template-columns: 1fr max-content;
+    grid-template-rows: max-content 1fr;
+    grid-template-areas:
+        "banner exit-btn"
+        "form form";
+}
+
+dialog#edit-event-prompt p.modal-banner {
+    grid-area: banner;
+}
+
+dialog#edit-event-prompt  button.close-modal{
+    grid-area: exit-btn;
+}
+
+dialog#edit-event-prompt  form#event-form{
+    grid-area: form;
+}
+
+/* Edit modal (end)  --- */
+
+/* Project Full view (end) -- */
