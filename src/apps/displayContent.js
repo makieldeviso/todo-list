@@ -29,20 +29,33 @@ const displayContent = (function () {
             const projectLink = this.dataset.link;
 
             if (mode !== undefined) {
-                clearItemDisplay(backAction, mode, projectLink);
+                clearItemDisplay(backAction);
 
                 // Removes the additional datasets after executing clearItemDisplay function
                 this.removeAttribute('data-mode');
                 this.removeAttribute('data-link');
+
+                // Show corresponding display, depending of the mode and action
+                if (mode === 'project-view') {
+                    projectsDisplay.showFullProject(projectLink);
+
+                } 
             
             } else {
                 clearItemDisplay(backAction);
+
+                if (backAction === 'event-fullview') {
+                    showDisplay('events-previews');
+
+                } else if (backAction === 'project-fullview') {
+                    showDisplay('projects-previews');
+                }
             }
 
         }
     }
 
-    const clearItemDisplay = function (action, option, link) {
+    const clearItemDisplay = function (action) {
         
         // Reusable function
         const clearPreview = function (previewSelector) {
@@ -68,15 +81,6 @@ const displayContent = (function () {
 
             // Note: removeActionBtn accepts multiple buttons argument
             removeActionBtn(editBtn, deleteBtn);
-
-            // Show corresponding display, depending of the mode and action
-            if (option === 'project-view') {
-                projectsDisplay.showFullProject(link);
-
-            } else {
-                // Return to event preview
-                showDisplay('events-previews');
-            }
   
         } else if (action === 'project-fullview') {
             // Close/ remove event full view
@@ -86,13 +90,10 @@ const displayContent = (function () {
 
             console.log(action);
 
-            // removeDisplay(projectFullView);
+            removeDisplay(projectFullView);
 
             // // Note: removeActionBtn accepts multiple buttons argument
             // removeActionBtn(editBtn, deleteBtn);
-
-            // Return to event preview
-            showDisplay('projects-previews');
 
         }
     }

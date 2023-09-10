@@ -155,7 +155,6 @@ const createModal = (function () {
 
         const eventStatus = eventObj.eventStatus;
 
-
         // Create dialog element with addition elements
         createNewModal('delete-event');
 

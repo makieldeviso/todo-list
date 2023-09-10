@@ -165,6 +165,7 @@ const showModals = (function () {
 
         // Display events preview window
         eventsDisplay.displayEventsToDOM();
+        
 
         // Execute onload/ sidebar counters
         onLoadScreen.displayEventsCount();

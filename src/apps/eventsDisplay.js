@@ -136,10 +136,10 @@ const eventsDisplay = (function () {
 
         // Ensures no existing action buttons
         const existingEditBtn = document.querySelector('button[value="edit-event"]');
-        if (existingEditBtn !== null) {
-            displayContent.removeActionBtn(existingEditBtn);
-        }
+        const existingDeleteBtn = document.querySelector('button[value="delete-event"]');
 
+        displayContent.removeActionBtn(existingEditBtn, existingDeleteBtn);
+        
         // Conditional don't add edit button if event is completed
         if (eventObj.eventStatus !== 'done') {
             createActionBtn('edit', 'edit-event', eventObj.eventId, eventEditForm.showEditEventForm, 'Edit');
@@ -372,9 +372,11 @@ const eventsDisplay = (function () {
         const eventPreviews = document.querySelectorAll('div.event-preview');
         eventPreviews.forEach(preview => displayContent.removeDisplay(preview));
         
-        // Ensures the event full view is refreshed when changes is applied
+        // Ensures the event full view is refreshed when changes are applied
         const eventFullViews = document.querySelectorAll('div.event-fullview');
         eventFullViews.forEach(fullview => displayContent.removeDisplay(fullview));
+
+        // Ensures action btns are refreshed when changes are applied
 
         // Add attribute to back-button
         backBtn.dataset.action = 'event-fullview';

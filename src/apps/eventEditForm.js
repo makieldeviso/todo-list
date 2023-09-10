@@ -27,6 +27,7 @@ const eventEditForm = (function () {
         schedField.value = formattedDate;
 
         // !!!!!!!!!!!!!!!!!!ADD PROJECT EDITING FEATURE!!!!!!!!!!!!!!!!!
+        
 
         const priorityBtns = editForm.querySelectorAll('button.prio-btn');
 
@@ -45,7 +46,7 @@ const eventEditForm = (function () {
             const status = tasksObj[individualTask].status;
             addTaskToEvent.addNewTask(task, status);
         }
-    }
+    } 
 
 
     // Initiate event edit modal with form
