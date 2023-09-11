@@ -163,10 +163,14 @@ const showModals = (function () {
         // Removes current event full view in the DOM
         displayContent.clearItemDisplay('event-fullview');
 
+        // Change back button action
+        // Note: since item display returns to previews page, back button dataset is changed
+        const backBtn = document.querySelector('button#back-sidebar');
+        backBtn.dataset.action = 'events-previews';
+
         // Display events preview window
         eventsDisplay.displayEventsToDOM();
         
-
         // Execute onload/ sidebar counters
         onLoadScreen.displayEventsCount();
     }

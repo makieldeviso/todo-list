@@ -107,6 +107,8 @@ const addEventForm = (function () {
 
         // Add to project options to the Add to Project Dropdown
         addProjectOptions('standalone');
+        const projectSelect = eventForm.querySelector('select#event-project');
+        createFormComponents.createProjectOptions(projectSelect); // Append options to select parameter
 
         // Adds event listeners to the created form
         modalUX.addModalUX();

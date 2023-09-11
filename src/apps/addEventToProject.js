@@ -104,6 +104,15 @@ const addEventToProject = (function () {
         eventOption.disabled = false;
     }
 
+    // Link new event to a project
+    // const linkNewEvent = function (projId) {
+    //     const projectId = projId;
+
+    //     const 
+
+
+    // }
+
 
     const addEventToProjectEvent = function (btn) {
         const adderBtn = btn;

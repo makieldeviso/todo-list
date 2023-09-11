@@ -399,6 +399,10 @@ const eventsDisplay = (function () {
             const eventDisplay = createEventDisplay(event);
             itemDisplay.appendChild(eventDisplay);
         });
+
+        // Change back button action
+        // const backBtn = document.querySelector('button#back-sidebar');
+        // backBtn.dataset.action = 'events-previews';
     }
 
     const showFullEventToDOM = function (event, action) {

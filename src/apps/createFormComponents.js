@@ -213,6 +213,26 @@ const createFormComponents = (function () {
         return container
     }
 
+    // Create and append project select options
+    const createProjectOptions = function (parentSelect) {
+        const projects = memoryHandler.getProjects();
+        
+        const projectOptions = projects.map(project => {
+            const projectOption = document.createElement('option');
+            projectOption.setAttribute('value', project.projectId);
+            projectOption.textContent = `${project.title}`;
+
+            return projectOption;
+        });
+
+        const projectSelect = parentSelect;
+        projectOptions.forEach(option => projectSelect.appendChild(option));
+        
+    }
+
+
+
+
     const createSaveFormBtns = function (dataId) {
         // Create container lvl-1 parent
         const container = createContainer('comp-container save-cont', dataId);
@@ -237,7 +257,13 @@ const createFormComponents = (function () {
         return container;
     }
 
-    return { createFormElement, createBasicComponent, createPriorityBtns, createTaskAdder, createEventAdder, createSaveFormBtns }
+    return { createFormElement, 
+            createBasicComponent, 
+            createPriorityBtns, 
+            createTaskAdder, 
+            createEventAdder, 
+            createProjectOptions, 
+            createSaveFormBtns }
 })();
 
 

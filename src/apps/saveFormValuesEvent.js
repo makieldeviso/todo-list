@@ -76,7 +76,7 @@ const saveFormValuesEvent = (function () {
             valueGet('#event-project'),
             valueGet('button.prio-btn[data-selected="selected"]')
         )
-            
+    
         // Add tasks to the newEvent object
         const tasks = addTaskToEvent.getNewTasks();
         newEvent['tasks'] = tasks;
@@ -113,6 +113,9 @@ const saveFormValuesEvent = (function () {
         } else {
             memoryHandler.replaceEvent(eventForModId, newEvent);
         }
+
+        // Adds the event to the project object
+        memoryHandler.addEventToProject(newEvent.projectTag, newEvent.eventId);
         
         // Closes modal upon successful save
         // If edit event modal is open, upon closing show full display of new event

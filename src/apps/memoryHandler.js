@@ -1,4 +1,5 @@
 import { differenceInCalendarDays } from 'date-fns';
+import { projectsScripts } from './projectsScripts';
 
 const memoryHandler = (function () {
     // Events (start) -
@@ -187,6 +188,18 @@ const getProject = function (id) {
     return projectObj
 }
 
+const addEventToProject = function (projectId, eventId) {
+    // Find the project from the memory
+    const projectIndex = projects.findIndex(project => project.projectId === projectId);
+    const projectForMod = projects[projectIndex];
+
+    // Count current number for events for identification
+    const eventsCount = projectsScripts.countEventsOfProject(projectForMod);
+
+    // Modify the project by adding a new event link
+    projectForMod.eventLinks[`event-${eventsCount + 1}`] = eventId;
+}
+
 // Projects (end) -
 
 
@@ -209,6 +222,7 @@ const getProject = function (id) {
             saveProject,
             getProjects,
             getProject,
+            addEventToProject,
         };
 })();
 
