@@ -188,10 +188,15 @@ const getProject = function (id) {
     return projectObj
 }
 
-const addEventToProject = function (projectId, eventId) {
+const getProjectForMod = function (projectId) {
     // Find the project from the memory
     const projectIndex = projects.findIndex(project => project.projectId === projectId);
-    const projectForMod = projects[projectIndex];
+
+    return projects[projectIndex];
+}
+
+const addEventToProject = function (projectId, eventId) {
+    const projectForMod = getProjectForMod(projectId);
 
     // Count current number for events for identification
     const eventsCount = projectsScripts.countEventsOfProject(projectForMod);
@@ -200,8 +205,23 @@ const addEventToProject = function (projectId, eventId) {
     projectForMod.eventLinks[`event-${eventsCount + 1}`] = eventId;
 }
 
-// Projects (end) -
+const deleteEventFromProject = function (eventId, projectId) {
+    const projectForMod = getProjectForMod(projectId);
+    const projectEvents = projectForMod.eventLinks;
+    
+    // Create temp object that reassign event keys and omit event for deletion
+    const tempEvents = {};
+    for (const key in projectEvents) {
+        if (projectEvents[key] !== eventId) {
+            console.log(projectEvents[key])
+            tempEvents[`event-${Object.keys(tempEvents).length + 1}`] = projectEvents[key];
+        }
+    }
 
+    // Assign new value to the eventLinks
+    projectForMod.eventLinks = tempEvents;
+}
+// Projects (end) -
 
 
     return {
@@ -223,6 +243,7 @@ const addEventToProject = function (projectId, eventId) {
             getProjects,
             getProject,
             addEventToProject,
+            deleteEventFromProject,
         };
 })();
 

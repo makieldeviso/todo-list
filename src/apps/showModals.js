@@ -154,6 +154,10 @@ const showModals = (function () {
     const confirmEventDelete = function () {
         const eventId = this.dataset.id;
 
+        // Modify project object linked to this event
+        const projectId = memoryHandler.getEvent(eventId).projectTag;
+        memoryHandler.deleteEventFromProject(eventId, projectId);
+
         // Modify event object
         memoryHandler.deleteEvent(eventId);
 
