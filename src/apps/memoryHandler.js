@@ -221,6 +221,47 @@ const deleteEventFromProject = function (eventId, projectId) {
     // Assign new value to the eventLinks
     projectForMod.eventLinks = tempEvents;
 }
+
+const modifyEventLink = function (eventForMod, newEventId, oldProjectTag, newProjectTag) {
+    // console.log(eventForMod);
+    // console.log(newEventId);
+    // console.log(oldProjectTag);
+    // console.log(newProjectTag);
+    const projectForMod = getProjectForMod(oldProjectTag);
+
+
+    if (oldProjectTag === newProjectTag) {
+        if (eventForMod === newEventId) {
+            return
+
+        } else {
+            const projectEvents = projectForMod.eventLinks;
+
+            for (const event in projectEvents) {
+                if (projectEvents[event] === eventForMod) {
+                    projectEvents[event] = newEventId;
+                    break;
+                }
+            }
+
+            return
+        }
+    } 
+
+    if (oldProjectTag !== 'standalone' && newProjectTag === 'standalone') {
+        deleteEventFromProject(eventForMod, oldProjectTag);
+
+    } else if (oldProjectTag === 'standalone' && newProjectTag !== 'standalone') {
+        addEventToProject(newProjectTag, newEventId);
+
+    } else {
+        deleteEventFromProject(eventForMod, oldProjectTag);
+        addEventToProject(newProjectTag, newEventId);
+    }
+
+}   
+
+
 // Projects (end) -
 
 
@@ -244,6 +285,7 @@ const deleteEventFromProject = function (eventId, projectId) {
             getProject,
             addEventToProject,
             deleteEventFromProject,
+            modifyEventLink,
         };
 })();
 

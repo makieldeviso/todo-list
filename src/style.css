@@ -1423,9 +1423,11 @@ div.fullview.events-list {
     display: flex;
     flex-direction: column;
     gap: calc(var(--common-margin) * 0.5);
+    padding-bottom: calc(var(--common-margin) * 0.5); ;
     border: 2px solid var(--base-orange);
     border-radius: 10px;
     margin-top: calc(var(--common-margin) * 2);
+    background-color: white;
 }
 
 div.event-header {

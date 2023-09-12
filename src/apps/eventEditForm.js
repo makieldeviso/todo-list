@@ -26,8 +26,8 @@ const eventEditForm = (function () {
         const formattedDate = format(eventObj.schedule, 'yyyy-MM-dd');
         schedField.value = formattedDate;
 
-        // !!!!!!!!!!!!!!!!!!ADD PROJECT EDITING FEATURE!!!!!!!!!!!!!!!!!
-        
+        const projectLinked = editForm.querySelector(`option[value='${eventObj.projectTag}']`);
+        projectLinked.selected = true;
 
         const priorityBtns = editForm.querySelectorAll('button.prio-btn');
 

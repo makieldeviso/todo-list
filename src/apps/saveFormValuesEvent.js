@@ -4,8 +4,15 @@ import { addEventForm } from "./addEventForm";
 import { addTaskToEvent } from "./addTaskToEvent";
 import { eventsDisplay } from "./eventsDisplay";
 import { onLoadScreen } from "./onLoadScreen";
+import { eventsScript } from "./eventsScript";
 
 const saveFormValuesEvent = (function () {
+
+    // Reusable DOM value getter function
+    const valueGet = function (selector) {
+        const value = document.querySelector(`${selector}`).value;
+        return value;
+    }
 
     // Validates event form input fields
     const validateEventForm = function () {
@@ -61,12 +68,6 @@ const saveFormValuesEvent = (function () {
             return {title, description, schedule, projectTag, priority}
         }
 
-        // Reusable DOM value getter function
-        const valueGet = function (selector) {
-            const value = document.querySelector(`${selector}`).value;
-            return value
-        }
-
         // Execute factory function, to make event object
         // Note: arguments depends on valueGet function to get values from DOM
         const newEvent = createEvent(
@@ -110,12 +111,20 @@ const saveFormValuesEvent = (function () {
         // This replaces the old eventObj with new eventObj
         if (eventForModId === undefined) {
             memoryHandler.saveEvent(newEvent);
+
+            // Adds the event to the project object
+            memoryHandler.addEventToProject(newEvent.projectTag, newEvent.eventId);
+
         } else {
+            const oldProjectTag = eventsScript.getProperty(eventForModId, 'projectTag');
+
             memoryHandler.replaceEvent(eventForModId, newEvent);
+
+            // Modify event link to project
+            memoryHandler.modifyEventLink(eventForModId, newEvent.eventId, oldProjectTag, newEvent.projectTag);
         }
 
-        // Adds the event to the project object
-        memoryHandler.addEventToProject(newEvent.projectTag, newEvent.eventId);
+        
         
         // Closes modal upon successful save
         // If edit event modal is open, upon closing show full display of new event
