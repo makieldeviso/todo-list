@@ -8,6 +8,7 @@ import { saveFormValues } from "./saveFormValuesEvent";
 import { addTaskToEvent } from "./addTaskToEvent";
 import { displayContent } from "./displayContent";
 import { onLoadScreen } from "./onLoadScreen";
+import { projectsDisplay } from "./projectsDisplay";
 
 const showModals = (function () {
     
@@ -168,15 +169,29 @@ const showModals = (function () {
         displayContent.clearItemDisplay('event-fullview');
 
         // Change back button action
+        // Note: Item display depends on where event full view was accessed
         // Note: since item display returns to previews page, back button dataset is changed
-        const backBtn = document.querySelector('button#back-sidebar');
-        backBtn.dataset.action = 'events-previews';
 
-        // Display events preview window
-        eventsDisplay.displayEventsToDOM();
-        
+        const backBtn = document.querySelector('button#back-sidebar');
+
+        if (this.hasAttribute('data-link')) {
+            backBtn.dataset.action = 'project-fullview';
+            backBtn.removeAttribute('data-mode');
+            backBtn.removeAttribute('data-link');
+
+            // Display project fullview
+            projectsDisplay.showFullProject(this.dataset.link);
+
+        } else {
+            backBtn.dataset.action = 'events-previews';
+
+            // Display events previews
+            eventsDisplay.displayEventsToDOM();
+        }
+
         // Execute onload/ sidebar counters
         onLoadScreen.displayEventsCount();
+
     }
 
     const closeEventDelete = function () {

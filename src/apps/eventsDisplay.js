@@ -376,8 +376,6 @@ const eventsDisplay = (function () {
         const eventFullViews = document.querySelectorAll('div.event-fullview');
         eventFullViews.forEach(fullview => displayContent.removeDisplay(fullview));
 
-        // Ensures action btns are refreshed when changes are applied
-
         // Add attribute to back-button
         backBtn.dataset.action = 'event-fullview';
 
@@ -400,9 +398,6 @@ const eventsDisplay = (function () {
             itemDisplay.appendChild(eventDisplay);
         });
 
-        // Change back button action
-        // const backBtn = document.querySelector('button#back-sidebar');
-        // backBtn.dataset.action = 'events-previews';
     }
 
     const showFullEventToDOM = function (event, action) {
