@@ -191,6 +191,11 @@ const getProject = function (id) {
     return projectObj
 }
 
+const countProjects = function () {
+    const projectsCount = getProjects().length;
+    return projectsCount;
+}
+
 const getProjectForMod = function (projectId) {
     // Find the project from the memory
     const projectIndex = projects.findIndex(project => project.projectId === projectId);
@@ -307,6 +312,7 @@ const completeProject = function (id) {
             saveProject,
             getProjects,
             getProject,
+            countProjects,
             addEventToProject,
             deleteEventFromProject,
             modifyEventLink,
