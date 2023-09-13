@@ -143,7 +143,7 @@ const displayContent = (function () {
     const removeDisplay = function (item) {
         const itemDisplay = document.querySelector('div#item-display');
         itemDisplay.removeChild(item);
-    }
+    }   
 
     const addSidebarEvents = function () {
         const eventsBtn = document.querySelectorAll('div.category');

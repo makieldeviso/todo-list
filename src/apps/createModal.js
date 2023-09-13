@@ -1,6 +1,7 @@
 import { eventsScript } from "./eventsScript";
 import { memoryHandler } from "./memoryHandler";
 import { modalUX } from "./modalUX";
+import { projectsScripts } from "./projectsScripts";
 
 const createModal = (function () {
     // Create modal and append to the 'main'
@@ -69,18 +70,18 @@ const createModal = (function () {
         btnsCont.setAttribute('class', 'save-cont');
         btnsCont.setAttribute('class', 'save-cont');
 
-        const createBtn = function (eventId, assignClass, assignValue, label) {
+        const createBtn = function (assignId, assignClass, assignValue, label) {
             const newBtn = document.createElement('button');
             newBtn.setAttribute('class', assignClass);
             newBtn.setAttribute('value', assignValue);
-            newBtn.dataset.id = eventId;
+            newBtn.dataset.id = assignId;
             newBtn.textContent = label;
 
             btnsCont.appendChild(newBtn);
         }
 
-        createBtn(btnProp.eventId, btnProp.neg.class, btnProp.neg.value, btnProp.neg.label);
-        createBtn(btnProp.eventId, btnProp.pos.class, btnProp.pos.value, btnProp.pos.label);
+        createBtn(btnProp.assignId, btnProp.neg.class, btnProp.neg.value, btnProp.neg.label);
+        createBtn(btnProp.assignId, btnProp.pos.class, btnProp.pos.value, btnProp.pos.label);
     
         return btnsCont;
     }
@@ -94,6 +95,7 @@ const createModal = (function () {
         return banner
     }
 
+    // Events prompts (start)
     // Creates event completion prompt
     const createEventCompletionPrompt = function (eventId) {
 
@@ -128,7 +130,7 @@ const createModal = (function () {
 
         // Executes createTwoChoiceBtn
         const confirmBtnsCont = createTwoChoiceBtn({
-            eventId: eventId,
+            assignId: eventId,
             pos: {
                 class: 'save',
                 value: 'confirm-complete',
@@ -179,7 +181,7 @@ const createModal = (function () {
 
         // Executes createTwoChoiceBtn
         const confirmBtnsCont = createTwoChoiceBtn({
-            eventId: eventId,
+            assignId: eventId,
             pos: {
                 class: 'save',
                 value: 'confirm-delete',
@@ -198,8 +200,70 @@ const createModal = (function () {
         const components = [promptHeader, content];
         components.forEach(comp => modalCont.appendChild(comp));
     }
+    // Events prompts (end)
 
-    return { createNewModal, createAddOptionsBtns, createEventCompletionPrompt, createBanner, createEventDeletePrompt }
+    // Projects prompts (start)
+    // Creates event completion prompt
+    const createProjectCompletionPrompt = function (projectId) {
+        console.log(projectId);
+        const projectObj = memoryHandler.getProject(projectId);
+        const totalEvents = projectsScripts.countEventsOfProject(projectObj);
+        const projectEventsCompleted = projectsScripts.projectEventsCompleted(projectObj);
+
+        // Create dialog element with addition elements
+        createNewModal('complete-project');
+
+        const promptModal = document.querySelector('dialog#complete-project-prompt');
+        const modalCont = promptModal.querySelector('div.modal-cont');
+
+        const promptHeader = createBanner('Complete Project');
+
+        const content = document.createElement('div');
+        content.setAttribute('class', 'completion-content');
+
+        const reminder = document.createElement('p');
+        reminder.setAttribute('class', 'reminder');
+
+        // Conditional reminder depending on tasks status
+        if (totalEvents === 0) {
+            reminder.textContent = 'Mark this project as completed?';
+
+        } else if (projectEventsCompleted) {
+            reminder.textContent = 'You have accomplished all the events. Complete this project?';
+        } 
+
+        // Executes createTwoChoiceBtn
+        const confirmBtnsCont = createTwoChoiceBtn({
+            assignId: projectId,
+            pos: {
+                class: 'save',
+                value: 'confirm-complete',
+                label: 'Yes',
+                },
+            neg: {
+                class: 'clear',
+                value: 'dont-complete',
+                label: 'No',
+                }
+        });
+
+        content.appendChild(reminder); //Append reminder message to content div
+        content.appendChild(confirmBtnsCont); //Append buttons container to content div
+
+        const components = [promptHeader, content];
+        components.forEach(comp => modalCont.appendChild(comp));
+    }
+
+     // Projects prompts (end)
+
+    return { createNewModal, 
+            createAddOptionsBtns,
+            createEventCompletionPrompt, 
+            createBanner, 
+            createEventDeletePrompt,
+        
+            createProjectCompletionPrompt,
+        }
 
 })();
 

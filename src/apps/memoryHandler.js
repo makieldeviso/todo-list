@@ -25,7 +25,8 @@ const memoryHandler = (function () {
                     }
                 },
                 "eventId": "ms.dodo'sbirthday1689724800000",
-                "eventStatus": 'pending',
+                "eventStatus": 'done',
+                "completion": 'on-time',
             },
 
             {
@@ -50,6 +51,7 @@ const memoryHandler = (function () {
                 },
                 "eventId": "doyourthing",
                 "eventStatus": 'done',
+                "completion": 'done-overdue',
             },
     ];
     
@@ -156,7 +158,8 @@ const placeholderProjects = [
         "priority": "high",
         "eventLinks": {"event-1": "ms.dodo'sbirthday1689724800000", "event-2": "doyourthing"},
         "projectId": "newprojecttest1693267200000",
-        "projectStatus": 'done'
+        "projectStatus": 'done',
+        "completion": "done-overdue"
     },
 
     {
@@ -223,12 +226,7 @@ const deleteEventFromProject = function (eventId, projectId) {
 }
 
 const modifyEventLink = function (eventForMod, newEventId, oldProjectTag, newProjectTag) {
-    // console.log(eventForMod);
-    // console.log(newEventId);
-    // console.log(oldProjectTag);
-    // console.log(newProjectTag);
     const projectForMod = getProjectForMod(oldProjectTag);
-
 
     if (oldProjectTag === newProjectTag) {
         if (eventForMod === newEventId) {
@@ -261,6 +259,32 @@ const modifyEventLink = function (eventForMod, newEventId, oldProjectTag, newPro
 
 }   
 
+// Mark complete a project
+const completeProject = function (id) {
+    const projectObj = getProjectForMod(id);
+
+    console.log(id);
+
+    projectObj.projectStatus = 'done';
+
+    // add property completion
+    const completionDate = new Date();
+    const schedule = projectObj.deadline;
+    const deadlineAlert =  differenceInCalendarDays(schedule, completionDate);
+
+    let completionRemark;
+
+    if (deadlineAlert === 0 ) {
+        completionRemark = 'on-time';
+    } else if (deadlineAlert > 0) {
+        completionRemark = 'early';
+    } else if (deadlineAlert < 0) {
+        completionRemark = 'done-overdue';
+    }
+
+    projectObj.completion = completionRemark;
+}
+
 
 // Projects (end) -
 
@@ -286,6 +310,7 @@ const modifyEventLink = function (eventForMod, newEventId, oldProjectTag, newPro
             addEventToProject,
             deleteEventFromProject,
             modifyEventLink,
+            completeProject,
         };
 })();
 

@@ -231,12 +231,76 @@ const showModals = (function () {
         button.addEventListener('click', showEventCompletionPrompt);
     }
 
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // Opens prompt before completing an event (start)
+    const showProjectCompletionPrompt = function () {
+        const projectId = this.dataset.id;
+
+        // Create prompt modal before completion
+        createModal.createProjectCompletionPrompt(projectId);
+
+        const promptModal = document.querySelector('dialog#complete-project-prompt');
+        const closeBtn = document.querySelector('button#close-complete-project');
+        const dontCompleteBtn = document.querySelector('button[value="dont-complete"]');
+        const completeBtn = document.querySelector('button[value="confirm-complete"]');
+
+        promptModal.showModal();
+
+        // Add eventListener to close-complete-event/ close modal button
+        closeBtn.addEventListener('click', closeProjectCompletion);
+
+        // Add eventlistener to save and don't save buttons;
+        dontCompleteBtn.addEventListener('click', closeProjectCompletion);
+       
+        // Note: When user confirm completion confirmProjectCompletion which
+        // modifies event object, closes confirm modal then display new event full view
+        completeBtn.addEventListener('click', confirmProjectCompletion);
+    }
+
+    const confirmProjectCompletion = function () {
+        const projectId = this.dataset.id;
+
+        // Modify event object
+        memoryHandler.completeProject(projectId);
+
+        // Close Modal
+        closeProjectCompletion();
+
+        // Display new event full view
+        projectsDisplay.showFullProject(projectId);
+
+        console.log(memoryHandler.getProjects());
+    }
+
+    const closeProjectCompletion = function () {
+        // Closes modal
+        const completionPromptModal = document.querySelector('dialog#complete-project-prompt');
+        completionPromptModal.close();
+
+        // Removes modal from the DOM
+        const main = document.querySelector('main');
+        main.removeChild(completionPromptModal);
+    }
+    // Opens prompt before completing an event (end)
+
+
+
+
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // Add event listener to project completion button
+    const addCompletionPromptProject = function (button) {
+        button.addEventListener('click', showProjectCompletionPrompt);
+    }
+
     return { addButtonEvent, 
             closeModal, 
             addCompletionPromptEvent, 
             showEventEditModal,
             closeEventEdit,
-            showEventDeletePrompt }
+            showEventDeletePrompt,
+        
+            addCompletionPromptProject}
 })();
 
 export { showModals };

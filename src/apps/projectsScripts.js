@@ -16,10 +16,6 @@ const projectsScripts = (function () {
         return eventsScript.checkDeadline(dateToCheck);
     }
 
-    // const getEventStatus = function () {
-        
-    // }
-
     const getProjectEvents = function (project) {
         const projectEvents = getProperty(project.projectId, 'eventLinks');
         const eventsKeys = Object.keys(projectEvents);
@@ -36,7 +32,6 @@ const projectsScripts = (function () {
         
         return projectEventObj; //return array of objects
     }
-
 
     const countEventsOfProject = function (project) {
         const projectEvents = getProperty(project.projectId, 'eventLinks');
@@ -55,9 +50,20 @@ const projectsScripts = (function () {
         return doneEventsCount;
     }
 
+    const projectEventsCompleted = function (project) {
+        let result = false;
 
+        const doneEvents = countDoneEvents(project);
+        const eventsOfProject = countEventsOfProject(project);
 
-    return {getProperty, checkDeadline, countEventsOfProject, countDoneEvents, getProjectEvents}
+        if (doneEvents === eventsOfProject) {
+            result = true;
+        } 
+
+        return result;
+    }
+
+    return {getProperty, checkDeadline, countEventsOfProject, countDoneEvents, getProjectEvents, projectEventsCompleted}
 
 })();
 

@@ -4,6 +4,7 @@ import { projectsScripts } from "./projectsScripts";
 import { memoryHandler } from "./memoryHandler";
 import { displayContent } from "./displayContent";
 import { eventsDisplay } from "./eventsDisplay";
+import { showModals } from "./showModals";
 
 const projectsDisplay = (function () {
 
@@ -223,7 +224,7 @@ const projectsDisplay = (function () {
         // Note: projectEvents is an Array of eventObj linked to this project
         const projectEvents = projectsScripts.getProjectEvents(projectObj); 
 
-        const eventsPreviews = projectEvents.forEach(event => {
+        projectEvents.forEach(event => {
             // Create event preview using eventsDisplay module
             const eventPreview = eventsDisplay.createEventDisplay(event);
             eventPreview.dataset.mode = 'project-view';
@@ -232,70 +233,32 @@ const projectsDisplay = (function () {
             eventsListCont.appendChild(eventPreview);
         });
         
-
-        // const tasksArray = taskKeys.map(key => {
-        //     // Note: key is string e.g. task-1, task-2
-        //     const taskObj = eventTasks[key]; // this is the object for individual task
-
-        //     const taskCont = document.createElement('div');
-        //     taskCont.setAttribute('class', 'task');
-            
-        //     const checkBtn = document.createElement('button');
-        //     checkBtn.setAttribute('class', 'check');
-        //     checkBtn.setAttribute('value', taskObj.status);
-
-        //     // Conditional if event is not yet done, add eventlistener to tasks
-        //     if (projectObj.eventStatus !== 'done') {
-        //         checkBtn.addEventListener('click', changeTaskStatus);
-        //     }
-
-        //     const taskText = makeText('task', taskObj.task);
-            
-        //     // Add data attributes to the components
-        //     const components = [taskCont, checkBtn, taskText];
-        //     components.forEach(comp => {
-        //         comp.dataset.id = projectObj.eventId;
-        //         comp.dataset.number = key;
-        //     });
-
-        //     // Appends other components to the taskCont
-        //     for (let i = 1; i < components.length; i++) {
-        //         components[0].appendChild(components[i]);
-        //     }
-
-        //     return taskCont;
-        // });
-
-        // Append individual tasks to the tasksListCont
-        // tasksArray.forEach(task => tasksListCont.appendChild(task));
-
-        // Create tasks list (end) --
-
         // Create action btns (start) --
         const actionBtnsCont = document.createElement('div');
         actionBtnsCont.setAttribute('class', 'project-action');
 
-        if (projectObj.eventStatus !== 'done') {
+        if (projectObj.projectStatus !== 'done') {
             const completeBtn = document.createElement('button');
             completeBtn.dataset.id = projectObj.projectId;
             completeBtn.setAttribute('value', 'complete-project');
             completeBtn.textContent = 'Complete Project';
 
+            const countDoneEvents = projectsScripts.countDoneEvents(projectObj);
+            const countEvents = projectsScripts.countEventsOfProject(projectObj);
+
+            if (countDoneEvents !== countEvents) {
+                completeBtn.disabled = true;
+            }
+
             // Add event listener through module
             // Note: modal activities here
-            // showModals.addCompletionPromptEvent(completeBtn);
+            showModals.addCompletionPromptProject(completeBtn);
 
             actionBtnsCont.appendChild(completeBtn);
         } else {
             const message = document.createElement('p');
             message.setAttribute('class', 'message');
-            
-
-            // if (projectScript.eventsCompleted(projectObj.tasks)) {
-            //     message.innerHTML = 'You have completed this event.<br/>Well Done!';
-            // } else {
-            //     message.innerHTML = 'You have completed this event without accomplishing all tasks.<br/>Living dangerously, are we?'
-            // }
+            message.innerHTML = 'You have completed this project.<br/>Well Done!';
 
             actionBtnsCont.appendChild(message);
         }
