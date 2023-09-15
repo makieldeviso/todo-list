@@ -55,6 +55,37 @@ const displayContent = (function () {
         }
     }
 
+    // Reusable create and append span function
+    const createSpan = function (parentP, assignClass, text) {
+        const newSpan = document.createElement('span');
+        newSpan.setAttribute('class', assignClass);
+        newSpan.textContent = text;
+
+        parentP.appendChild(newSpan);
+    }
+
+    // Reusable action buttons maker
+    // Note: auto append to action btn ribbon
+    const createActionBtn = function (assignClass, assignValue, linkedId, linkedFunc, text) {
+        const actionRibbon = document.querySelector('div#action-btns');
+
+        // Condition check to detect if button exist 
+        const existingBtn = document.querySelector(`button.action-btn.${assignClass}`);
+
+        if (existingBtn === null) {
+            const newBtn = document.createElement('button');
+            newBtn.setAttribute('class', `action-btn ${assignClass}`);
+            newBtn.setAttribute('value', assignValue);
+            newBtn.dataset.id = linkedId;
+            newBtn.addEventListener('click', linkedFunc);
+
+            createSpan(newBtn, 'icon', '');
+            createSpan(newBtn, 'text', text);
+
+            actionRibbon.appendChild(newBtn);
+        } 
+    }
+
     const clearItemDisplay = function (action) {
         
         // Reusable function
@@ -155,7 +186,15 @@ const displayContent = (function () {
         backBtn.addEventListener('click', backSideBar);
     }
 
-    return {showDisplay, addSidebarEvents, removeDisplay, backBtnEvents, removeActionBtn, clearItemDisplay}
+    return {showDisplay, 
+            addSidebarEvents, 
+            removeDisplay, 
+            backBtnEvents, 
+            removeActionBtn, 
+            clearItemDisplay, 
+            createActionBtn,
+            createSpan,
+        }
 
 })();
 

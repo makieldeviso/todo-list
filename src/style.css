@@ -575,6 +575,8 @@ p.fullview.event-sched span.sched-icon {
 p.fullview.event-prio {
     font-size: calc(var(--header-font-size) * 0.8);
     margin: 0;
+    width: calc(100px + 1vw);
+    min-width: max-content;
 }
 
 div.fullview.tasks-list {
@@ -926,6 +928,10 @@ p.project-event-count {
 
 p.project-event-count.done {
     color: var(--base-yellow);
+}
+
+div.project-preview[data-status="done"] p.project-event-count.done {
+    color: #54B435;
 }
 
 p.event-title, 
@@ -1351,6 +1357,27 @@ div.project-fullview {
     background-color: #f5d5c1;
 }   
 
+div.project-fullview[data-status="done"] {
+    background-color: var(--darkest-color);
+}
+
+div.project-fullview[data-status="done"] p.fullview.project-title {
+    color: #54B435;
+}
+
+div.project-fullview[data-status="done"] p.label {
+    color: white;
+}
+
+div.project-fullview[data-status="done"] p.fullview.project-desc,
+div.project-fullview[data-status="done"] p.fullview.project-deadline span.deadline-date {
+    color: var(--base-yellow);
+}
+
+
+
+
+
 div.project-status {
     grid-area: status;
     width: var(--header-font-size);
@@ -1416,6 +1443,8 @@ p.fullview.project-deadline span.deadline-icon {
 p.fullview.project-prio {
     font-size: calc(var(--header-font-size) * 0.8);
     margin: 0;
+    width: calc(100px + 1vw);
+    min-width: max-content;
 }
 
 div.fullview.events-list {
@@ -1454,6 +1483,10 @@ div.event-header p.project-event-count {
     padding: calc(var(--common-padding) * 0.8);
     border-radius: 10px;
     color: black;
+}
+
+div.event-header p.project-event-count.done {
+    color: #54B435;
 }
 
 div.fullview.events-list div.event {
@@ -1521,6 +1554,7 @@ div.project-action p.message {
     font-size: calc(var(--header-font-size) * 1);
     text-align: center;
     margin-top: var(--common-margin);
+    color: #54B435;
 }
 
 /* Completion and delete prompt modal (start) --- */

@@ -37,7 +37,6 @@ const projectsDisplay = (function () {
         newEventCounter.setAttribute('class', 'project-event-count pending');
         newEventCounter.dataset.id = project.projectId;
 
-        const events = project.eventLinks; // this is Object
         const done = projectsScripts.countDoneEvents(project);
         const total = projectsScripts.countEventsOfProject(project);
 
@@ -53,6 +52,28 @@ const projectsDisplay = (function () {
 
         return newEventCounter;
     }
+
+    // // Reusable action buttons maker
+    // // Note: auto append to action btn ribbon
+    // const createActionBtn = function (assignClass, assignValue, projectId, linkedFunc, text) {
+    //     const actionRibbon = document.querySelector('div#action-btns');
+
+    //     // Condition check to detect if button exist 
+    //     const existingBtn = document.querySelector(`button.action-btn.${assignClass}`);
+
+    //     if (existingBtn === null) {
+    //         const newBtn = document.createElement('button');
+    //         newBtn.setAttribute('class', `action-btn ${assignClass}`);
+    //         newBtn.setAttribute('value', assignValue);
+    //         newBtn.dataset.id = projectId;
+    //         newBtn.addEventListener('click', linkedFunc);
+
+    //         createSpan(newBtn, 'icon', '');
+    //         createSpan(newBtn, 'text', text);
+
+    //         actionRibbon.appendChild(newBtn);
+    //     } 
+    // }
 
     // Event preview/ display  DOM maker
     const createProjectPreview = function (projectObj) {

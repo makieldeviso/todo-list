@@ -112,8 +112,10 @@ const saveFormValuesEvent = (function () {
         if (eventForModId === undefined) {
             memoryHandler.saveEvent(newEvent);
 
-            // Adds the event to the project object
-            memoryHandler.addEventToProject(newEvent.projectTag, newEvent.eventId);
+            if (newEvent.projectTag !== 'standalone') {
+                // Adds the event to the project object
+                memoryHandler.addEventToProject(newEvent.projectTag, newEvent.eventId);
+            }
 
         } else {
             const oldProjectTag = eventsScript.getProperty(eventForModId, 'projectTag');
@@ -124,7 +126,6 @@ const saveFormValuesEvent = (function () {
             memoryHandler.modifyEventLink(eventForModId, newEvent.eventId, oldProjectTag, newEvent.projectTag);
         }
 
-        
         
         // Closes modal upon successful save
         // If edit event modal is open, upon closing show full display of new event

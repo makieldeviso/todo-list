@@ -25,15 +25,6 @@ const eventsDisplay = (function () {
         return newText;
     }
 
-    // Reusable create and append span function
-    const createSpan = function (parentP, assignClass, text) {
-        const newSpan = document.createElement('span');
-        newSpan.setAttribute('class', assignClass);
-        newSpan.textContent = text;
-
-        parentP.appendChild(newSpan);
-    }
-
     // Reusable task counter creator function
     const createTaskCounter = function (event) {
         const newTaskCounter = document.createElement('p');
@@ -44,10 +35,10 @@ const eventsDisplay = (function () {
         const done = eventsScript.countDoneTasks(tasks);
         const total = eventsScript.countTasksOfEvent(tasks);
 
-        createSpan(newTaskCounter, 'done', `${done}`);
-        createSpan(newTaskCounter, 'slash', '/');
-        createSpan(newTaskCounter, 'total', `${total}`);
-        createSpan(newTaskCounter, 'label', 'tasks');
+        displayContent.createSpan(newTaskCounter, 'done', `${done}`);
+        displayContent.createSpan(newTaskCounter, 'slash', '/');
+        displayContent.createSpan(newTaskCounter, 'total', `${total}`);
+        displayContent.createSpan(newTaskCounter, 'label', 'tasks');
 
         if (done === total) {
             newTaskCounter.classList.remove('pending');
@@ -55,40 +46,6 @@ const eventsDisplay = (function () {
         } 
 
         return newTaskCounter;
-    }
-
-    // Reusable action buttons maker
-    // Note: auto append to action btn ribbon
-    const createActionBtn = function (assignClass, assignValue, eventId, linkedFunc, text) {
-        const actionRibbon = document.querySelector('div#action-btns');
-
-        // Condition check to detect if button exist 
-        const existingBtn = document.querySelector(`button.action-btn.${assignClass}`);
-
-        if (existingBtn === null) {
-            const newBtn = document.createElement('button');
-            newBtn.setAttribute('class', `action-btn ${assignClass}`);
-            newBtn.setAttribute('value', assignValue);
-            newBtn.dataset.id = eventId;
-            newBtn.addEventListener('click', linkedFunc);
-
-            createSpan(newBtn, 'icon', '');
-            createSpan(newBtn, 'text', text);
-
-            actionRibbon.appendChild(newBtn);
-        } 
-    }
-
-    const getEventProjectTitle = function (obj) {
-        let projectTitle;
-
-        if (obj.projectTag === 'standalone') {
-            projectTitle = 'Standalone';
-        } else {
-            projectTitle = projectsScripts.getProperty(obj.projectTag, 'title')
-        }
-
-        return projectTitle;
     }
 
     // Changes status of task of an event
@@ -142,12 +99,12 @@ const eventsDisplay = (function () {
         
         // Conditional don't add edit button if event is completed
         if (eventObj.eventStatus !== 'done') {
-            createActionBtn('edit', 'edit-event', eventObj.eventId, eventEditForm.showEditEventForm, 'Edit');
+            displayContent.createActionBtn('edit', 'edit-event', eventObj.eventId, eventEditForm.showEditEventForm, 'Edit');
         }
         // Create edit button appended on the action buttons ribbon (end) -
 
         // Create delete button appended on the action buttons ribbon (start) -
-        createActionBtn('delete', 'delete-event', eventObj.eventId, eventDelete.showDeletePrompt, 'Delete');
+        displayContent.createActionBtn('delete', 'delete-event', eventObj.eventId, eventDelete.showDeletePrompt, 'Delete');
         // Create delete button appended on the action buttons ribbon (end) -
 
         // Create event full view container
@@ -167,7 +124,7 @@ const eventsDisplay = (function () {
         const desc = makeText('fullview event-desc', eventObj.description);
 
         const projLabel = makeText('fullview proj-label label', 'Project:');
-        const proj = makeText('fullview event-proj', getEventProjectTitle(eventObj));
+        const proj = makeText('fullview event-proj', eventsScript.getEventProjectTitle(eventObj));
 
         const prio = makeText('event-prio', eventObj.priority);
         prio.classList.add('fullview');
@@ -181,8 +138,8 @@ const eventsDisplay = (function () {
         // Note: use date-fns
         const dateString = format(eventObj.schedule, 'ccc, MMM dd, yyyy');
 
-        createSpan(sched, 'sched-icon', '');
-        createSpan(sched, 'sched-date', dateString);
+        displayContent.createSpan(sched, 'sched-icon', '');
+        displayContent.createSpan(sched, 'sched-date', dateString);
          // Create sched (end) --
 
         // Create tasks list (start) --
@@ -301,7 +258,7 @@ const eventsDisplay = (function () {
         // Execute makeText and assign to variables  
         const newTitle = makeText('event-title', eventObj.title);
         const newDesc = makeText('event-desc', eventObj.description);
-        const newProjTag = makeText('event-proj', getEventProjectTitle(eventObj));
+        const newProjTag = makeText('event-proj', eventsScript.getEventProjectTitle(eventObj));
         const newPrio = makeText('event-prio', eventObj.priority);
         // (2-5) (end)-
 
@@ -316,12 +273,12 @@ const eventsDisplay = (function () {
 
         // Checks if event was already completed
         if (eventObj.completion === undefined) {
-            createSpan(newSched, `sched-icon ${deadlineAlert}`, '');
+            displayContent.createSpan(newSched, `sched-icon ${deadlineAlert}`, '');
         } else {
-            createSpan(newSched, `sched-icon ${eventObj.completion}`, '');
+            displayContent.createSpan(newSched, `sched-icon ${eventObj.completion}`, '');
         }
 
-        createSpan(newSched, 'sched-date', dateString);
+        displayContent.createSpan(newSched, 'sched-date', dateString);
         // (6) (end)-
 
         // (7) (start)-
