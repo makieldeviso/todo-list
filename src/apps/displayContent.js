@@ -123,8 +123,8 @@ const displayContent = (function () {
 
             removeDisplay(projectFullView);
 
-            // // Note: removeActionBtn accepts multiple buttons argument
-            // removeActionBtn(editBtn, deleteBtn);
+            // Note: removeActionBtn accepts multiple buttons argument
+            removeActionBtn(editBtn, deleteBtn);
 
         }
     }

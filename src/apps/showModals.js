@@ -232,6 +232,84 @@ const showModals = (function () {
     }
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // PROJECT DELETION
+    // Show project delete prompt modal (start) - 
+    const showProjectDeletePrompt = function (id) {
+        const projectId = id;
+
+        // Create prompt modal before completion
+        createModal.createProjectDeletePrompt(projectId);
+
+        const promptModal = document.querySelector('dialog#delete-project-prompt');
+        const closeBtn = document.querySelector('button#close-delete-project');
+        const dontDeleteBtn = document.querySelector('button[value="dont-delete"]');
+        const deleteBtn = document.querySelector('button[value="confirm-delete"]');
+
+        promptModal.showModal();
+
+        // Add eventListener to close-delete-project/ close modal button
+        closeBtn.addEventListener('click', closeProjectDelete);
+
+        // Add eventlistener to delete and don't delete buttons;
+        dontDeleteBtn.addEventListener('click', closeProjectDelete);
+       
+        // Note: When user confirm deletion confirmProjectDeletion which
+        // modifies project object, closes confirm modal then display new projects preview
+        deleteBtn.addEventListener('click', confirmProjectDelete);
+    }
+
+    const closeProjectDelete = function () {
+        // Closes modal
+        const deletePromptModal = document.querySelector('dialog#delete-project-prompt');
+        deletePromptModal.close();
+
+        // Removes modal from the DOM
+        const main = document.querySelector('main');
+        main.removeChild(deletePromptModal);
+    }
+
+    const confirmProjectDelete = function () {
+        const projectId = this.dataset.id;
+
+        // Delete project from memory and modifies events linked to this project 
+        memoryHandler.deleteProject(projectId);
+
+        // Close Modal
+        closeProjectDelete();
+
+        // Removes current project full view in the DOM
+        displayContent.clearItemDisplay('project-fullview');
+
+        // Change back button action
+        // Note: Item display depends on where event full view was accessed
+        // Note: since item display returns to previews page, back button dataset is changed
+
+        const backBtn = document.querySelector('button#back-sidebar');
+
+        // if (this.hasAttribute('data-link')) {
+        //     backBtn.dataset.action = 'project-fullview';
+        //     backBtn.removeAttribute('data-mode');
+        //     backBtn.removeAttribute('data-link');
+
+        //     // Display project fullview
+        //     projectsDisplay.showFullProject(this.dataset.link);
+
+        // } else {
+        //     backBtn.dataset.action = 'project-previews';
+
+        //     // Display events previews
+        //     projectsDisplay.displayProjectsToDOM();
+        // }
+
+        backBtn.dataset.action = 'projects-previews';
+        projectsDisplay.displayProjectsToDOM();
+
+        // Execute onload/ sidebar counters
+        onLoadScreen.displayEventsCount();
+
+    }
+
+    // PROJECT COMPLETION
     // Opens prompt before completing an event (start)
     const showProjectCompletionPrompt = function () {
         const projectId = this.dataset.id;
@@ -283,7 +361,7 @@ const showModals = (function () {
     }
     // Opens prompt before completing an event (end)
 
-
+    
 
 
 
@@ -300,7 +378,9 @@ const showModals = (function () {
             closeEventEdit,
             showEventDeletePrompt,
         
-            addCompletionPromptProject}
+            addCompletionPromptProject,
+            showProjectDeletePrompt,
+        }
 })();
 
 export { showModals };

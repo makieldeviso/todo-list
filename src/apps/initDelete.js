@@ -1,7 +1,8 @@
 import { showModals } from "./showModals";
+import { memoryHandler } from "./memoryHandler";
 
-const eventDelete = (function () {
-    const showDeletePrompt = function () {
+const initDelete = (function () {
+    const showDeleteEventPrompt = function () {
         const eventId = this.dataset.id;
 
         // Show/ Display confirm delete prompt modal
@@ -18,7 +19,17 @@ const eventDelete = (function () {
 
     }
 
-    return {showDeletePrompt};
+    const showDeleteProjectPrompt = function () {
+        const projectId = this.dataset.id;
+
+        // Show/ Display confirm delete prompt modal
+        showModals.showProjectDeletePrompt(projectId);
+
+
+        // memoryHandler.deleteProject(projectId);
+    }
+
+    return {showDeleteEventPrompt, showDeleteProjectPrompt};
 })();
 
-export {eventDelete};
+export {initDelete};

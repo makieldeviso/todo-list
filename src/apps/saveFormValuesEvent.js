@@ -126,7 +126,6 @@ const saveFormValuesEvent = (function () {
             memoryHandler.modifyEventLink(eventForModId, newEvent.eventId, oldProjectTag, newEvent.projectTag);
         }
 
-        
         // Closes modal upon successful save
         // If edit event modal is open, upon closing show full display of new event
         if (saveType === 'save-new-event') {

@@ -254,6 +254,57 @@ const createModal = (function () {
         components.forEach(comp => modalCont.appendChild(comp));
     }
 
+    // Creates project delete prompt
+    const createProjectDeletePrompt = function (projectId) {
+
+        const projectObj = memoryHandler.getProject(projectId);
+
+        const projectStatus = projectObj.projectStatus;
+
+        // Create dialog element with addition elements
+        createNewModal('delete-project');
+
+        const promptModal = document.querySelector('dialog#delete-project-prompt');
+        const modalCont = promptModal.querySelector('div.modal-cont');
+
+        const promptHeader = createBanner('Delete Project');
+
+        const content = document.createElement('div');
+        content.setAttribute('class', 'delete-content');
+
+        const reminder = document.createElement('p');
+        reminder.setAttribute('class', 'reminder');
+
+        // Conditional reminder depending on tasks status
+        if (projectStatus === 'pending') {
+            reminder.textContent = 'You have not yet completed this project. Are you sure you want to delete project?';
+
+        } else if (projectStatus === 'done') {
+            reminder.textContent = 'Good job! You have already completed this project. Confirm event deletion?';
+        }
+
+        // Executes createTwoChoiceBtn
+        const confirmBtnsCont = createTwoChoiceBtn({
+            assignId: projectId,
+            pos: {
+                class: 'save',
+                value: 'confirm-delete',
+                label: 'Yes',
+                },
+            neg: {
+                class: 'clear',
+                value: 'dont-delete',
+                label: 'No',
+                }
+        });
+
+        content.appendChild(reminder); //Append reminder message to content div
+        content.appendChild(confirmBtnsCont); //Append buttons container to content div
+
+        const components = [promptHeader, content];
+        components.forEach(comp => modalCont.appendChild(comp));
+    }
+
      // Projects prompts (end)
 
     return { createNewModal, 
@@ -263,6 +314,7 @@ const createModal = (function () {
             createEventDeletePrompt,
         
             createProjectCompletionPrompt,
+            createProjectDeletePrompt,
         }
 
 })();

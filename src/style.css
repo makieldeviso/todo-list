@@ -678,7 +678,8 @@ div.event-action p.message {
 
 /* Completion and delete prompt modal (start) --- */
 dialog#complete-event-prompt,
-dialog#delete-event-prompt {
+dialog#delete-event-prompt,
+dialog#delete-project-prompt {
     width: 95vw;
     /* height: 50vh; */
     margin: auto;
@@ -687,7 +688,8 @@ dialog#delete-event-prompt {
 }
 
 dialog#complete-event-prompt div.modal-cont,
-dialog#delete-event-prompt div.modal-cont {
+dialog#delete-event-prompt div.modal-cont,
+dialog#delete-project-prompt div.modal-cont {
     display: grid;
     grid-template-rows: max-content 1fr;
     grid-template-areas:
@@ -696,7 +698,8 @@ dialog#delete-event-prompt div.modal-cont {
 }
 
 dialog#complete-event-prompt button.close-modal,
-dialog#delete-event-prompt button.close-modal {
+dialog#delete-event-prompt button.close-modal,
+dialog#delete-project-prompt button.close-modal {
     grid-area: btn;
 }
 
@@ -1560,7 +1563,8 @@ div.project-action p.message {
 /* Completion and delete prompt modal (start) --- */
 dialog#complete-event-prompt,
 dialog#complete-project-prompt,
-dialog#delete-event-prompt {
+dialog#delete-event-prompt,
+dialog#delete-project-prompt {
     width: 95vw;
     /* height: 50vh; */
     margin: auto;
@@ -1570,7 +1574,8 @@ dialog#delete-event-prompt {
 
 dialog#complete-event-prompt div.modal-cont,
 dialog#complete-project-prompt div.modal-cont,
-dialog#delete-event-prompt div.modal-cont {
+dialog#delete-event-prompt div.modal-cont,
+dialog#delete-project-prompt div.modal-cont {
     display: grid;
     grid-template-rows: max-content 1fr;
     grid-template-areas:
@@ -1580,7 +1585,8 @@ dialog#delete-event-prompt div.modal-cont {
 
 dialog#complete-event-prompt button.close-modal,
 dialog#complete-project-prompt button.close-modal,
-dialog#delete-event-prompt button.close-modal {
+dialog#delete-event-prompt button.close-modal,
+dialog#delete-project-prompt button.close-modal {
     grid-area: btn;
 }
 

@@ -7,7 +7,7 @@ import { displayContent } from "./displayContent";
 import { createModal } from "./createModal";
 import { showModals } from "./showModals";
 import { eventEditForm } from "./eventEditForm";
-import { eventDelete } from "./eventDelete";
+import { initDelete } from "./initDelete";
 
 const eventsDisplay = (function () {
 
@@ -104,7 +104,7 @@ const eventsDisplay = (function () {
         // Create edit button appended on the action buttons ribbon (end) -
 
         // Create delete button appended on the action buttons ribbon (start) -
-        displayContent.createActionBtn('delete', 'delete-event', eventObj.eventId, eventDelete.showDeletePrompt, 'Delete');
+        displayContent.createActionBtn('delete', 'delete-event', eventObj.eventId, initDelete.showDeleteEventPrompt, 'Delete');
         // Create delete button appended on the action buttons ribbon (end) -
 
         // Create event full view container
