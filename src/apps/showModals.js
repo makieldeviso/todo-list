@@ -305,7 +305,7 @@ const showModals = (function () {
         projectsDisplay.displayProjectsToDOM();
 
         // Execute onload/ sidebar counters
-        onLoadScreen.displayEventsCount();
+        onLoadScreen.displayProjectsCount();
 
     }
 

@@ -25,8 +25,6 @@ const initDelete = (function () {
         // Show/ Display confirm delete prompt modal
         showModals.showProjectDeletePrompt(projectId);
 
-
-        // memoryHandler.deleteProject(projectId);
     }
 
     return {showDeleteEventPrompt, showDeleteProjectPrompt};

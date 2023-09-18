@@ -95,6 +95,36 @@ const createModal = (function () {
         return banner
     }
 
+    // Create checkbox
+    const createCheckbox = function (legendText, dataArray, propertyId) {
+        const fieldset = document.createElement('fieldset');
+        const legend = document.createElement('legend');
+        legend.textContent = `${legendText}:`;
+
+        fieldset.appendChild(legend);
+
+        dataArray.forEach(data => {
+            const inputCont = document.createElement('div');
+
+            const input = document.createElement('input');
+            input.setAttribute('type', 'checkbox');
+            input.setAttribute('id', data[propertyId] );
+            input.setAttribute('name', data[propertyId] ); 
+            input.checked = true;
+
+            const inputLabel = document.createElement('label');
+            inputLabel.setAttribute('for', data[propertyId]);
+            inputLabel.textContent = data.title;
+
+            inputCont.appendChild(input);
+            inputCont.appendChild(inputLabel);
+
+            fieldset.appendChild(inputCont);
+        })
+
+        return fieldset;
+    }
+
     // Events prompts (start)
     // Creates event completion prompt
     const createEventCompletionPrompt = function (eventId) {
@@ -275,12 +305,23 @@ const createModal = (function () {
         const reminder = document.createElement('p');
         reminder.setAttribute('class', 'reminder');
 
+        const eventsReminder = document.createElement('p');
+        eventsReminder.setAttribute('class', 'events-reminder');
+
+        let eventsCheckbox;
+
         // Conditional reminder depending on tasks status
         if (projectStatus === 'pending') {
             reminder.textContent = 'You have not yet completed this project. Are you sure you want to delete project?';
 
+            
+
+
         } else if (projectStatus === 'done') {
-            reminder.textContent = 'Good job! You have already completed this project. Confirm event deletion?';
+            reminder.textContent = 'Good job! You have already completed this project.';
+            const checkboxMessage = "These events are linked to this project, uncheck events you don't want to delete with this project"
+            
+            eventsCheckbox = createCheckbox(checkboxMessage,projectsScripts.getProjectEvents(projectObj), 'projectId');
         }
 
         // Executes createTwoChoiceBtn
@@ -299,6 +340,7 @@ const createModal = (function () {
         });
 
         content.appendChild(reminder); //Append reminder message to content div
+        content.appendChild(eventsCheckbox); //Append checkbox of events
         content.appendChild(confirmBtnsCont); //Append buttons container to content div
 
         const components = [promptHeader, content];
