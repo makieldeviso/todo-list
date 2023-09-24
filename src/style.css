@@ -1656,7 +1656,74 @@ dialog#edit-event-prompt  button.close-modal{
 dialog#edit-event-prompt  form#event-form{
     grid-area: form;
 }
-
 /* Edit modal (end)  --- */
+
+/* Modal checkbox (start) --- */
+div.checkbox-cont {
+    border: 1px solid white;
+    padding: var(--common-padding);
+    width: 95%;
+    margin: auto;
+    border-radius: 10px;
+    background-color: #f5e2d6;
+}
+
+div.checkbox-input input:checked~label {
+    color: var(--dark-orange);
+}
+
+fieldset.events-checkbox label {
+    color: var(--gray);
+}
+
+fieldset.events-checkbox {
+    font-size: var(--common-font-size);
+    margin: 0 var(--common-margin);
+    border: none;
+}
+
+fieldset.events-checkbox legend {
+    text-align: center;
+    margin: 0 0 var(--common-margin);
+    padding: 0 var(--common-padding);
+}
+
+fieldset.events-checkbox div {
+    margin: 0 var(--common-margin) calc(var(--common-margin) * 0.5);
+}
+
+fieldset.events-checkbox div.checkbox-input {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    min-width: 165px;
+    width: calc(80% + 1vw);
+    margin: 0 auto calc(var(--common-margin) * 0.5);
+    gap: 5px;
+    align-items: start;
+}
+
+div.checkbox-input input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 1px solid var(--gray);
+    background-color: var(--off-white);
+    border-radius: 3px;
+    width: calc(var(--common-font-size) * 1.1);
+    height: calc(var(--common-font-size) * 1.1);
+    outline: none;
+    cursor: pointer;
+}
+
+div.checkbox-input input:checked {
+    background-color: var(--dark-orange);
+    background-image: url("assets/check.svg");
+    background-position: center;
+    background-size: 80% 80%;
+    background-repeat: no-repeat;
+    border-color: white;
+}
+/* Modal checkbox (end) --- */
+
 
 /* Project Full view (end) -- */

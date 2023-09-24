@@ -271,9 +271,15 @@ const showModals = (function () {
     const confirmProjectDelete = function () {
         const projectId = this.dataset.id;
 
+        const eventsForDelete = Array.from(document.querySelectorAll('input:checked'));
+        const eventsForDeleteId = eventsForDelete.map(input => input.value );
+
         // Delete project from memory and modifies events linked to this project 
         memoryHandler.deleteProject(projectId);
 
+        // Delete the events the user wants to delete with this project
+        eventsForDeleteId.forEach(eventId => memoryHandler.deleteEvent(eventId));
+        
         // Close Modal
         closeProjectDelete();
 

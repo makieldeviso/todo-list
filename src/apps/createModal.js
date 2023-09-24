@@ -96,33 +96,54 @@ const createModal = (function () {
     }
 
     // Create checkbox
-    const createCheckbox = function (legendText, dataArray, propertyId) {
+    const createCheckbox = function (legendText, projectObj) {
+
+        const eventsArray = projectsScripts.getProjectEvents(projectObj);
+        const projectStatus = projectObj.projectStatus;
+        console.log(projectStatus);
+
+        if (eventsArray.length === 0) {
+            return 'noEvent';
+        }
+
+        const checkboxCont = document.createElement('div');
+        checkboxCont.classList.add('checkbox-cont');
+
         const fieldset = document.createElement('fieldset');
+        fieldset.classList.add('events-checkbox');
+
         const legend = document.createElement('legend');
-        legend.textContent = `${legendText}:`;
+        legend.textContent = `${legendText}`;
 
         fieldset.appendChild(legend);
 
-        dataArray.forEach(data => {
+        eventsArray.forEach(event => {
             const inputCont = document.createElement('div');
+            inputCont.classList.add('checkbox-input');
 
             const input = document.createElement('input');
             input.setAttribute('type', 'checkbox');
-            input.setAttribute('id', data[propertyId] );
-            input.setAttribute('name', data[propertyId] ); 
-            input.checked = true;
+            input.setAttribute('id', event['projectId'] );
+            input.setAttribute('name', event['projectId'] ); 
+            input.setAttribute('value', event['projectId'] ); 
+
+            if (projectStatus === 'done') {
+                input.checked = true;
+            }
 
             const inputLabel = document.createElement('label');
-            inputLabel.setAttribute('for', data[propertyId]);
-            inputLabel.textContent = data.title;
+            inputLabel.setAttribute('for', event['projectId']);
+            inputLabel.textContent = event.title;
 
             inputCont.appendChild(input);
             inputCont.appendChild(inputLabel);
 
             fieldset.appendChild(inputCont);
-        })
+        });
 
-        return fieldset;
+        checkboxCont.appendChild(fieldset)
+
+        return checkboxCont;
     }
 
     // Events prompts (start)
@@ -311,17 +332,16 @@ const createModal = (function () {
         let eventsCheckbox;
 
         // Conditional reminder depending on tasks status
+        const checkboxMessage = "These events are linked to this project. Check events you want to delete along with this project."
         if (projectStatus === 'pending') {
             reminder.textContent = 'You have not yet completed this project. Are you sure you want to delete project?';
-
             
-
-
+            eventsCheckbox = createCheckbox(checkboxMessage, projectObj);
+            
         } else if (projectStatus === 'done') {
-            reminder.textContent = 'Good job! You have already completed this project.';
-            const checkboxMessage = "These events are linked to this project, uncheck events you don't want to delete with this project"
+            reminder.textContent = 'Good job! You have already completed this project. Remove it from your list?';
             
-            eventsCheckbox = createCheckbox(checkboxMessage,projectsScripts.getProjectEvents(projectObj), 'projectId');
+            eventsCheckbox = createCheckbox(checkboxMessage, projectObj);
         }
 
         // Executes createTwoChoiceBtn
@@ -340,7 +360,11 @@ const createModal = (function () {
         });
 
         content.appendChild(reminder); //Append reminder message to content div
-        content.appendChild(eventsCheckbox); //Append checkbox of events
+
+        if (eventsCheckbox !== 'noEvent') {
+            content.appendChild(eventsCheckbox); //Append checkbox of events
+        }
+
         content.appendChild(confirmBtnsCont); //Append buttons container to content div
 
         const components = [promptHeader, content];
