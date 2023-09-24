@@ -16,7 +16,6 @@ const displayContent = (function () {
     }
 
     const backSideBar = function () {
-        // if false recur using backSideBar function
         const backAction = this.dataset.action;
 
         if (backAction === 'events-previews' || backAction === 'projects-previews') {

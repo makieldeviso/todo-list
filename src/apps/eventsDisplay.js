@@ -321,6 +321,11 @@ const eventsDisplay = (function () {
 
                 // Add an id link of the project to the back button
                 backBtn.dataset.link = eventsScript.getProperty(previewId, 'projectTag');
+
+                // Remove buttons in the ribbon
+                const editBtn = document.querySelector('button[value="edit-project"]');
+                const deleteBtn = document.querySelector('button[value="delete-project"]');
+                displayContent.removeActionBtn(editBtn, deleteBtn);
             }
 
         }
