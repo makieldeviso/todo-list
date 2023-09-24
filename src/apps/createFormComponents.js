@@ -216,8 +216,9 @@ const createFormComponents = (function () {
     // Create and append project select options
     const createProjectOptions = function (parentSelect) {
         const projects = memoryHandler.getProjects();
+        const pendingProjects = projects.filter(project => project.projectStatus !== 'done');
         
-        const projectOptions = projects.map(project => {
+        const projectOptions = pendingProjects.map(project => {
             const projectOption = document.createElement('option');
             projectOption.setAttribute('value', project.projectId);
             projectOption.textContent = `${project.title}`;
@@ -229,9 +230,6 @@ const createFormComponents = (function () {
         projectOptions.forEach(option => projectSelect.appendChild(option));
         
     }
-
-
-
 
     const createSaveFormBtns = function (dataId) {
         // Create container lvl-1 parent
