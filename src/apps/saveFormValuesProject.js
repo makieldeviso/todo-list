@@ -1,6 +1,8 @@
 import { addEventToProject } from "./addEventToProject";
 import { memoryHandler } from "./memoryHandler";
+import { projectsDisplay } from "./projectsDisplay";
 import { showModals } from "./showModals";
+import { onLoadScreen } from "./onLoadScreen";
 
 const saveFormValuesProject = (function () {
 
@@ -46,6 +48,8 @@ const saveFormValuesProject = (function () {
     // Note: validated first
     const saveProjectForm = function () {
         const saveType = this.getAttribute('id');
+
+        // save-edit-project
 
         // Validates form before saving
         const validationErrors = validateProjectForm();
@@ -99,15 +103,36 @@ const saveFormValuesProject = (function () {
         //Add default project status
         newProject['projectStatus'] = 'pending';
 
+        
+        if (saveType === 'save-new-project') {
+            // Save the project in array memory
+            memoryHandler.saveProject(newProject);
 
-        // Save the project in array memory
-        memoryHandler.saveProject(newProject);
+            // Link events to the project
+            linkEventsToProject(newProject);
 
-        // Link events to the project
-        linkEventsToProject(newProject);
+            // Close Modal
+            showModals.closeModal();
 
-        // Close Modal
-        showModals.closeModal();
+        } else if ('save-edit-project') {
+            console.log(newProject);
+            const projectForModId = this.dataset.project;
+            const currentObj = memoryHandler.getProject(this.dataset.project);
+
+            // Replace old project obj with new obj, then link link/relink events to project
+            memoryHandler.replaceProject(projectForModId, currentObj, newProject);
+
+            // Close Modal
+            showModals.closeProjectEdit();
+
+            // Display newly edited project full view
+            projectsDisplay.showFullProject(newProject.projectId);
+            
+        }
+
+        // Execute other display project counters
+        onLoadScreen.displayProjectsCount();
+        console.log(memoryHandler.getProjects());
     }
 
     // Link events to project

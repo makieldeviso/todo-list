@@ -138,12 +138,6 @@ const projectsDisplay = (function () {
 
     }
 
-
-    const editProject = function () {
-        console.log('test');
-    }
-
-
     const createProjectFullView = function (projectObj) {
         // Create edit button appended on the action buttons ribbon (start) -
         console.log(projectObj);

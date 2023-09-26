@@ -314,6 +314,25 @@ const deleteProject = function (id) {
     
 }
 
+const replaceProject = function (id, currentObj, newObj) {
+    const projectForModIndex  = projects.findIndex(project => project.projectId === `${id}`);
+
+    // unlink Events
+    const currentProjectEvents = currentObj.eventLinks;
+    for (const eventKey in currentProjectEvents) {
+        unlinkEventToProject(currentProjectEvents[eventKey]);
+        
+    }
+    
+    // relink event
+    const newProjectEvents = newObj.eventLinks;
+    for (const eventKey in newProjectEvents) {
+        linkEventToProject(newProjectEvents[eventKey], newObj.projectId );
+    }
+      
+    projects.splice(projectForModIndex, 1, newObj);
+}
+
 
 // Projects (end) -
 
@@ -342,6 +361,7 @@ const deleteProject = function (id) {
             modifyEventLink,
             completeProject,
             deleteProject,
+            replaceProject,
         };
 })();
 

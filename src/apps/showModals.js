@@ -9,6 +9,7 @@ import { addTaskToEvent } from "./addTaskToEvent";
 import { displayContent } from "./displayContent";
 import { onLoadScreen } from "./onLoadScreen";
 import { projectsDisplay } from "./projectsDisplay";
+import { addEventToProject } from "./addEventToProject";
 
 const showModals = (function () {
     
@@ -336,10 +337,23 @@ const showModals = (function () {
         editForm.dataset.id = projectId;
         
         // Add close modal event listener
-        // closeBtn.addEventListener('click', closeEventEdit);
+        closeBtn.addEventListener('click', closeProjectEdit);
 
         // Show Modal created
         editModal.showModal();
+    }
+
+    // Closes project edit modal
+    const closeProjectEdit = function () {
+        // Closes modal
+        const editProjectModal = document.querySelector('dialog#edit-project-prompt');
+        editProjectModal.close();
+
+        // Removes modal from the DOM
+        const main = document.querySelector('main');
+        main.removeChild(editProjectModal);
+
+        console.log(addEventToProject.getProjectEvents());
     }
 
     // PROJECT COMPLETION
@@ -414,6 +428,7 @@ const showModals = (function () {
             addCompletionPromptProject,
             showProjectDeletePrompt,
             showProjectEditModal,
+            closeProjectEdit,
         }
 })();
 

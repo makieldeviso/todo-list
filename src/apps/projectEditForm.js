@@ -49,9 +49,6 @@ const projectEditForm = (function () {
     }
 
 
-
-
-
     // Initiate project edit modal with form
     const showEditProjectForm = function () {
         const projectId = this.dataset.id;
