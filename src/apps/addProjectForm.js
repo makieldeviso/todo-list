@@ -36,10 +36,19 @@ const addProjectForm = (function () {
         return [title, desc, deadline];
     }
 
-    const newProjectForm = function () {
+    const newProjectForm = function (trigger) {
+
+        const buttonClick = this.value === 'new-project';
+        let assignDataId = 'new-project';
+        if (trigger === 'default' || buttonClick ) {
+           assignDataId = 'new-project';
+        } else {
+            assignDataId = trigger;
+        }
+
         const modalCont = document.querySelector('div.modal-cont');
 
-        // Conditions when executing newEventForm
+        // Conditions when executing newProjectForm
         const eventForm = document.querySelector('form#event-form');
         const existingForm = document.querySelector('form#project-form');
 
@@ -60,24 +69,24 @@ const addProjectForm = (function () {
         // Add form components
         // Note: creates multiple from array of objects
         const newBasicComps = projectFormComp().map(comp => {
-            const component = createFormComponents.createBasicComponent(comp, 'new-project');
+            const component = createFormComponents.createBasicComponent(comp, assignDataId);
             return component;
          }); 
 
         //  Add priority tag
-        const newPrioBtns = createFormComponents.createPriorityBtns('new-project', 'Project Priority');
+        const newPrioBtns = createFormComponents.createPriorityBtns(assignDataId, 'Project Priority');
         modalUX.addPriorityBtnEvent(newPrioBtns);
 
         //  Add event adder components then add linked event listeners to respective components 
-        const newEventAdder = createFormComponents.createEventAdder('new-project');
+        const newEventAdder = createFormComponents.createEventAdder(assignDataId);
         const eventAdderBtn = newEventAdder.querySelector('button#add-event-btn');
         addEventToProject.addEventToProjectEvent(eventAdderBtn);
         // Resets newProjectEvents stored temporary linked events
         addEventToProject.resetProjectEvents();
 
         // Add save/ clear buttons and corresponding event listeners
-        const newSaveBtns = createFormComponents.createSaveFormBtns('new-project');
-        saveFormValuesProject.addSaveProjectFormEvent(newSaveBtns);
+        const newSaveBtns = createFormComponents.createSaveFormBtns(assignDataId);
+        saveFormValuesProject.addSaveProjectFormEvent(newSaveBtns, assignDataId);
 
         // Appends the components to the parent form
         const allComp = [...newBasicComps, newPrioBtns, newEventAdder, newSaveBtns];

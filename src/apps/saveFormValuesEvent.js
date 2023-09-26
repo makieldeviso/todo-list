@@ -155,21 +155,7 @@ const saveFormValuesEvent = (function () {
         saveBtn.addEventListener('click', saveEventForm);
     }
 
-    // Adds event edit listener
-    const addEditEventSaveEvent = function (action) {
-        const saveEventBtn = document.querySelector('button.save[data-id="edit-event"]');
-    
-        // Ensures if addTaskBtn exists 
-        if (saveEventBtn !== null) {
-            if (action === true) {
-                saveEventBtn.addEventListener('click', saveEventForm);
-            } else if (action === false) {
-                saveEventBtn.removeEventListener('click', saveEventForm);
-            }
-        }
-    }
-
-    return { addSaveEventFormEvent, addEditEventSaveEvent, clearEventForm, saveEventForm}
+    return { addSaveEventFormEvent, clearEventForm, saveEventForm}
 })();
 
 export {saveFormValuesEvent}

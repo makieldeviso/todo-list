@@ -6,6 +6,7 @@ import { displayContent } from "./displayContent";
 import { eventsDisplay } from "./eventsDisplay";
 import { showModals } from "./showModals";
 import { initDelete } from "./initDelete";
+import { projectEditForm } from "./projectEditForm";
 
 const projectsDisplay = (function () {
 
@@ -138,10 +139,9 @@ const projectsDisplay = (function () {
     }
 
 
-    const test = function () {
+    const editProject = function () {
         console.log('test');
     }
-
 
 
     const createProjectFullView = function (projectObj) {
@@ -157,7 +157,7 @@ const projectsDisplay = (function () {
 
         // Conditional don't add edit button if event is completed
         if (projectObj.projectStatus !== 'done') {
-            displayContent.createActionBtn('edit', 'edit-project', projectObj.projectId, test, 'Edit');
+            displayContent.createActionBtn('edit', 'edit-project', projectObj.projectId, projectEditForm.showEditProjectForm, 'Edit');
         }
         // Create edit button appended on the action buttons ribbon (end) -
 

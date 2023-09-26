@@ -315,6 +315,33 @@ const showModals = (function () {
 
     }
 
+    // Show edit project form modal 
+    const showProjectEditModal = function (id) {
+        const projectId = id;
+        
+        // Creates modal first before showing
+        createModal.createNewModal('edit-project');
+        const editModal = document.querySelector('dialog#edit-project-prompt');
+        const modalCont = editModal.querySelector('div.modal-cont');
+        const closeBtn = editModal.querySelector('button.close-modal');
+
+        // Add Modal Banner
+        const editBanner = createModal.createBanner('Edit Project');
+        modalCont.appendChild(editBanner);
+
+        // Add default event form and assign data-id
+        addProjectForm.newProjectForm('edit-project');
+        const editForm = document.querySelector('form#project-form');
+
+        editForm.dataset.id = projectId;
+        
+        // Add close modal event listener
+        // closeBtn.addEventListener('click', closeEventEdit);
+
+        // Show Modal created
+        editModal.showModal();
+    }
+
     // PROJECT COMPLETION
     // Opens prompt before completing an event (start)
     const showProjectCompletionPrompt = function () {
@@ -386,6 +413,7 @@ const showModals = (function () {
         
             addCompletionPromptProject,
             showProjectDeletePrompt,
+            showProjectEditModal,
         }
 })();
 

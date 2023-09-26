@@ -125,14 +125,14 @@ const saveFormValuesProject = (function () {
     }
 
     // Add event listeners to the save/clear buttons
-    const addSaveProjectFormEvent = function (btnsCont) {
-        const clearBtn = btnsCont.querySelector('button#clear-new-project');
-        const saveBtn = btnsCont.querySelector('button#save-new-project');
+    const addSaveProjectFormEvent = function (btnsCont, assignDataId) {
+        const clearBtn = btnsCont.querySelector(`button#clear-${assignDataId}`);
+        const saveBtn = btnsCont.querySelector(`button#save-${assignDataId}`);
 
         clearBtn.addEventListener('click', clearProjectForm);
         saveBtn.addEventListener('click', saveProjectForm);
     }
-
+    
     return {addSaveProjectFormEvent}
 })();
 

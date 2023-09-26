@@ -50,28 +50,40 @@ const addEventToProject = (function () {
         eventsCont.appendChild(newEventCont);
     }
 
-    const addEvent = function () {
+    const addEvent = function (trigger) {
         const eventSelect = document.querySelector('select#add-event-select');
-        
-        // Check if value was selected or not
-        if (eventSelect.value === '') {
-            return;
+
+        // Allow function to work aside from eventListener
+        let eventValue;
+        if (typeof trigger !== 'string') {
+            // If addEvent was triggered by add button
+            eventValue = eventSelect.value;
+
+            // Check if value was selected or not
+            if (eventSelect.value === '') {
+                return;
+            }
+
+        } else {
+            // If addEvent was triggered from function call
+            eventValue = trigger;
         }
 
-        const eventOption = eventSelect.querySelector(`option[value="${eventSelect.value}"]`);
+        const eventOption = eventSelect.querySelector(`option[value="${eventValue}"]`);
         const defaultOption = eventSelect.querySelector('option[value=""]');
 
-        const eventObj = memoryHandler.getEvents().find((event) => event.eventId === eventSelect.value );
+        const eventObj = memoryHandler.getEvent(eventValue);
 
         // Create an event identifier object
         // Save an event Id to an object
-        newProjectEvents[`event-${getEventsCount() + 1}`] = eventSelect.value;
+        newProjectEvents[`event-${getEventsCount() + 1}`] = eventValue;
 
         // Disables the selected event from choices, the turn the select to default value
         defaultOption.selected = true;
         eventOption.disabled = true;
 
         addEventsToDOM(eventObj);
+        console.log(newProjectEvents);
     }
 
     const unlinkEvent = function () {
@@ -102,17 +114,8 @@ const addEventToProject = (function () {
 
         // Reactivate option from the selection
         eventOption.disabled = false;
+        console.log(newProjectEvents);
     }
-
-    // Link new event to a project
-    // const linkNewEvent = function (projId) {
-    //     const projectId = projId;
-
-    //     const 
-
-
-    // }
-
 
     const addEventToProjectEvent = function (btn) {
         const adderBtn = btn;

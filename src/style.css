@@ -741,7 +741,8 @@ div.delete-content div.save-cont {
 /* Completion prompt modal (end) --- */
 
 /* Edit modal (start)  --- */
-dialog#edit-event-prompt {
+dialog#edit-event-prompt,
+dialog#edit-project-prompt {
     width: 95vw;
     height: 95vh;
     margin: auto;
@@ -750,7 +751,8 @@ dialog#edit-event-prompt {
     overflow: hidden;
 }
 
-dialog#edit-event-prompt div.modal-cont {
+dialog#edit-event-prompt div.modal-cont,
+dialog#edit-project-prompt div.modal-cont {
     grid-template-columns: 1fr max-content;
     grid-template-rows: max-content 1fr;
     grid-template-areas:
@@ -758,15 +760,18 @@ dialog#edit-event-prompt div.modal-cont {
         "form form";
 }
 
-dialog#edit-event-prompt p.modal-banner {
+dialog#edit-event-prompt p.modal-banner,
+dialog#edit-project-prompt p.modal-banner {
     grid-area: banner;
 }
 
-dialog#edit-event-prompt  button.close-modal{
+dialog#edit-event-prompt  button.close-modal,
+dialog#edit-project-prompt  button.close-modal{
     grid-area: exit-btn;
 }
 
-dialog#edit-event-prompt  form#event-form{
+dialog#edit-event-prompt  form#event-form,
+dialog#edit-project-prompt  form#project-form{
     grid-area: form;
 }
 
