@@ -253,7 +253,12 @@ div#item-display{
     display: flex;
     flex-direction: column;
     gap: var(--common-margin);
-    padding-top: var(--common-padding);
+    /* padding-top: var(--common-padding); */
+}
+
+div.event-preview:first-of-type,
+div.project-preview:first-of-type {
+    margin-top: var(--common-margin);
 }
 
 /* Action Btns (start) -- */

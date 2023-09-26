@@ -331,8 +331,7 @@ const eventsDisplay = (function () {
         }
          
         // Clear display panel
-        const eventPreviews = document.querySelectorAll('div.event-preview');
-        eventPreviews.forEach(preview => displayContent.removeDisplay(preview));
+        displayContent.hardClearItemDisplay();
         
         // Ensures the event full view is refreshed when changes are applied
         const eventFullViews = document.querySelectorAll('div.event-fullview');

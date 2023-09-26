@@ -1,6 +1,7 @@
 import { eventsDisplay } from "./eventsDisplay";
 import { projectsDisplay } from "./projectsDisplay";
 import { memoryHandler } from "./memoryHandler";
+import { displayContentTimeFiltered } from "../displayContentTimeFiltered";
 
 const displayContent = (function () {
 
@@ -51,6 +52,10 @@ const displayContent = (function () {
                 }
             }
 
+        } else if (backAction === 'today-previews') {
+            translateSidebar(false);
+            clearItemDisplay('projects-previews');
+            clearItemDisplay('events-previews');
         }
     }
 
@@ -128,6 +133,16 @@ const displayContent = (function () {
         }
     }
 
+    // Manually clear display panel of previews
+    // Removes projects and events previews
+    const hardClearItemDisplay = function () {
+        // Clear display panel
+        const projectPreviews = document.querySelectorAll('div.project-preview');
+        const eventPreviews = document.querySelectorAll('div.event-preview');
+        projectPreviews.forEach(preview => displayContent.removeDisplay(preview));
+        eventPreviews.forEach(event => displayContent.removeDisplay(event));
+    }
+
     // Note: button event triggered function
     const showDisplay = function (action) {
         const backBtn = document.querySelector('button#back-sidebar');
@@ -142,7 +157,6 @@ const displayContent = (function () {
             assignAction = `${this.getAttribute('id')}-previews`;
         }
         
-        console.log(assignAction);
         backBtn.dataset.action = assignAction;
 
         if (assignAction === 'events-previews') {
@@ -154,7 +168,7 @@ const displayContent = (function () {
             translateSidebar(true);
 
         } else {
-            return; //!!!!!!!!!!!!! TEMPORARY RETURN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            displayContentTimeFiltered.displayTimeFiltered(assignAction);
         }
         
     }
@@ -187,12 +201,15 @@ const displayContent = (function () {
 
     return {showDisplay, 
             addSidebarEvents, 
+            translateSidebar,
             removeDisplay, 
             backBtnEvents, 
             removeActionBtn, 
             clearItemDisplay, 
+            hardClearItemDisplay,
             createActionBtn,
             createSpan,
+            
         }
 
 })();

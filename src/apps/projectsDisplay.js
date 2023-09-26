@@ -118,8 +118,7 @@ const projectsDisplay = (function () {
         const itemDisplay = document.querySelector('div#item-display');
     
         // Clear display panel
-        const projectPreviews = document.querySelectorAll('div.project-preview');
-        projectPreviews.forEach(preview => displayContent.removeDisplay(preview));
+        displayContent.hardClearItemDisplay();
         
         // Ensures the project full view is refreshed when changes is applied
         const projectFullViews = document.querySelectorAll('div.project-fullview');
@@ -278,7 +277,7 @@ const projectsDisplay = (function () {
     }
 
 
-    return {displayProjectsToDOM, showFullProject};
+    return {displayProjectsToDOM, showFullProject, createProjectPreview};
 
 
 

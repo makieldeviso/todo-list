@@ -25,14 +25,13 @@ const memoryHandler = (function () {
                     }
                 },
                 "eventId": "ms.dodo'sbirthday1689724800000",
-                "eventStatus": 'done',
-                "completion": 'on-time',
+                "eventStatus": 'pending',
             },
 
             {
                 "title": "Do your thing",
                 "description": "Do your thing",
-                "schedule": new Date("2023-07-20T00:00:00.000Z"),
+                "schedule": new Date(),
                 "projectTag": "newprojecttest1693267200000",
                 "priority": "mid",
                 "tasks": {
@@ -50,8 +49,7 @@ const memoryHandler = (function () {
                     }
                 },
                 "eventId": "doyourthing",
-                "eventStatus": 'done',
-                "completion": 'done-overdue',
+                "eventStatus": 'pending',
             },
     ];
     
@@ -165,7 +163,6 @@ const placeholderProjects = [
         "eventLinks": {"event-1": "ms.dodo'sbirthday1689724800000", "event-2": "doyourthing"},
         "projectId": "newprojecttest1693267200000",
         "projectStatus": 'pending',
-        "completion": "pending"
     },
 
     {
@@ -175,7 +172,7 @@ const placeholderProjects = [
         "priority": "high",
         "eventLinks": {},
         "projectId": "newprojecttest1693267200001",
-        "projectStatus": 'pending'
+        "projectStatus": 'pending',
     }
 
 ];
