@@ -45,6 +45,32 @@ const displayContentTimeFiltered = (function () {
         });
     }
 
+    // Merge projectObjs and eventObjs into an array, then sort from upcoming to far time schedule/ deadline
+    // Note: projectObj and eventObjs parameter needs array arguments
+    const sortProjectsAndEvents = function (projectObjs, eventObjs) {
+        const consolidatedObj = [...projectObjs, ...eventObjs];
+        const sortedObj = consolidatedObj.sort((a, b) => {
+            let aTime;
+            let bTime;
+
+            if (a.hasOwnProperty('projectId')) {
+                aTime = a.deadline;
+            } else if (a.hasOwnProperty('eventId')) {
+                aTime = a.schedule;
+            }
+
+            if (b.hasOwnProperty('projectId')) {
+                bTime = b.deadline;
+            } else if (b.hasOwnProperty('eventId')) {
+                bTime = b.schedule;
+            }
+            return aTime - bTime
+        });
+        
+            return sortedObj;
+        }
+    
+
     const displayToday = function () {
         const todayDate = format(new Date(), 'MMMM, dd, yyyy');
 
@@ -88,13 +114,12 @@ const displayContentTimeFiltered = (function () {
             }
         });
 
+        const sortedObj = sortProjectsAndEvents(upcomingProjects, upcomingEvents);
+
         displayContent.createFilterBanner('append', 'upcoming');
 
-        // Create and append upcoming projects preview
-        createFilteredPreview(upcomingProjects, 'upcoming-view');
-
-        // Create and append upcoming events preview
-        createFilteredPreview(upcomingEvents, 'upcomingView')
+        // Create and append upcoming projects and events previews
+        createFilteredPreview(sortedObj, 'upcoming-view');
     }
 
     const displaySomeday = function () {
@@ -127,7 +152,7 @@ const displayContentTimeFiltered = (function () {
         createFilteredPreview(somedayProjects, 'someday-view');
 
         // Create and append someday events preview
-        createFilteredPreview(somedayEvents, 'somedayView')
+        createFilteredPreview(somedayEvents, 'someday-view')
 
     }
 
