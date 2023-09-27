@@ -106,17 +106,23 @@ const projectsDisplay = (function () {
 
     const showFullProject = function (trigger) {
 
-    // Conditional to enable non-eventlistener trigger
+        const itemDisplay = document.querySelector('div#item-display');
+        const backBtn = document.querySelector('button#back-sidebar');
+        
+        // Conditional to enable non-eventlistener trigger
         // If trigger is string means non-eventlistener
         let projectId;
         if (typeof trigger === 'string') {
             projectId = trigger
         } else {
             projectId = this.dataset.id;
+
+            // Add additional backBtn dataset attributes depending on where full view was accessed
+            if (this.hasAttribute('data-filter')) {
+                backBtn.dataset.filter = this.dataset.filter;
+            } 
         }
 
-        const itemDisplay = document.querySelector('div#item-display');
-    
         // Clear display panel
         displayContent.hardClearItemDisplay();
         
@@ -125,13 +131,12 @@ const projectsDisplay = (function () {
        projectFullViews.forEach(fullview => displayContent.removeDisplay(fullview));
 
         // Add attribute to back-button
-        const backBtn = document.querySelector('button#back-sidebar');
         backBtn.dataset.action = 'project-fullview';
 
         //  Get project with the Id specified
         const projectObj = memoryHandler.getProject(projectId);
 
-        // Create project full view
+        // Create and append project full view
         const projectFullView = createProjectFullView(projectObj);
         itemDisplay.appendChild(projectFullView);
 

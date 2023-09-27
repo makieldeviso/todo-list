@@ -27,6 +27,7 @@ const displayContent = (function () {
             
             const mode = this.dataset.mode;
             const projectLink = this.dataset.link;
+            const timeFilter = this.dataset.filter;
 
             if (mode !== undefined) {
                 clearItemDisplay(backAction);
@@ -41,6 +42,18 @@ const displayContent = (function () {
 
                 } 
             
+            } else if (timeFilter !== undefined) {
+                // This executes when using time filter
+                clearItemDisplay(backAction);
+
+                // Removes the additional datasets after executing clearItemDisplay function
+                this.removeAttribute('data-filter');
+
+                if (timeFilter === 'today-view') {
+                    displayContentTimeFiltered.displayToday();
+                    this.dataset.action = 'today-previews';
+                }
+
             } else {
                 clearItemDisplay(backAction);
 
@@ -54,8 +67,8 @@ const displayContent = (function () {
 
         } else if (backAction === 'today-previews') {
             translateSidebar(false);
-            clearItemDisplay('projects-previews');
             clearItemDisplay('events-previews');
+            clearItemDisplay('projects-previews');
         }
     }
 
@@ -139,8 +152,15 @@ const displayContent = (function () {
         // Clear display panel
         const projectPreviews = document.querySelectorAll('div.project-preview');
         const eventPreviews = document.querySelectorAll('div.event-preview');
-        projectPreviews.forEach(preview => displayContent.removeDisplay(preview));
-        eventPreviews.forEach(event => displayContent.removeDisplay(event));
+
+        projectPreviews.forEach(preview => removeDisplay(preview));
+        eventPreviews.forEach(event => {
+            // if event preview is not part of a project fullview
+            if (event.dataset.mode !== 'project-view') {
+                removeDisplay(event);
+            }
+        });
+            
     }
 
     // Note: button event triggered function

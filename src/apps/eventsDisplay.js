@@ -326,7 +326,13 @@ const eventsDisplay = (function () {
                 const editBtn = document.querySelector('button[value="edit-project"]');
                 const deleteBtn = document.querySelector('button[value="delete-project"]');
                 displayContent.removeActionBtn(editBtn, deleteBtn);
-            }
+
+            } 
+
+            // Add additional backBtn dataset attributes depending on where full view was accessed
+            if (this.hasAttribute('data-filter')) {
+                backBtn.dataset.filter = this.dataset.filter;
+            } 
 
         }
          
