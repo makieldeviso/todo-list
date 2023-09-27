@@ -1,6 +1,5 @@
 import { memoryHandler } from "./apps/memoryHandler";
-import { format } from 'date-fns';
-import { differenceInCalendarDays } from 'date-fns' ;
+import { format, differenceInCalendarDays  } from 'date-fns';
 import { displayContent } from "./apps/displayContent";
 import { eventsDisplay } from "./apps/eventsDisplay";
 import { projectsDisplay } from "./apps/projectsDisplay";
@@ -8,19 +7,40 @@ import { projectsDisplay } from "./apps/projectsDisplay";
 const displayContentTimeFiltered = (function () {
 
     const displayTimeFiltered = function (action) {
+
         if (action === 'today-previews') {
             displayToday();
+            displayContent.translateSidebar(true);
+        } else if (action === 'upcoming-previews') {
+            displayUpcoming();
             displayContent.translateSidebar(true);
         } else {
             return;
         }
     }
+    
+    // Reusable create and append filtered preview to the item display
+    const createFilteredPreview = function (objArray, filterName) {
+        // Create and append project previews on itemDisplay
+        const itemDisplay = document.querySelector('div#item-display');
+
+         objArray.forEach(obj => {
+            // Note: conditional detect if obj is eventObj or projectObj
+            let preview;
+            if (obj.hasOwnProperty('projectId')) {
+                preview = projectsDisplay.createProjectPreview(obj);
+
+            } else if (obj.hasOwnProperty('eventId')) {
+                preview = eventsDisplay.createEventDisplay(obj);
+            }
+
+            preview.dataset.filter = filterName;
+            itemDisplay.appendChild(preview);
+        });
+    }
 
     const displayToday = function () {
         const todayDate = format(new Date(), 'MMMM, dd, yyyy');
-        const itemDisplay = document.querySelector('div#item-display');
-
-        console.log(todayDate);
 
         const projects = memoryHandler.getProjects();
         const events = memoryHandler.getEvents();
@@ -28,26 +48,50 @@ const displayContentTimeFiltered = (function () {
         const todayProjects = projects.filter(project => format(project.deadline, 'MMMM, dd, yyyy') === todayDate);
         const todayEvents = events.filter(event => format(event.schedule, 'MMMM, dd, yyyy') === todayDate);
 
+        displayContent.createFilterBanner('append', 'today');
+
         // Create and append project previews on itemDisplay
-        todayProjects.forEach(project => {
-            const projectDisplay = projectsDisplay.createProjectPreview(project);
-            projectDisplay.dataset.filter = 'today-view';
-            itemDisplay.appendChild(projectDisplay);
-        });
+        createFilteredPreview(todayProjects, 'today-view');
 
         // Create and append event previews on itemDisplay
-        todayEvents.forEach(event => {
-            const eventDisplay = eventsDisplay.createEventDisplay(event);
-            eventDisplay.dataset.filter = 'today-view';
-            itemDisplay.appendChild(eventDisplay);
-        });
-
+        createFilteredPreview(todayEvents, 'today-view');
     }
 
+    const displayUpcoming = function () {
 
-    return {displayTimeFiltered, displayToday}
+        const projects = memoryHandler.getProjects();
+        const events = memoryHandler.getEvents();
 
+        // Filters upcoming projects
+        const upcomingProjects = projects.filter(project => {
+            const projectDeadline = project.deadline;
+            const dayDiff = differenceInCalendarDays(projectDeadline, new Date());
+            
+            if (dayDiff <= 7 && dayDiff > 0) {
+                return project;
+            }
+        });
 
+         // Filters upcoming events
+        const upcomingEvents = events.filter(event => {
+            const eventSched = event.schedule;
+            const dayDiff = differenceInCalendarDays(eventSched, new Date());
+
+            if (dayDiff <= 7 && dayDiff > 0) {
+                return event;
+            }
+        });
+
+        displayContent.createFilterBanner('append', 'upcoming');
+
+        // Create and append upcoming projects preview
+        createFilteredPreview(upcomingProjects, 'upcoming-view');
+
+        // Create and append upcoming events preview
+        createFilteredPreview(upcomingEvents, 'upcomingView')
+    }
+
+    return {displayTimeFiltered, displayToday, displayUpcoming}
 
 })();
 

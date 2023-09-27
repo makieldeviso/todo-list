@@ -2,6 +2,7 @@ import { eventsDisplay } from "./eventsDisplay";
 import { projectsDisplay } from "./projectsDisplay";
 import { memoryHandler } from "./memoryHandler";
 import { displayContentTimeFiltered } from "../displayContentTimeFiltered";
+import { formatting } from "./formatting";
 
 const displayContent = (function () {
 
@@ -52,6 +53,10 @@ const displayContent = (function () {
                 if (timeFilter === 'today-view') {
                     displayContentTimeFiltered.displayToday();
                     this.dataset.action = 'today-previews';
+
+                } else if (timeFilter === 'upcoming-view') {
+                    displayContentTimeFiltered.displayUpcoming();
+                    this.dataset.action = 'upcoming-previews';
                 }
 
             } else {
@@ -65,7 +70,10 @@ const displayContent = (function () {
                 }
             }
 
-        } else if (backAction === 'today-previews') {
+        } else if (
+            backAction === 'today-previews' ||
+            backAction === 'upcoming-previews' ){      
+
             translateSidebar(false);
             clearItemDisplay('events-previews');
             clearItemDisplay('projects-previews');
@@ -79,6 +87,26 @@ const displayContent = (function () {
         newSpan.textContent = text;
 
         parentP.appendChild(newSpan);
+    }
+
+    // Create and append/ remove Filter Banner
+    const createFilterBanner = function (action, text) {
+        const itemDisplay = document.querySelector('div#item-display');
+        
+        if (action === 'append') {
+            const banner = document.createElement('h3');
+            banner.setAttribute('id', 'filter-banner');
+            createSpan(banner, `${text} icon`, '');
+            createSpan(banner, 'main-text', formatting.toProper(text));
+
+            itemDisplay.appendChild(banner);
+
+        } else if (action === 'remove') {
+            const banner = document.querySelector('h3#filter-banner');
+            if (banner !== null) {
+                itemDisplay.removeChild(banner);
+            }
+        }
     }
 
     // Reusable action buttons maker
@@ -104,7 +132,6 @@ const displayContent = (function () {
     }
 
     const clearItemDisplay = function (action) {
-        
         // Reusable function
         const clearPreview = function (previewSelector) {
             // Note: previewSelector parameter is string used for querySelector
@@ -144,6 +171,9 @@ const displayContent = (function () {
             removeActionBtn(editBtn, deleteBtn);
 
         }
+
+        // Remove filter banner
+        createFilterBanner('remove');
     }
 
     // Manually clear display panel of previews
@@ -160,6 +190,9 @@ const displayContent = (function () {
                 removeDisplay(event);
             }
         });
+
+        // Clear Filter Banner
+        createFilterBanner('remove');
             
     }
 
@@ -180,10 +213,12 @@ const displayContent = (function () {
         backBtn.dataset.action = assignAction;
 
         if (assignAction === 'events-previews') {
+            createFilterBanner('append', 'events');
             eventsDisplay.displayEventsToDOM();
             translateSidebar(true);
-
+            
         } else if (assignAction === 'projects-previews') {
+            createFilterBanner('append', 'projects');
             projectsDisplay.displayProjectsToDOM();
             translateSidebar(true);
 
@@ -229,6 +264,7 @@ const displayContent = (function () {
             hardClearItemDisplay,
             createActionBtn,
             createSpan,
+            createFilterBanner,
             
         }
 

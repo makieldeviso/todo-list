@@ -65,7 +65,7 @@ const eventsScript = (function () {
             deadlineAlert = 'overdue';
         } else if (daysApart === 0) {
             deadlineAlert = 'today';
-        } else if (daysApart > 0 && daysApart < 7) {
+        } else if (daysApart > 0 && daysApart <= 7) {
             deadlineAlert = 'upcoming';
         } else if (daysApart > 7) {
             deadlineAlert = 'far';

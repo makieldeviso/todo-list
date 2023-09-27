@@ -7,7 +7,7 @@ const memoryHandler = (function () {
             {
                 "title": "Ms. Dodo's Birthday",
                 "description": "60th Birthday, food committee",
-                "schedule": new Date(),
+                "schedule": new Date(2023, 9, 4),
                 "projectTag": "newprojecttest1693267200000",
                 "priority": "high",
                 "tasks": {
@@ -158,7 +158,7 @@ const placeholderProjects = [
     {
         "title": "New Project Test",
         "description": "Project Test Description",
-        "deadline": new Date(),
+        "deadline": new Date(2023, 9, 4),
         "priority": "high",
         "eventLinks": {"event-1": "ms.dodo'sbirthday1689724800000", "event-2": "doyourthing"},
         "projectId": "newprojecttest1693267200000",

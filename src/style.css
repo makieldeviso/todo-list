@@ -157,7 +157,8 @@ div.category p {
     font-size: var(--common-font-size);
 }
 
-svg.tab-icon {
+svg.tab-icon,
+img.tab-icon {
     width: var(--icon-size);
     height: var(--icon-size);
 }
@@ -256,10 +257,31 @@ div#item-display{
     /* padding-top: var(--common-padding); */
 }
 
-div.event-preview:first-of-type,
-div.project-preview:first-of-type {
-    margin-top: var(--common-margin);
+h3#filter-banner {
+    font-size: var(--title-font-size);
+    padding: var(--common-padding) calc(var(--common-padding) * 2);
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    align-items: center;
+    gap: 5px;
 }
+
+h3#filter-banner span.main-text {
+    font-family: var(--header-font-style);
+}
+
+h3#filter-banner span.icon {
+    width: calc(var(--header-font-size) * 1.3);
+    height: calc(var(--header-font-size) * 1.3);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+span.icon.today {
+    background-image: url(./assets/today-icon.svg);
+}
+
 
 /* Action Btns (start) -- */
 div#action-btns {
