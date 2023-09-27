@@ -11,9 +11,15 @@ const displayContentTimeFiltered = (function () {
         if (action === 'today-previews') {
             displayToday();
             displayContent.translateSidebar(true);
+
         } else if (action === 'upcoming-previews') {
             displayUpcoming();
             displayContent.translateSidebar(true);
+
+        } else if (action === 'someday-previews') {
+            displaySomeday();
+            displayContent.translateSidebar(true);
+
         } else {
             return;
         }
@@ -91,7 +97,42 @@ const displayContentTimeFiltered = (function () {
         createFilteredPreview(upcomingEvents, 'upcomingView')
     }
 
-    return {displayTimeFiltered, displayToday, displayUpcoming}
+    const displaySomeday = function () {
+        const projects = memoryHandler.getProjects();
+        const events = memoryHandler.getEvents();
+
+        // Filters someday projects
+        const somedayProjects = projects.filter(project => {
+            const projectDeadline = project.deadline;
+            const dayDiff = differenceInCalendarDays(projectDeadline, new Date());
+            
+            if (dayDiff >= 1 ) {
+                return project;
+            }
+        });
+
+         // Filters someday events
+        const somedayEvents = events.filter(event => {
+            const eventSched = event.schedule;
+            const dayDiff = differenceInCalendarDays(eventSched, new Date());
+
+            if (dayDiff >= 1) {
+                return event;
+            }
+        });
+
+        displayContent.createFilterBanner('append', 'someday');
+
+        // Create and append someday projects preview
+        createFilteredPreview(somedayProjects, 'someday-view');
+
+        // Create and append someday events preview
+        createFilteredPreview(somedayEvents, 'somedayView')
+
+    }
+
+
+    return {displayTimeFiltered, displayToday, displayUpcoming, displaySomeday}
 
 })();
 

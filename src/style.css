@@ -362,7 +362,7 @@ div.event-preview {
     grid-template-rows: repeat(3, max-content);
     padding: var(--common-padding);
     border: 1px solid var(--base-blue);
-    border-radius: 10px;
+    border-radius: 15px;
     column-gap: var(--common-padding);
     margin: 0 calc(var(--common-margin) * 0.5);
     background-color: var(--off-white);
@@ -815,7 +815,6 @@ div.project-preview {
     border: 2px solid var(--base-yellow);
     box-shadow: 
         0 0 1px 2px rgba(33, 42, 62, 0.2);
-    border-radius: 10px;
     column-gap: var(--common-padding);
     margin: 0 calc(var(--common-margin) * 0.5);
     background-color: var(--dark-orange);
@@ -824,6 +823,7 @@ div.project-preview {
         "marker title deadline"
         ". desc prio"
         ". . event";
+
 }
  
 div.project-preview[data-status="done"] {

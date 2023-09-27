@@ -57,6 +57,10 @@ const displayContent = (function () {
                 } else if (timeFilter === 'upcoming-view') {
                     displayContentTimeFiltered.displayUpcoming();
                     this.dataset.action = 'upcoming-previews';
+
+                } else if (timeFilter === 'someday-view') {
+                    displayContentTimeFiltered.displaySomeday();
+                    this.dataset.action = 'someday-previews';
                 }
 
             } else {
@@ -72,7 +76,8 @@ const displayContent = (function () {
 
         } else if (
             backAction === 'today-previews' ||
-            backAction === 'upcoming-previews' ){      
+            backAction === 'upcoming-previews'||
+            backAction === 'someday-previews' ){      
 
             translateSidebar(false);
             clearItemDisplay('events-previews');
