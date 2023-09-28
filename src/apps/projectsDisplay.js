@@ -112,14 +112,15 @@ const projectsDisplay = (function () {
         // Conditional to enable non-eventlistener trigger
         // If trigger is string means non-eventlistener
         let projectId;
+        let timeFiltered = false;
         if (typeof trigger === 'string') {
             projectId = trigger
         } else {
             projectId = this.dataset.id;
 
-            // Add additional backBtn dataset attributes depending on where full view was accessed
+            // Activate timeFilter flag, used for addition attributes to elements
             if (this.hasAttribute('data-filter')) {
-                backBtn.dataset.filter = this.dataset.filter;
+                timeFiltered = true;
             } 
         }
 
@@ -139,6 +140,14 @@ const projectsDisplay = (function () {
         // Create and append project full view
         const projectFullView = createProjectFullView(projectObj);
         itemDisplay.appendChild(projectFullView);
+
+        // Additional dataset attribute to buttons if full view was accessed through time filter
+        if (timeFiltered) {
+            const deleteBtn = document.querySelector('button.delete');
+
+            backBtn.dataset.filter = this.dataset.filter;
+            deleteBtn.dataset.filter = this.dataset.filter;
+        }
 
     }
 

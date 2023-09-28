@@ -137,7 +137,7 @@ const saveFormValuesEvent = (function () {
         }
 
         // Execute other display events counters
-        onLoadScreen.displayEventsCount();
+        onLoadScreen.loadCounters();
     }
 
     // Clears input field

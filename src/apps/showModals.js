@@ -10,6 +10,7 @@ import { displayContent } from "./displayContent";
 import { onLoadScreen } from "./onLoadScreen";
 import { projectsDisplay } from "./projectsDisplay";
 import { addEventToProject } from "./addEventToProject";
+import { displayContentTimeFiltered } from "../displayContentTimeFiltered";
 
 const showModals = (function () {
     
@@ -151,6 +152,8 @@ const showModals = (function () {
         // Note: When user confirm deletion confirmEventDeletion which
         // modifies event object, closes confirm modal then display new event preview
         deleteBtn.addEventListener('click', confirmEventDelete);
+
+        return new Promise(resolve => resolve(deleteBtn));
     }
 
     const confirmEventDelete = function () {
@@ -184,14 +187,25 @@ const showModals = (function () {
             projectsDisplay.showFullProject(this.dataset.link);
 
         } else {
-            backBtn.dataset.action = 'events-previews';
 
-            // Display events previews
-            eventsDisplay.displayEventsToDOM();
+            if (this.hasAttribute('data-filter')) {
+                const timeFilter = displayContentTimeFiltered.convertDataSet(this.dataset.filter);
+
+                backBtn.dataset.action = `${timeFilter}-previews`;
+
+                // Display time filtered previews
+                displayContentTimeFiltered.displayTimeFiltered(timeFilter);
+
+            } else {
+                backBtn.dataset.action = 'events-previews';
+
+                // Display events previews
+                eventsDisplay.displayEventsToDOM();
+            }
         }
 
         // Execute onload/ sidebar counters
-        onLoadScreen.displayEventsCount();
+        onLoadScreen.loadCounters();
 
     }
 
@@ -257,6 +271,8 @@ const showModals = (function () {
         // Note: When user confirm deletion confirmProjectDeletion which
         // modifies project object, closes confirm modal then display new projects preview
         deleteBtn.addEventListener('click', confirmProjectDelete);
+
+        return new Promise(resolve => resolve(deleteBtn));
     }
 
     const closeProjectDelete = function () {
@@ -293,26 +309,19 @@ const showModals = (function () {
 
         const backBtn = document.querySelector('button#back-sidebar');
 
-        // if (this.hasAttribute('data-link')) {
-        //     backBtn.dataset.action = 'project-fullview';
-        //     backBtn.removeAttribute('data-mode');
-        //     backBtn.removeAttribute('data-link');
+        
+        if (this.hasAttribute('data-filter')) {
+            const timeFilter = displayContentTimeFiltered.convertDataSet(this.dataset.filter);
+            backBtn.dataset.action = `${timeFilter}-previews`;
+            displayContentTimeFiltered.displayTimeFiltered(timeFilter);
 
-        //     // Display project fullview
-        //     projectsDisplay.showFullProject(this.dataset.link);
-
-        // } else {
-        //     backBtn.dataset.action = 'project-previews';
-
-        //     // Display events previews
-        //     projectsDisplay.displayProjectsToDOM();
-        // }
-
-        backBtn.dataset.action = 'projects-previews';
-        projectsDisplay.displayProjectsToDOM();
+        } else {
+            backBtn.dataset.action = 'projects-previews';
+            projectsDisplay.displayProjectsToDOM();
+        }
 
         // Execute onload/ sidebar counters
-        onLoadScreen.displayProjectsCount();
+        onLoadScreen.loadCounters();
 
     }
 

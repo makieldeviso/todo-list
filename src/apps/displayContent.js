@@ -47,21 +47,14 @@ const displayContent = (function () {
                 // This executes when using time filter
                 clearItemDisplay(backAction);
 
+                const time = displayContentTimeFiltered.convertDataSet(timeFilter);
+
                 // Removes the additional datasets after executing clearItemDisplay function
                 this.removeAttribute('data-filter');
 
-                if (timeFilter === 'today-view') {
-                    displayContentTimeFiltered.displayToday();
-                    this.dataset.action = 'today-previews';
-
-                } else if (timeFilter === 'upcoming-view') {
-                    displayContentTimeFiltered.displayUpcoming();
-                    this.dataset.action = 'upcoming-previews';
-
-                } else if (timeFilter === 'someday-view') {
-                    displayContentTimeFiltered.displaySomeday();
-                    this.dataset.action = 'someday-previews';
-                }
+                // Display time filtered previews and add data-action to back-btn
+                displayContentTimeFiltered.displayTimeFiltered(timeFilter);
+                this.dataset.action = `${time}-previews`;
 
             } else {
                 clearItemDisplay(backAction);

@@ -6,22 +6,23 @@ import { projectsDisplay } from "./apps/projectsDisplay";
 
 const displayContentTimeFiltered = (function () {
 
+    // Reminder: As much as possible don't pass converted argument, use dataset
     const displayTimeFiltered = function (action) {
 
-        if (action === 'today-previews') {
+        let timeFilter = convertDataSet(action);
+
+        if (timeFilter === 'today') {
             displayToday();
-            displayContent.translateSidebar(true);
 
-        } else if (action === 'upcoming-previews') {
+        } else if (timeFilter === 'upcoming') {
             displayUpcoming();
-            displayContent.translateSidebar(true);
 
-        } else if (action === 'someday-previews') {
+        } else if (timeFilter === 'someday') {
             displaySomeday();
-            displayContent.translateSidebar(true);
+        } 
 
-        } else {
-            return;
+        if (action.includes('previews')) {
+            displayContent.translateSidebar(true);
         }
     }
     
@@ -77,6 +78,14 @@ const displayContentTimeFiltered = (function () {
         return filteredObj
     }
 
+    // Count time filtered todo (array.length)
+    // Note: needs condition argument, then return the length of the filtered array
+    const countTimeFiltered = function (condition) {
+        const todoArray = memoryHandler.getAll();
+        const filteredArray = timeFilter(todoArray, condition);
+        return filteredArray.length;
+    }
+
     // Merge projectObjs and eventObjs into an array, then sort from upcoming to far time schedule/ deadline
     // Note: projectObj and eventObjs parameter needs array arguments
     const sortProjectsAndEvents = function (objectsArray) {
@@ -103,8 +112,6 @@ const displayContentTimeFiltered = (function () {
     
 
     const displayToday = function () {
-        const todayDate = format(new Date(), 'MMMM, dd, yyyy');
-
         const todoArray = memoryHandler.getAll();
 
         // Filter today projects and events
@@ -147,8 +154,29 @@ const displayContentTimeFiltered = (function () {
         createFilteredPreview(sortedObj, 'someday-view');
     }
 
+    // dataset converter
+    const convertDataSet = function (datasetString) {
 
-    return {displayTimeFiltered, displayToday, displayUpcoming, displaySomeday}
+        let actionString;
+        if (datasetString.includes('today')) {
+            actionString = 'today';
+        } else if (datasetString.includes('upcoming')) {
+            actionString = 'upcoming';
+        } else if (datasetString.includes('someday')) {
+            actionString = 'someday';
+        }
+
+        return actionString;
+    }
+
+    return {displayTimeFiltered, 
+            timeFilter, 
+            countTimeFiltered,
+            displayToday, 
+            displayUpcoming, 
+            displaySomeday,
+            convertDataSet,
+        }
 
 })();
 

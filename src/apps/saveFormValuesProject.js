@@ -131,8 +131,7 @@ const saveFormValuesProject = (function () {
         }
 
         // Execute other display project counters
-        onLoadScreen.displayProjectsCount();
-        console.log(memoryHandler.getProjects());
+        onLoadScreen.loadCounters();
     }
 
     // Link events to project

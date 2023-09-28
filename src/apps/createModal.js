@@ -100,7 +100,6 @@ const createModal = (function () {
 
         const eventsArray = projectsScripts.getProjectEvents(projectObj);
         const projectStatus = projectObj.projectStatus;
-        console.log(projectStatus);
 
         if (eventsArray.length === 0) {
             return 'noEvent';

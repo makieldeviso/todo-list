@@ -305,6 +305,7 @@ const eventsDisplay = (function () {
         // If trigger is string means non-eventlistener
         
         let previewId;
+        let timeFiltered = false;
         if (typeof trigger === 'string') {
             previewId = trigger
 
@@ -329,9 +330,9 @@ const eventsDisplay = (function () {
 
             } 
 
-            // Add additional backBtn dataset attributes depending on where full view was accessed
+            // Activate timeFiltered flag, , used for addition attributes to elements
             if (this.hasAttribute('data-filter')) {
-                backBtn.dataset.filter = this.dataset.filter;
+                timeFiltered = true;
             } 
 
         }
@@ -352,6 +353,14 @@ const eventsDisplay = (function () {
         // Create event full view
         const eventFullView = createEventFullView(event);
         itemDisplay.appendChild(eventFullView);
+
+        // Additional dataset attribute to buttons if full view was accessed through time filter
+        if (timeFiltered) {
+            const deleteBtn = document.querySelector('button.delete');
+
+            backBtn.dataset.filter = this.dataset.filter;
+            deleteBtn.dataset.filter = this.dataset.filter;
+        }
 
     }
 
