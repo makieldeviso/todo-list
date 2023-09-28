@@ -7,7 +7,7 @@ const memoryHandler = (function () {
             {
                 "title": "Ms. Dodo's Birthday",
                 "description": "60th Birthday, food committee",
-                "schedule": new Date(2023, 9, 4),
+                "schedule": new Date(2024, 1, 8),
                 "projectTag": "newprojecttest1693267200000",
                 "priority": "high",
                 "tasks": {
@@ -31,7 +31,7 @@ const memoryHandler = (function () {
             {
                 "title": "Do your thing",
                 "description": "Do your thing",
-                "schedule": new Date(2023, 9, 1),
+                "schedule": new Date(),
                 "projectTag": "newprojecttest1693267200000",
                 "priority": "mid",
                 "tasks": {
@@ -158,7 +158,7 @@ const placeholderProjects = [
     {
         "title": "New Project Test",
         "description": "Project Test Description",
-        "deadline": new Date(2023, 9, 3),
+        "deadline": new Date(2023, 8, 29),
         "priority": "high",
         "eventLinks": {"event-1": "ms.dodo'sbirthday1689724800000", "event-2": "doyourthing"},
         "projectId": "newprojecttest1693267200000",
@@ -168,7 +168,7 @@ const placeholderProjects = [
     {
         "title": "New Project Test-2",
         "description": "Project Test Description-2",
-        "deadline": new Date(2023, 9, 5),
+        "deadline": new Date(),
         "priority": "high",
         "eventLinks": {},
         "projectId": "newprojecttest1693267200001",
@@ -330,6 +330,14 @@ const replaceProject = function (id, currentObj, newObj) {
     projects.splice(projectForModIndex, 1, newObj);
 }
 
+// Get/ return consolidated array of unfiltered and unsorted array of project and event objects
+const getAll = function () {
+    const projects = getProjects();
+    const events = getEvents();
+
+    return [...projects, ...events];
+}
+
 
 // Projects (end) -
 
@@ -359,6 +367,8 @@ const replaceProject = function (id, currentObj, newObj) {
             completeProject,
             deleteProject,
             replaceProject,
+
+            getAll,
         };
 })();
 

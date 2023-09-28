@@ -45,11 +45,42 @@ const displayContentTimeFiltered = (function () {
         });
     }
 
+    const timeFilter = function (objArray, condition) {
+        const filteredObj = objArray.filter(obj => {
+            let objDeadline;
+            if (obj.hasOwnProperty('projectId')) {
+                objDeadline = obj.deadline;
+            } else if (obj.hasOwnProperty('eventId')) {
+                objDeadline = obj.schedule;
+            }
+
+            const dayDiff = differenceInCalendarDays(objDeadline, new Date());
+            
+            if (condition === 'upcoming') {
+                if (dayDiff <= 7 && dayDiff > 0) {
+                    return obj;
+                }
+            } else if (condition === 'someday') {
+                if (dayDiff >= 1) {
+                    return obj;
+                }
+            } else if (condition === 'today') {
+                const todayDateFormatted = format(new Date(),'MMMM, dd, yyyy');
+                const objDeadlineFormatted = format(objDeadline,'MMMM, dd, yyyy');
+
+                if (todayDateFormatted === objDeadlineFormatted) {
+                    return obj;
+                }
+            }
+        });
+
+        return filteredObj
+    }
+
     // Merge projectObjs and eventObjs into an array, then sort from upcoming to far time schedule/ deadline
     // Note: projectObj and eventObjs parameter needs array arguments
-    const sortProjectsAndEvents = function (projectObjs, eventObjs) {
-        const consolidatedObj = [...projectObjs, ...eventObjs];
-        const sortedObj = consolidatedObj.sort((a, b) => {
+    const sortProjectsAndEvents = function (objectsArray) {
+        const sortedObj = objectsArray.sort((a, b) => {
             let aTime;
             let bTime;
 
@@ -74,47 +105,26 @@ const displayContentTimeFiltered = (function () {
     const displayToday = function () {
         const todayDate = format(new Date(), 'MMMM, dd, yyyy');
 
-        const projects = memoryHandler.getProjects();
-        const events = memoryHandler.getEvents();
+        const todoArray = memoryHandler.getAll();
 
-        const todayProjects = projects.filter(project => format(project.deadline, 'MMMM, dd, yyyy') === todayDate);
-        const todayEvents = events.filter(event => format(event.schedule, 'MMMM, dd, yyyy') === todayDate);
+        // Filter today projects and events
+        const todayObjArray = timeFilter(todoArray, 'today');
 
         displayContent.createFilterBanner('append', 'today');
 
         // Create and append project previews on itemDisplay
-        createFilteredPreview(todayProjects, 'today-view');
-
-        // Create and append event previews on itemDisplay
-        createFilteredPreview(todayEvents, 'today-view');
+        // Note: todayArray is not sorted, order is projects then events
+        createFilteredPreview(todayObjArray, 'today-view');
     }
 
     const displayUpcoming = function () {
+        const todoArray = memoryHandler.getAll();
 
-        const projects = memoryHandler.getProjects();
-        const events = memoryHandler.getEvents();
+        // Filters upcoming projects and events
+        const upcomingObjArray = timeFilter(todoArray, 'upcoming');
 
-        // Filters upcoming projects
-        const upcomingProjects = projects.filter(project => {
-            const projectDeadline = project.deadline;
-            const dayDiff = differenceInCalendarDays(projectDeadline, new Date());
-            
-            if (dayDiff <= 7 && dayDiff > 0) {
-                return project;
-            }
-        });
-
-         // Filters upcoming events
-        const upcomingEvents = events.filter(event => {
-            const eventSched = event.schedule;
-            const dayDiff = differenceInCalendarDays(eventSched, new Date());
-
-            if (dayDiff <= 7 && dayDiff > 0) {
-                return event;
-            }
-        });
-
-        const sortedObj = sortProjectsAndEvents(upcomingProjects, upcomingEvents);
+        // Sort project and event objects from upcoming to farthest time
+        const sortedObj = sortProjectsAndEvents(upcomingObjArray);
 
         displayContent.createFilterBanner('append', 'upcoming');
 
@@ -123,37 +133,18 @@ const displayContentTimeFiltered = (function () {
     }
 
     const displaySomeday = function () {
-        const projects = memoryHandler.getProjects();
-        const events = memoryHandler.getEvents();
+        const todoArray = memoryHandler.getAll();
 
-        // Filters someday projects
-        const somedayProjects = projects.filter(project => {
-            const projectDeadline = project.deadline;
-            const dayDiff = differenceInCalendarDays(projectDeadline, new Date());
-            
-            if (dayDiff >= 1 ) {
-                return project;
-            }
-        });
+        // Filters someday projects and events
+        const somedayObjArray = timeFilter(todoArray, 'someday');
 
-         // Filters someday events
-        const somedayEvents = events.filter(event => {
-            const eventSched = event.schedule;
-            const dayDiff = differenceInCalendarDays(eventSched, new Date());
-
-            if (dayDiff >= 1) {
-                return event;
-            }
-        });
+        // Sort project and event objects from upcoming to farthest time
+        const sortedObj = sortProjectsAndEvents(somedayObjArray);
 
         displayContent.createFilterBanner('append', 'someday');
 
-        // Create and append someday projects preview
-        createFilteredPreview(somedayProjects, 'someday-view');
-
-        // Create and append someday events preview
-        createFilteredPreview(somedayEvents, 'someday-view')
-
+        // Create and append someday projects and events previews
+        createFilteredPreview(sortedObj, 'someday-view');
     }
 
 
