@@ -11,15 +11,19 @@ const displayContentTimeFiltered = (function () {
 
         let timeFilter = convertDataSet(action);
 
-        if (timeFilter === 'today') {
-            displayToday();
-
-        } else if (timeFilter === 'upcoming') {
-            displayUpcoming();
-
-        } else if (timeFilter === 'someday') {
-            displaySomeday();
-        } 
+        switch (timeFilter) {
+            case 'today' : 
+                displayToday();
+                break;
+            case 'upcoming' : 
+                displayUpcoming();
+                break;
+            case 'someday' : 
+                displaySomeday();
+                break;
+            default :
+                break;
+        }
 
         if (action.includes('previews')) {
             displayContent.translateSidebar(true);

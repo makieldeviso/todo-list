@@ -282,6 +282,21 @@ span.icon.today {
     background-image: url(./assets/today-icon.svg);
 }
 
+span.icon.upcoming {
+    background-image: url(./assets/upcoming-icon.svg);
+}
+span.icon.someday {
+    background-image: url(./assets/someday-icon.svg);
+}
+
+span.icon.events {
+    background-image: url(./assets/events-icon.svg);
+}
+
+span.icon.projects {
+    background-image: url(./assets/projects-icon.svg);
+}
+
 
 /* Action Btns (start) -- */
 div#action-btns {
@@ -483,6 +498,10 @@ p.event-sched span.sched-icon.overdue~span {
 
 p.event-sched span.sched-icon.today {
     background-image: url('./assets/calendar-today.png');
+}
+
+p.event-sched span.sched-icon.far {
+    background-image: url('./assets/calendar-far.svg');
 }
 
 /* if completed */

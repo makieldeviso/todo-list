@@ -158,7 +158,7 @@ const placeholderProjects = [
     {
         "title": "New Project Test",
         "description": "Project Test Description",
-        "deadline": new Date(2023, 8, 29),
+        "deadline": new Date(2023, 8, 30),
         "priority": "high",
         "eventLinks": {"event-1": "ms.dodo'sbirthday1689724800000", "event-2": "doyourthing"},
         "projectId": "newprojecttest1693267200000",

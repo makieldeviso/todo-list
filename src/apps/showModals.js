@@ -161,8 +161,10 @@ const showModals = (function () {
 
         // Modify project object linked to this event
         const projectId = memoryHandler.getEvent(eventId).projectTag;
-        memoryHandler.deleteEventFromProject(eventId, projectId);
-
+        if (projectId !== 'standalone') {
+            memoryHandler.deleteEventFromProject(eventId, projectId);
+        }
+        
         // Modify event object
         memoryHandler.deleteEvent(eventId);
 
@@ -200,6 +202,7 @@ const showModals = (function () {
                 backBtn.dataset.action = 'events-previews';
 
                 // Display events previews
+                displayContent.createFilterBanner('append', 'events');
                 eventsDisplay.displayEventsToDOM();
             }
         }
@@ -317,6 +320,7 @@ const showModals = (function () {
 
         } else {
             backBtn.dataset.action = 'projects-previews';
+            displayContent.createFilterBanner('append', 'projects');
             projectsDisplay.displayProjectsToDOM();
         }
 
