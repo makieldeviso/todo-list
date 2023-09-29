@@ -8,8 +8,6 @@ import { showModals } from "./showModals";
 import { initDelete } from "./initDelete";
 import { projectEditForm } from "./projectEditForm";
 import projectIcon from '../assets/projects-icon.svg';
-import pendingIcon from '../assets/pending-white.svg';
-import doneIcon from '../assets/done.svg';
 
 const projectsDisplay = (function () {
 
@@ -61,30 +59,12 @@ const projectsDisplay = (function () {
 
         // (1) (start)-
         // Add event marking to indicate if 'pending' or 'done'
-        const newMarker = new Image();
-        newMarker.setAttribute('class', 'marker');
-        let altAttr;
-        let titleAttr;
-        if (projectObj.projectStatus === 'pending') {
-            newMarker.src = pendingIcon;
-            altAttr = 'Project status icon: Pending'
-            titleAttr = 'Pending';
-        } else if (projectObj.projectStatus === 'done') {
-            newMarker.src = doneIcon;
-            altAttr = 'Project status icon: Completed'
-            titleAttr = 'Completed';
-        }
-
-        newMarker.setAttribute('alt', altAttr);
-        newMarker.setAttribute('title', titleAttr);
+        const newMarker = displayContent.createStatusMarker(projectObj);
         // (1) (end)-
 
         // (2) (start) -
         // Add indicator icon to classify as event or project. UI related
-        const newIndicator = new Image();
-        newIndicator.src = projectIcon;
-        newIndicator.setAttribute('alt', 'project-icon');
-        newIndicator.setAttribute('class', 'indicator-icon');
+        const newIndicator = displayContent.createIndicatorIcon('projects');
         // (2) (end) -
 
         // (3-5) (start)-

@@ -4,6 +4,12 @@ import { memoryHandler } from "./memoryHandler";
 import { displayContentTimeFiltered } from "../displayContentTimeFiltered";
 import { formatting } from "./formatting";
 
+import pendingIcon from '../assets/pending-white.svg';
+import pendingOrangeIcon from '../assets/pending-orange.svg';
+import doneIcon from '../assets/done.svg';
+import projectsIcon from '../assets/projects-icon.svg'
+import eventsIcon from '../assets/events-icon.svg'
+
 const displayContent = (function () {
 
     const translateSidebar = function (action) {
@@ -129,6 +135,58 @@ const displayContent = (function () {
         } 
     }
 
+    // Reusable status indicator icon maker
+    const createStatusMarker = function (obj) {
+        let todoType;
+        if (obj.hasOwnProperty('projectId')) {
+            todoType = 'project';
+        } else {
+            todoType = 'event';
+        }
+
+        const marker = new Image();
+        marker.setAttribute('class', 'marker');
+        let altAttr;
+        let titleAttr;
+
+        if (obj[`${todoType}Status`] === 'pending') {
+            if (todoType === 'project') {
+                marker.src = pendingIcon;
+            } else {
+                marker.src = pendingOrangeIcon;
+            }
+            
+            altAttr = `${formatting.toProper(todoType)} status icon: Pending`;
+            titleAttr = 'Pending';
+        } else if (obj[`${todoType}Status`] === 'done') {
+            marker.src = doneIcon;
+            altAttr = `${formatting.toProper(todoType)} status icon: Completed`;
+            titleAttr = 'Completed';
+        }
+
+        marker.setAttribute('alt', altAttr);
+        marker.setAttribute('title', titleAttr);
+
+        return marker;
+    }
+
+    // Create event and project icon for user indicator, UI related distinguish events and projects
+    // Note: Parameter is string. Either 'events' or 'projects'
+    const createIndicatorIcon = function (todoType) {
+        const icon = new Image();
+
+        if (todoType === 'projects') {
+            icon.src = projectsIcon;
+        } else {
+            icon.src = eventsIcon;
+        }
+ 
+        icon.setAttribute('alt', `${todoType}-icon`);
+        icon.setAttribute('class', 'indicator-icon');
+
+        return icon;
+    }
+    
     const clearItemDisplay = function (action) {
         // Reusable function
         const clearPreview = function (previewSelector) {
@@ -255,15 +313,18 @@ const displayContent = (function () {
     return {showDisplay, 
             addSidebarEvents, 
             translateSidebar,
-            removeDisplay, 
             backBtnEvents, 
+
+            removeDisplay, 
             removeActionBtn, 
             clearItemDisplay, 
             hardClearItemDisplay,
+
             createActionBtn,
             createSpan,
             createFilterBanner,
-            
+            createStatusMarker,
+            createIndicatorIcon,
         }
 
 })();

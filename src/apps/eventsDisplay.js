@@ -250,19 +250,23 @@ const eventsDisplay = (function () {
 
         // (1) (start)-
         // Add event marking to indicate if 'pending' or 'done'
-        const newMarker = document.createElement('div');
-        newMarker.setAttribute('class', 'marker');
+        const newMarker = displayContent.createStatusMarker(eventObj);
         // (1) (end)-
 
-        // (2-5) (start)-
+        // (2) (start)-
+        // Add indicator icon to classify as event or project. UI related
+        const newIndicator = displayContent.createIndicatorIcon('events');
+        // (2) (end)-
+
+        // (3-6) (start)-
         // Execute makeText and assign to variables  
         const newTitle = makeText('event-title', eventObj.title);
         const newDesc = makeText('event-desc', eventObj.description);
         const newProjTag = makeText('event-proj', eventsScript.getEventProjectTitle(eventObj));
         const newPrio = makeText('event-prio', eventObj.priority);
-        // (2-5) (end)-
+        // (3-6) (end)-
 
-        // (6) (start)-
+        // (7) (start)-
         const newSched = document.createElement('p');
         newSched.setAttribute('class', 'event-sched');
 
@@ -279,15 +283,15 @@ const eventsDisplay = (function () {
         }
 
         displayContent.createSpan(newSched, 'sched-date', dateString);
-        // (6) (end)-
-
-        // (7) (start)-
-        // Create task count p
-        const newTaskCount = createTaskCounter(eventObj);
         // (7) (end)-
 
+        // (8) (start)-
+        // Create task count p
+        const newTaskCount = createTaskCounter(eventObj);
+        // (8) (end)-
+
         // Append preview components to newEvent
-        const components = [newMarker, newTitle, newDesc, newProjTag, newPrio, newSched, newTaskCount];
+        const components = [newMarker, newIndicator, newTitle, newDesc, newProjTag, newPrio, newSched, newTaskCount];
         components.forEach(comp => newEvent.appendChild(comp));
 
         // Add event listener to newEvent

@@ -390,7 +390,7 @@ div.event-preview {
 
     grid-template-areas: 
         "marker title sched"
-        ". proj prio"
+        "indicator proj prio"
         ". desc task";
 }
 
@@ -402,25 +402,12 @@ div.event-preview:hover {
     cursor: pointer;
 }
     
-div.marker {
-    grid-area: marker;
-    width: 100%;
-    height: 100%;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-}
-
-div.event-preview[data-status="pending"] div.marker {
-    background-image: url('./assets/pending.png');
-}
-
-div.event-preview[data-status="done"] div.marker {
-    background-image: url('./assets/done.png');
-}
-
 div.event-preview[data-status="done"] p.event-title {
     color: #54B435;
+}
+
+div.event-preview img.indicator-icon {
+    filter: unset;
 }
 
 p.event-title {
@@ -478,15 +465,18 @@ p.event-sched {
     grid-area: sched;
     text-align: right;
     font-size: calc(var(--header-font-size) * 0.7);
-    display: flex;
+    display: grid;
+    grid-template-columns: max-content 1fr;
     align-items: center;
-    gap: 3px;
+    gap: var(--common-padding);
+    padding: 0 var(--common-padding);
 }
 
 p.event-sched span.sched-icon {
     display: flex;
     width: var(--header-font-size);
-    height: 100%;
+    width: calc(12px + 1vw);
+    height: calc(12px + 1vw);
     margin: auto;
     background-image: url('./assets/calendar-alert.svg');
     background-position: center;
@@ -587,7 +577,7 @@ div.event-fullview[data-status="done"] div.event-status {
 }
 
 div.event-fullview[data-status="pending"] div.event-status {
-    background-image: url('./assets/pending.png');
+    background-image: url('./assets/pending-orange.svg');
 }
 
 
@@ -855,7 +845,7 @@ div.project-preview {
         "indicator desc prio"
         ". . event";
 
-    transition: filter 0.1s ease-in-out, transform 0.1s ease-in-out;
+    transition: filter 0.1s ease-in-out;
 }
  
 div.project-preview[data-status="done"] {
@@ -866,7 +856,6 @@ div.project-preview[data-status="done"] {
 div.project-preview:hover {
     cursor: pointer;
     filter: brightness(1.1);
-    transform: translateX(3px);
 }
     
 img.marker {
@@ -1475,7 +1464,7 @@ div.project-fullview[data-status="done"] div.project-status {
 }
 
 div.project-fullview[data-status="pending"] div.project-status {
-    background-image: url('./assets/pending.png');
+    background-image: url('./assets/pending-orange.svg');
 }
 
 p.fullview.project-title, p.fullview.project-desc {
