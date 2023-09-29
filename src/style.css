@@ -333,9 +333,15 @@ button.action-btn.delete {
     gap: 3px;
     box-shadow: 0 2px 2px 1px rgba(62, 62, 62, 0.3);
 
-    border-radius: 5px;
+    border-radius: 10px;
     border: 2px solid white;
     background-color: var(--dark-orange);
+}
+
+button.action-btn[value="edit-project"],
+button.action-btn[value="delete-project"] {
+    background-color: var(--darkest-color);
+    border-radius: 0;
 }
 
 button.action-btn span.icon {
@@ -373,7 +379,7 @@ button.action-btn.delete span.text {
 /*  Event Preview (start) --*/
 div.event-preview {
     display: grid;
-    grid-template-columns: 15px 1fr max-content;
+    grid-template-columns: calc(10px + 1vw) 1fr max-content;
     grid-template-rows: repeat(3, max-content);
     padding: var(--common-padding);
     border: 1px solid var(--base-blue);
@@ -482,7 +488,7 @@ p.event-sched span.sched-icon {
     width: var(--header-font-size);
     height: 100%;
     margin: auto;
-    background-image: url('./assets/calendar-alert.png');
+    background-image: url('./assets/calendar-alert.svg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
@@ -540,6 +546,12 @@ p.event-desc {
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+
+p.event-title {
+    -webkit-line-clamp: 1;
+}
+
+
 /*  Event Preview (end) --*/
 
 /* Event Full view (start) -- */
@@ -707,7 +719,7 @@ div.event-action {
 button[value="complete-event"] {
     font-size: calc(var(--common-font-size) * 1.2);
     padding: var(--common-padding);
-    border-radius: 5px;
+    border-radius: 10px;
     border: 2px solid white;
     background-color: green;
     color: white;
@@ -828,7 +840,7 @@ dialog#edit-project-prompt  form#project-form{
 /*  Project Preview (start) --*/
 div.project-preview {
     display: grid;
-    grid-template-columns: 15px 1fr max-content;
+    grid-template-columns: calc(10px + 1vw) 1fr max-content;
     grid-template-rows: repeat(3, max-content);
     padding: var(--common-padding);
     border: 2px solid var(--base-yellow);
@@ -840,9 +852,10 @@ div.project-preview {
 
     grid-template-areas: 
         "marker title deadline"
-        ". desc prio"
+        "indicator desc prio"
         ". . event";
 
+    transition: filter 0.1s ease-in-out, transform 0.1s ease-in-out;
 }
  
 div.project-preview[data-status="done"] {
@@ -852,27 +865,32 @@ div.project-preview[data-status="done"] {
 
 div.project-preview:hover {
     cursor: pointer;
+    filter: brightness(1.1);
+    transform: translateX(3px);
 }
     
-div.marker {
+img.marker {
     grid-area: marker;
     width: 100%;
     height: 100%;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
 }
 
-div.project-preview[data-status="pending"] div.marker {
-    background-image: url('./assets/pending-white.png');
-}
-
-div.project-preview[data-status="done"] div.marker {
-    background-image: url('./assets/done.png');
+img.indicator-icon {
+    grid-area: indicator;
+    width: 100%;
+    height: 100%;
+    filter: brightness(150%);
 }
 
 div.project-preview[data-status="done"] p.project-title {
     color: #54B435;
+}
+
+p.project-title, p.project-desc {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 p.project-title {
@@ -880,7 +898,8 @@ p.project-title {
     font-size: var(--header-font-size);
     font-family: var(--header-font-style);
     color: white;
-}
+
+    -webkit-line-clamp: 1;}
 
 p.project-desc{
     grid-area: desc;
@@ -925,22 +944,26 @@ p.project-deadline {
     grid-area: deadline;
     text-align: right;
     font-size: calc(var(--header-font-size) * 0.7);
-    display: flex;
+    display: grid;
+    grid-template-columns: max-content 1fr;
     align-items: center;
-    gap: 3px;
+    gap: var(--common-padding);
     padding: 0 var(--common-padding);
-    color: white;
+    color: black;
+    background-color: var(--base-yellow);
+    border-radius: 5px;
+    border: 1px solid white;
 }
 
 p.project-deadline span.deadline-icon {
     display: flex;
-    width: var(--header-font-size);
-    height: 100%;
+    width: calc(12px + 1vw);
+    height: calc(12px + 1vw);
     margin: auto;
-    background-image: url('./assets/calendar-alert.png');
+    background-image: url('./assets/calendar-alert.svg');
     background-position: center;
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
 }
 
 p.project-deadline span.deadline-icon.overdue {
@@ -953,6 +976,10 @@ p.project-deadline span.deadline-icon.overdue~span {
 
 p.project-deadline span.deadline-icon.today {
     background-image: url('./assets/calendar-today.png');
+}
+
+p.project-deadline span.deadline-icon.far {
+    background-image: url('./assets/calendar-far.svg');
 }
 
 /* if completed */
@@ -981,7 +1008,7 @@ p.project-event-count {
 }
 
 p.project-event-count.done {
-    color: var(--base-yellow);
+    color: #93f074;  
 }
 
 div.project-preview[data-status="done"] p.project-event-count.done {
@@ -1481,16 +1508,20 @@ p.fullview.deadline-label {
 p.fullview.project-deadline {
     font-size: calc(var(--header-font-size) * 1.2);
     padding: 0;
+    background-color: transparent;
+    border: none;
+    display: grid;
+    grid-template-columns: max-content 1fr;
 }
 
 p.fullview.project-deadline span.deadline-date {
-    grid-area: deadline;
     color: black;
     font-family: var(--header-font-style);
 }
 
 p.fullview.project-deadline span.deadline-icon {
     width: calc(var(--header-font-size) * 1.3);
+    height: calc(var(--header-font-size) * 1.3);
     margin: unset;
 }
 
@@ -1590,7 +1621,6 @@ div.project-action {
 button[value="complete-project"] {
     font-size: calc(var(--common-font-size) * 1.2);
     padding: var(--common-padding);
-    border-radius: 5px;
     border: 2px solid white;
     background-color: green;
     color: white;

@@ -31,7 +31,7 @@ const memoryHandler = (function () {
             {
                 "title": "Do your thing",
                 "description": "Do your thing",
-                "schedule": new Date(),
+                "schedule": new Date(2023, 9, 1),
                 "projectTag": "newprojecttest1693267200000",
                 "priority": "mid",
                 "tasks": {
@@ -56,7 +56,7 @@ const memoryHandler = (function () {
     const events = [...placeholderEvents];
 
     const saveEvent = function(newEvent) {
-        events.push(newEvent);
+        events.unshift(newEvent);
     };
 
     const getEvents = function () {
@@ -158,17 +158,17 @@ const placeholderProjects = [
     {
         "title": "New Project Test",
         "description": "Project Test Description",
-        "deadline": new Date(2023, 8, 30),
+        "deadline": new Date(2023, 7, 30),
         "priority": "high",
         "eventLinks": {"event-1": "ms.dodo'sbirthday1689724800000", "event-2": "doyourthing"},
         "projectId": "newprojecttest1693267200000",
         "projectStatus": 'pending',
-    },
+    },  
 
     {
         "title": "New Project Test-2",
         "description": "Project Test Description-2",
-        "deadline": new Date(),
+        "deadline": new Date(2023, 9, 1 ),
         "priority": "high",
         "eventLinks": {},
         "projectId": "newprojecttest1693267200001",
@@ -180,9 +180,7 @@ const placeholderProjects = [
 const projects = [...placeholderProjects];
 
 const saveProject = function (projectObj) {
-    projects.push(projectObj);
-    console.log(projectObj);
-    console.log(projects);
+    projects.unshift(projectObj);
 }
 
 const getProjects = function () {

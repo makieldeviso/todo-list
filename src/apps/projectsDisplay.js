@@ -7,6 +7,9 @@ import { eventsDisplay } from "./eventsDisplay";
 import { showModals } from "./showModals";
 import { initDelete } from "./initDelete";
 import { projectEditForm } from "./projectEditForm";
+import projectIcon from '../assets/projects-icon.svg';
+import pendingIcon from '../assets/pending-white.svg';
+import doneIcon from '../assets/done.svg';
 
 const projectsDisplay = (function () {
 
@@ -58,17 +61,38 @@ const projectsDisplay = (function () {
 
         // (1) (start)-
         // Add event marking to indicate if 'pending' or 'done'
-        const newMarker = document.createElement('div');
+        const newMarker = new Image();
         newMarker.setAttribute('class', 'marker');
+        let altAttr;
+        let titleAttr;
+        if (projectObj.projectStatus === 'pending') {
+            newMarker.src = pendingIcon;
+            altAttr = 'Project status icon: Pending'
+            titleAttr = 'Pending';
+        } else if (projectObj.projectStatus === 'done') {
+            newMarker.src = doneIcon;
+            altAttr = 'Project status icon: Completed'
+            titleAttr = 'Completed';
+        }
+
+        newMarker.setAttribute('alt', altAttr);
+        newMarker.setAttribute('title', titleAttr);
         // (1) (end)-
 
-        // (2-5) (start)-
+        // (2) (start) -
+        // Add indicator icon to classify as event or project. UI related
+        const newIndicator = new Image();
+        newIndicator.src = projectIcon;
+        newIndicator.setAttribute('alt', 'project-icon');
+        newIndicator.setAttribute('class', 'indicator-icon');
+        // (2) (end) -
+
+        // (3-5) (start)-
         // Execute makeText and assign to variables  
         const newTitle = makeText('project-title', projectObj.title);
         const newDesc = makeText('project-desc', projectObj.description);
-        // const newProjTag = makeText('project-proj', getEventProjectTitle(projectObj));
         const newPrio = makeText('project-prio', projectObj.priority);
-        // (2-5) (end)-
+        // (3-5) (end)-
 
         // (6) (start)-
         const newDeadline = document.createElement('p');
@@ -80,13 +104,18 @@ const projectsDisplay = (function () {
         const deadlineAlert = projectsScripts.checkDeadline(projectObj.deadline);
 
         // Checks if event was already completed
+        let deadlineTitleAttr;
         if (projectObj.completion === undefined) {
             displayContent.createSpan(newDeadline, `deadline-icon ${deadlineAlert}`, '');
+            deadlineTitleAttr = deadlineAlert;
         } else {
             displayContent.createSpan(newDeadline, `deadline-icon ${projectObj.completion}`, '');
+            deadlineTitleAttr = projectObj.completion;
         }
 
         displayContent.createSpan(newDeadline, 'deadline-date', dateString);
+        const deadlineIcon = newDeadline.querySelector('span.deadline-icon');
+        deadlineIcon.setAttribute('title', formatting.toProper(deadlineTitleAttr));
         // (6) (end)-
 
         // (7) (start)-
@@ -95,7 +124,7 @@ const projectsDisplay = (function () {
         // (7) (end)-
 
         // Append preview components to newProject
-        const components = [newMarker, newTitle, newDesc, newPrio, newDeadline, newEventCount];
+        const components = [newMarker, newIndicator, newTitle, newDesc, newPrio, newDeadline, newEventCount];
         components.forEach(comp => newProject.appendChild(comp));
 
         // Add event listener to newProject
