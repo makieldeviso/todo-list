@@ -50,12 +50,18 @@ const projectsDisplay = (function () {
     // Event preview/ display  DOM maker
     const createProjectPreview = function (projectObj) {
 
-        projectsScripts.countDoneEvents(projectObj)
-        
         const newProject = document.createElement('div');
         newProject.setAttribute('class', 'project-preview');
         newProject.setAttribute('data-id', `${projectObj.projectId}`);
-        newProject.dataset.status = projectObj.projectStatus;
+        
+        // Check pending if overdue
+        const deadlineAlert = projectsScripts.checkDeadline(projectObj.deadline);
+
+        if (projectObj.projectStatus === 'pending' && deadlineAlert === 'overdue' ) {
+            newProject.dataset.status = 'overdue';
+        } else {
+            newProject.dataset.status = projectObj.projectStatus;
+        }
 
         // (1) (start)-
         // Add event marking to indicate if 'pending' or 'done'
@@ -81,7 +87,6 @@ const projectsDisplay = (function () {
         // format schedule
         // Note: use date-fns
         const dateString = format(projectObj.deadline, 'MMM dd, yyyy');
-        const deadlineAlert = projectsScripts.checkDeadline(projectObj.deadline);
 
         // Checks if event was already completed
         let deadlineTitleAttr;

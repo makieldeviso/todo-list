@@ -1,19 +1,20 @@
 import { memoryHandler } from "./memoryHandler";
 import { displayContentTimeFiltered } from "../displayContentTimeFiltered";
-
+import { formatting } from "./formatting";
 
 const onLoadScreen = (function () {
 
-    const displayEventsCount = function () {
-        const eventsCounter = document.querySelector('p#events-count');
-        const eventsCount = memoryHandler.countEvents();
-        eventsCounter.textContent = `${eventsCount}`;
-    }
+    // Display counters for projects or events
+    // Note: argument requires string (e.g. 'projects', 'events);
+    const displayProjectEventCount = function (todoType) {
+        const counter = document.querySelector(`p#${todoType}-count`);
 
-    const displayProjectsCount = function () {
-        const projectsCounter = document.querySelector('p#projects-count');
-        const projectsCount = memoryHandler.countProjects();
-        projectsCounter.textContent = `${projectsCount}`;
+        // format argument to proper (e.g. projects => Projects);
+        const todoProper = formatting.toProper(todoType);
+        const count = memoryHandler[`count${todoProper}`]();
+
+        counter.textContent = `${count}`;
+        counter.dataset.count = `${count}`;
     }
 
     // Display counters for time filter
@@ -22,14 +23,16 @@ const onLoadScreen = (function () {
         const counter = document.querySelector(`p#${timeFilter}-count`);
         const count = displayContentTimeFiltered.countTimeFiltered(`${timeFilter}`);
         counter.textContent = `${count}`;
+        counter.dataset.count = `${count}`;
     }
 
     const loadCounters = function () {
-        displayEventsCount();
-        displayProjectsCount();
+        displayProjectEventCount('events');
+        displayProjectEventCount('projects');
         displayTimeCount('today');   
         displayTimeCount('upcoming');
-        displayTimeCount('someday');     
+        displayTimeCount('someday');  
+        displayTimeCount('overdue');    
     }
 
     const addOnLoadEvents = function () {

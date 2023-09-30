@@ -76,7 +76,8 @@ const displayContent = (function () {
         } else if (
             backAction === 'today-previews' ||
             backAction === 'upcoming-previews'||
-            backAction === 'someday-previews' ){      
+            backAction === 'someday-previews'||
+            backAction === 'overdue-previews' ){      
 
             translateSidebar(false);
             clearItemDisplay('events-previews');

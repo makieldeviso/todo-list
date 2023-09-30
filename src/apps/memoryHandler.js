@@ -7,7 +7,7 @@ const memoryHandler = (function () {
             {
                 "title": "Ms. Dodo's Birthday",
                 "description": "60th Birthday, food committee",
-                "schedule": new Date(2024, 1, 8),
+                "schedule": new Date(2023, 1, 8),
                 "projectTag": "newprojecttest1693267200000",
                 "priority": "high",
                 "tasks": {

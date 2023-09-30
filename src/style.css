@@ -167,7 +167,7 @@ div#today {
     margin-top: var(--common-margin);
 }
 
-div#someday {
+div#overdue {
     margin-bottom: var(--common-margin);
 }
 /* Categories (end) -  */
@@ -285,8 +285,13 @@ span.icon.today {
 span.icon.upcoming {
     background-image: url(./assets/upcoming-icon.svg);
 }
+
 span.icon.someday {
     background-image: url(./assets/someday-icon.svg);
+}
+
+span.icon.overdue {
+    background-image: url(./assets/overdue-icon.svg);
 }
 
 span.icon.events {
@@ -396,6 +401,11 @@ div.event-preview {
 
 div.event-preview[data-status="done"] {
     background-color: rgb(232, 237, 232);
+}
+
+div.event-preview[data-status="overdue"] {
+    border-color: red;
+    background-color: rgba(255, 0, 0, 0.1);
 }
 
 div.event-preview:hover {
@@ -853,6 +863,11 @@ div.project-preview[data-status="done"] {
     border-color: #54B435;
 }
 
+div.project-preview[data-status="overdue"] {
+    /* border: 5px solid red; */
+    background-color: rgb(242, 41, 41);
+}
+    
 div.project-preview:hover {
     cursor: pointer;
     filter: brightness(1.1);

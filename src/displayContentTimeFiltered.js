@@ -10,7 +10,6 @@ const displayContentTimeFiltered = (function () {
     const displayTimeFiltered = function (action) {
 
         let timeFilter = convertDataSet(action);
-
         switch (timeFilter) {
             case 'today' : 
                 displayToday();
@@ -20,6 +19,9 @@ const displayContentTimeFiltered = (function () {
                 break;
             case 'someday' : 
                 displaySomeday();
+                break;
+            case 'overdue' : 
+                displayOverdue();
                 break;
             default :
                 break;
@@ -53,10 +55,13 @@ const displayContentTimeFiltered = (function () {
     const timeFilter = function (objArray, condition) {
         const filteredObj = objArray.filter(obj => {
             let objDeadline;
+            let objStatus;
             if (obj.hasOwnProperty('projectId')) {
                 objDeadline = obj.deadline;
+                objStatus = obj.projectStatus;
             } else if (obj.hasOwnProperty('eventId')) {
                 objDeadline = obj.schedule;
+                objStatus = obj.eventStatus;
             }
 
             const dayDiff = differenceInCalendarDays(objDeadline, new Date());
@@ -76,7 +81,13 @@ const displayContentTimeFiltered = (function () {
                 if (todayDateFormatted === objDeadlineFormatted) {
                     return obj;
                 }
+            } else if (condition === 'overdue' && objStatus === 'pending') {
+                if (dayDiff < 0) {
+                    return obj;
+                }
             }
+
+
         });
 
         return filteredObj
@@ -158,19 +169,29 @@ const displayContentTimeFiltered = (function () {
         createFilteredPreview(sortedObj, 'someday-view');
     }
 
+    const displayOverdue = function () {
+        const todoArray = memoryHandler.getAll();
+        
+        // Filters someday projects and events
+        const overdueObjArray = timeFilter(todoArray, 'overdue');
+
+        // Sort project and event objects from upcoming to farthest time
+        const sortedObj = sortProjectsAndEvents(overdueObjArray);
+
+        displayContent.createFilterBanner('append', 'overdue');
+
+        // Create and append someday projects and events previews
+        createFilteredPreview(sortedObj, 'overdue-view');
+    }
+
     // dataset converter
     const convertDataSet = function (datasetString) {
+        const timeConditions = ['today', 'upcoming', 'someday', 'overdue'];
 
-        let actionString;
-        if (datasetString.includes('today')) {
-            actionString = 'today';
-        } else if (datasetString.includes('upcoming')) {
-            actionString = 'upcoming';
-        } else if (datasetString.includes('someday')) {
-            actionString = 'someday';
-        }
+        const assignAction = timeConditions.find(time => datasetString.includes(time));
+        console.log(assignAction);
 
-        return actionString;
+        return assignAction;
     }
 
     return {displayTimeFiltered, 
@@ -179,6 +200,7 @@ const displayContentTimeFiltered = (function () {
             displayToday, 
             displayUpcoming, 
             displaySomeday,
+            displayOverdue,
             convertDataSet,
         }
 

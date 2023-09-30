@@ -248,6 +248,15 @@ const eventsDisplay = (function () {
         newEvent.setAttribute('data-id', `${eventObj.eventId}`);
         newEvent.dataset.status = eventObj.eventStatus;
 
+        // Check pending if overdue
+        const deadlineAlert = eventsScript.checkDeadline(eventObj.schedule);
+
+        if (eventObj.eventStatus === 'pending' && deadlineAlert === 'overdue' ) {
+            newEvent.dataset.status = 'overdue';
+        } else {
+            newEvent.dataset.status = eventObj.eventStatus;
+        }
+
         // (1) (start)-
         // Add event marking to indicate if 'pending' or 'done'
         const newMarker = displayContent.createStatusMarker(eventObj);
@@ -273,16 +282,20 @@ const eventsDisplay = (function () {
         // format schedule
         // Note: use date-fns
         const dateString = format(eventObj.schedule, 'MMM dd, yyyy');
-        const deadlineAlert = eventsScript.checkDeadline(eventObj.schedule);
 
         // Checks if event was already completed
+        let deadlineTitleAttr;
         if (eventObj.completion === undefined) {
             displayContent.createSpan(newSched, `sched-icon ${deadlineAlert}`, '');
+            deadlineTitleAttr = deadlineAlert;
         } else {
             displayContent.createSpan(newSched, `sched-icon ${eventObj.completion}`, '');
+            deadlineTitleAttr = eventObj.completion;
         }
 
         displayContent.createSpan(newSched, 'sched-date', dateString);
+        const deadlineIcon = newSched.querySelector('span.sched-icon');
+        deadlineIcon.setAttribute('title', formatting.toProper(deadlineTitleAttr));
         // (7) (end)-
 
         // (8) (start)-
