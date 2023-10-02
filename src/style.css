@@ -689,7 +689,7 @@ div.task-header p.event-task-count {
 div.fullview.tasks-list div.task {
     display: grid;
     grid-template-columns: max-content 1fr;
-    gap: 5px;
+    gap: 10px;
     padding-bottom: var(--common-padding);
     border-bottom: 1px solid var(--base-orange);
 }
@@ -715,8 +715,7 @@ button.check[value="done"] {
 }
 
 button.check[value="done"]~p.task {
-    transition: opacity ease-in-out 0.2s;
-    opacity: 0.3;
+    color: #54B435;
 }
 
 div.fullview.tasks-list p.task {
@@ -746,6 +745,10 @@ div.event-action p.message {
     font-size: calc(var(--header-font-size) * 1);
     text-align: center;
     margin-top: var(--common-margin);
+}
+
+div.event-fullview[data-status="done"] p.message {
+    color: #54B435;
 }
 
 /* Completion and delete prompt modal (start) --- */
@@ -1473,10 +1476,6 @@ div.project-fullview[data-status="done"] p.fullview.project-deadline span.deadli
     color: var(--base-yellow);
 }
 
-
-
-
-
 div.project-status {
     grid-area: status;
     width: var(--header-font-size);
@@ -1610,23 +1609,6 @@ button.check {
     background-repeat: no-repeat;
     background-size: contain;
     align-self: start;
-}
-
-button.check[value="pending"] {
-    background-image: url('./assets/box-blank.png');
-}
-
-button.check[value="done"] {
-    background-image: url('./assets/box-check.png');
-}
-
-button.check[value="done"]~p.task {
-    transition: opacity ease-in-out 0.2s;
-    opacity: 0.3;
-}
-
-div.fullview.events-list p.task {
-    font-size: calc(var(--header-font-size) * 0.85);
 }
 
 div.project-action {

@@ -78,7 +78,8 @@ const showModals = (function () {
         // Display new event full view
         eventsDisplay.showFullEvent(eventId);
 
-        console.log(memoryHandler.getEvents());
+        // reload counters
+        onLoadScreen.loadCounters();
     }
 
     const closeCompletion = function () {
@@ -407,7 +408,9 @@ const showModals = (function () {
         // Display new event full view
         projectsDisplay.showFullProject(projectId);
 
-        console.log(memoryHandler.getProjects());
+        // Reload counter
+        // Note: useful when reloading count for overdue filter
+        onLoadScreen.loadCounters();
     }
 
     const closeProjectCompletion = function () {
