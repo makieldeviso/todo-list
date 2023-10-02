@@ -9,23 +9,33 @@ const displayContentTimeFiltered = (function () {
     // Reminder: As much as possible don't pass converted argument, use dataset
     const displayTimeFiltered = function (action) {
 
-        let timeFilter = convertDataSet(action);
-        switch (timeFilter) {
-            case 'today' : 
-                displayToday();
-                break;
-            case 'upcoming' : 
-                displayUpcoming();
-                break;
-            case 'someday' : 
-                displaySomeday();
-                break;
-            case 'overdue' : 
-                displayOverdue();
-                break;
-            default :
-                break;
+        // Executable function
+        // Note: Decided to write as function, easier to read
+        const initiateFilter = function (time) {
+            const todoArray = memoryHandler.getAll();
+            
+            // Filters projects and events according to time filter
+            const timeObjArray = timeFilter(todoArray, time);
+            
+            // Create and append time filter banner to item display
+            displayContent.createFilterBanner('append', time);
+
+            // Sort project and event objects from upcoming to farthest time
+            // Note: todayArray is not sorted, order is projects then events
+            let sortedObj;
+            if (time !== 'today') {
+                sortedObj = sortProjectsAndEvents(timeObjArray);
+            } else {
+                sortedObj = timeObjArray;
+            }
+    
+            // Create and append filtered projects and events previews
+            createFilteredPreview(sortedObj, `${time}-view`);
         }
+
+        // Run initiateFilter function
+        const filter = convertDataSet(action);
+        initiateFilter(filter);
 
         if (action.includes('previews')) {
             displayContent.translateSidebar(true);
@@ -125,66 +135,7 @@ const displayContentTimeFiltered = (function () {
             return sortedObj;
         }
     
-
-    const displayToday = function () {
-        const todoArray = memoryHandler.getAll();
-
-        // Filter today projects and events
-        const todayObjArray = timeFilter(todoArray, 'today');
-
-        displayContent.createFilterBanner('append', 'today');
-
-        // Create and append project previews on itemDisplay
-        // Note: todayArray is not sorted, order is projects then events
-        createFilteredPreview(todayObjArray, 'today-view');
-    }
-
-    const displayUpcoming = function () {
-        const todoArray = memoryHandler.getAll();
-
-        // Filters upcoming projects and events
-        const upcomingObjArray = timeFilter(todoArray, 'upcoming');
-
-        // Sort project and event objects from upcoming to farthest time
-        const sortedObj = sortProjectsAndEvents(upcomingObjArray);
-
-        displayContent.createFilterBanner('append', 'upcoming');
-
-        // Create and append upcoming projects and events previews
-        createFilteredPreview(sortedObj, 'upcoming-view');
-    }
-
-    const displaySomeday = function () {
-        const todoArray = memoryHandler.getAll();
-
-        // Filters someday projects and events
-        const somedayObjArray = timeFilter(todoArray, 'someday');
-
-        // Sort project and event objects from upcoming to farthest time
-        const sortedObj = sortProjectsAndEvents(somedayObjArray);
-
-        displayContent.createFilterBanner('append', 'someday');
-
-        // Create and append someday projects and events previews
-        createFilteredPreview(sortedObj, 'someday-view');
-    }
-
-    const displayOverdue = function () {
-        const todoArray = memoryHandler.getAll();
-        
-        // Filters someday projects and events
-        const overdueObjArray = timeFilter(todoArray, 'overdue');
-
-        // Sort project and event objects from upcoming to farthest time
-        const sortedObj = sortProjectsAndEvents(overdueObjArray);
-
-        displayContent.createFilterBanner('append', 'overdue');
-
-        // Create and append someday projects and events previews
-        createFilteredPreview(sortedObj, 'overdue-view');
-    }
-
-    // dataset converter
+    // Dataset converter
     const convertDataSet = function (datasetString) {
         const timeConditions = ['today', 'upcoming', 'someday', 'overdue'];
 
@@ -197,10 +148,6 @@ const displayContentTimeFiltered = (function () {
     return {displayTimeFiltered, 
             timeFilter, 
             countTimeFiltered,
-            displayToday, 
-            displayUpcoming, 
-            displaySomeday,
-            displayOverdue,
             convertDataSet,
         }
 
