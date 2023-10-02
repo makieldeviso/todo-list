@@ -6,42 +6,6 @@ import { projectsDisplay } from "./apps/projectsDisplay";
 
 const displayContentTimeFiltered = (function () {
 
-    // Reminder: As much as possible don't pass converted argument, use dataset
-    const displayTimeFiltered = function (action) {
-
-        // Executable function
-        // Note: Decided to write as function, easier to read
-        const initiateFilter = function (time) {
-            const todoArray = memoryHandler.getAll();
-            
-            // Filters projects and events according to time filter
-            const timeObjArray = timeFilter(todoArray, time);
-            
-            // Create and append time filter banner to item display
-            displayContent.createFilterBanner('append', time);
-
-            // Sort project and event objects from upcoming to farthest time
-            // Note: todayArray is not sorted, order is projects then events
-            let sortedObj;
-            if (time !== 'today') {
-                sortedObj = sortProjectsAndEvents(timeObjArray);
-            } else {
-                sortedObj = timeObjArray;
-            }
-    
-            // Create and append filtered projects and events previews
-            createFilteredPreview(sortedObj, `${time}-view`);
-        }
-
-        // Run initiateFilter function
-        const filter = convertDataSet(action);
-        initiateFilter(filter);
-
-        if (action.includes('previews')) {
-            displayContent.translateSidebar(true);
-        }
-    }
-    
     // Reusable create and append filtered preview to the item display
     const createFilteredPreview = function (objArray, filterName) {
         // Create and append project previews on itemDisplay
@@ -62,6 +26,7 @@ const displayContentTimeFiltered = (function () {
         });
     }
 
+    // Return array of todoItems(objects) filtered by time condition argument
     const timeFilter = function (objArray, condition) {
         const filteredObj = objArray.filter(obj => {
             let objDeadline;
@@ -96,8 +61,6 @@ const displayContentTimeFiltered = (function () {
                     return obj;
                 }
             }
-
-
         });
 
         return filteredObj
@@ -140,12 +103,48 @@ const displayContentTimeFiltered = (function () {
         const timeConditions = ['today', 'upcoming', 'someday', 'overdue'];
 
         const assignAction = timeConditions.find(time => datasetString.includes(time));
-        console.log(assignAction);
 
         return assignAction;
     }
 
+    // Reminder: As much as possible don't pass converted argument, use dataset
+    const displayTimeFiltered = function (action) {
+
+        // Executable function
+        // Note: Decided to write as function, easier to read
+        const initiateFilter = function (time) {
+            const todoArray = memoryHandler.getAll();
+            
+            // Filters projects and events according to time filter
+            const timeObjArray = timeFilter(todoArray, time);
+            
+            // Create and append time filter banner to item display
+            displayContent.createFilterBanner('append', time);
+
+            // Sort project and event objects from upcoming to farthest time
+            // Note: todayArray is not sorted, order is projects then events
+            let sortedObj;
+            if (time !== 'today') {
+                sortedObj = sortProjectsAndEvents(timeObjArray);
+            } else {
+                sortedObj = timeObjArray;
+            }
+    
+            // Create and append filtered projects and events previews
+            createFilteredPreview(sortedObj, `${time}-view`);
+        }
+
+        // Run initiateFilter function
+        const filter = convertDataSet(action);
+        initiateFilter(filter);
+
+        if (action.includes('previews')) {
+            displayContent.translateSidebar(true);
+        }
+    }
+
     return {displayTimeFiltered, 
+            sortProjectsAndEvents,
             timeFilter, 
             countTimeFiltered,
             convertDataSet,

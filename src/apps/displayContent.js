@@ -2,6 +2,7 @@ import { eventsDisplay } from "./eventsDisplay";
 import { projectsDisplay } from "./projectsDisplay";
 import { memoryHandler } from "./memoryHandler";
 import { displayContentTimeFiltered } from "../displayContentTimeFiltered";
+import { displayContentPriorityFiltered } from "../displayContentPriorityFiltered";
 import { formatting } from "./formatting";
 
 import pendingIcon from '../assets/pending-white.svg';
@@ -26,15 +27,45 @@ const displayContent = (function () {
     const backSideBar = function () {
         const backAction = this.dataset.action;
 
-        if (backAction === 'events-previews' || backAction === 'projects-previews') {
+        // Check conditions first on how the backSideBar function will execute
+        const checkActionType = function (action) {
+            const time = ['today', 'upcoming', 'someday', 'overdue'];
+            const timeFiltered = time.some(condition => action.includes(condition));
+            const todoType = ['event', 'project'];
+            const typeFiltered = todoType.some(condition => action.includes(condition));
+
+            let filterType;
+            if (action.includes('prio')) {
+                filterType = 'priority-filtered';
+
+            } else if (timeFiltered) {
+                filterType = 'time-filtered';
+
+            } else if (typeFiltered) {
+                filterType = 'type-filtered';
+            }
+
+            let condition
+            if (action.includes('fullview')) {
+                condition = `${filterType}-fullview`;
+
+            } else if (action.includes('preview')) {
+                condition = `${filterType}-preview`;
+            }
+
+            return condition;
+        }
+        const backCondition = checkActionType(backAction);
+        
+        if (backCondition === 'type-filtered-preview') {
             translateSidebar(false);
             clearItemDisplay(backAction);
 
-        } else if (backAction === 'event-fullview' || backAction === 'project-fullview') {
+        } else if (backCondition === 'type-filtered-fullview') {
             
             const mode = this.dataset.mode;
             const todoLink = this.dataset.link;
-            const timeFilter = this.dataset.filter;
+            const filter = this.dataset.filter;
 
             if (mode !== undefined) {
                 clearItemDisplay(backAction);   
@@ -51,18 +82,28 @@ const displayContent = (function () {
                     eventsDisplay.showFullEvent(todoLink);
                 }
             
-            } else if (timeFilter !== undefined) {
+            } else if (filter !== undefined) {
                 // This executes when using time filter
                 clearItemDisplay(backAction);
 
-                const time = displayContentTimeFiltered.convertDataSet(timeFilter);
+                if (filter.includes('prio')) {
+                    const priority = displayContentPriorityFiltered.convertDataSet(filter);
+
+                    // Display priority filtered previews and add data-action to back-btn
+                    displayContentPriorityFiltered.displayPriorityFiltered(priority);
+                    this.dataset.action = `${priority}-prio-previews`;
+
+                } else {
+                    const time = displayContentTimeFiltered.convertDataSet(filter);
+
+                    // Display time filtered previews and add data-action to back-btn
+                    displayContentTimeFiltered.displayTimeFiltered(time);
+                    this.dataset.action = `${time}-previews`;
+                }
 
                 // Removes the additional datasets after executing clearItemDisplay function
                 this.removeAttribute('data-filter');
 
-                // Display time filtered previews and add data-action to back-btn
-                displayContentTimeFiltered.displayTimeFiltered(timeFilter);
-                this.dataset.action = `${time}-previews`;
 
             } else {
                 clearItemDisplay(backAction);
@@ -76,10 +117,8 @@ const displayContent = (function () {
             }
 
         } else if (
-            backAction === 'today-previews' ||
-            backAction === 'upcoming-previews'||
-            backAction === 'someday-previews'||
-            backAction === 'overdue-previews' ){      
+            backCondition === 'time-filtered-preview'|| 
+            backCondition === 'priority-filtered-preview') {      
 
             translateSidebar(false);
             clearItemDisplay('events-previews');
@@ -222,8 +261,6 @@ const displayContent = (function () {
             const editBtn = document.querySelector('button[value="edit-project"]');
             const deleteBtn = document.querySelector('button[value="delete-project"]');
 
-            console.log(action);
-
             removeDisplay(projectFullView);
 
             // Note: removeActionBtn accepts multiple buttons argument
@@ -282,7 +319,14 @@ const displayContent = (function () {
             translateSidebar(true);
 
         } else {
-            displayContentTimeFiltered.displayTimeFiltered(assignAction);
+
+            if (assignAction.includes('prio')) {
+                displayContentPriorityFiltered.displayPriorityFiltered(assignAction);
+
+            } else {
+                displayContentTimeFiltered.displayTimeFiltered(assignAction);
+            }
+            
         }
         
     }
