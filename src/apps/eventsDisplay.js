@@ -310,7 +310,7 @@ const eventsDisplay = (function () {
             deadlineTitleAttr = deadlineAlert;
         } else {
             displayContent.createSpan(newSched, `sched-icon ${eventObj.completion}`, '');
-            deadlineTitleAttr = eventObj.completion;
+            deadlineTitleAttr = `${eventObj.completion} completion`;
         }
 
         displayContent.createSpan(newSched, 'sched-date', dateString);

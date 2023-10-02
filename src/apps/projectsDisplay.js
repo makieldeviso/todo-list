@@ -95,7 +95,7 @@ const projectsDisplay = (function () {
             deadlineTitleAttr = deadlineAlert;
         } else {
             displayContent.createSpan(newDeadline, `deadline-icon ${projectObj.completion}`, '');
-            deadlineTitleAttr = projectObj.completion;
+            deadlineTitleAttr = `${projectObj.completion} completion`;
         }
 
         displayContent.createSpan(newDeadline, 'deadline-date', dateString);

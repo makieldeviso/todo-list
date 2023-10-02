@@ -7,7 +7,7 @@ const memoryHandler = (function () {
             {
                 "title": "Ms. Dodo's Birthday",
                 "description": "60th Birthday, food committee",
-                "schedule": new Date(2023, 1, 8),
+                "schedule": new Date(),
                 "projectTag": "newprojecttest1693267200000",
                 "priority": "high",
                 "tasks": {
@@ -31,7 +31,7 @@ const memoryHandler = (function () {
             {
                 "title": "Do your thing",
                 "description": "Do your thing",
-                "schedule": new Date(2023, 9, 1),
+                "schedule": new Date(2024, 9, 1),
                 "projectTag": "newprojecttest1693267200000",
                 "priority": "mid",
                 "tasks": {
@@ -119,7 +119,7 @@ const memoryHandler = (function () {
         } else if (deadlineAlert > 0) {
             completionRemark = 'early';
         } else if (deadlineAlert < 0) {
-            completionRemark = 'done-overdue';
+            completionRemark = 'late';
         }
 
         eventObj.completion = completionRemark;
@@ -168,7 +168,7 @@ const placeholderProjects = [
     {
         "title": "New Project Test-2",
         "description": "Project Test Description-2",
-        "deadline": new Date(2023, 9, 1 ),
+        "deadline": new Date(2023, 9, 3 ),
         "priority": "high",
         "eventLinks": {},
         "projectId": "newprojecttest1693267200001",
@@ -285,7 +285,7 @@ const completeProject = function (id) {
     } else if (deadlineAlert > 0) {
         completionRemark = 'early';
     } else if (deadlineAlert < 0) {
-        completionRemark = 'done-overdue';
+        completionRemark = 'late';
     }
 
     projectObj.completion = completionRemark;

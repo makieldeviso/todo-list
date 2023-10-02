@@ -403,7 +403,7 @@ const showModals = (function () {
         memoryHandler.completeProject(projectId);
 
         // Close Modal
-        closeProjectCompletion();
+        closeProjectCompletion();   
 
         // Display new event full view
         projectsDisplay.showFullProject(projectId);

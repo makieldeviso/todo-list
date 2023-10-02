@@ -519,8 +519,8 @@ p.event-sched span.sched-icon.on-time{
     background-image: url('./assets/calendar-on-time.png');
 }
 
-p.event-sched span.sched-icon.done-overdue{
-    background-image: url('./assets/calendar-done-overdue.png');
+p.event-sched span.sched-icon.late{
+    background-image: url('./assets/calendar-late.png');
 }
 
 p.event-task-count {
@@ -1012,8 +1012,8 @@ p.project-deadline span.deadline-icon.on-time{
     background-image: url('./assets/calendar-on-time.png');
 }
 
-p.project-deadline span.deadline-icon.done-overdue{
-    background-image: url('./assets/calendar-done-overdue.png');
+p.project-deadline span.deadline-icon.late{
+    background-image: url('./assets/calendar-late.png');
 }
 
 p.project-event-count {
