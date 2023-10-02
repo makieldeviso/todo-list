@@ -8,6 +8,7 @@ import { createModal } from "./createModal";
 import { showModals } from "./showModals";
 import { eventEditForm } from "./eventEditForm";
 import { initDelete } from "./initDelete";
+import { projectsDisplay } from "./projectsDisplay";
 
 const eventsDisplay = (function () {
 
@@ -123,9 +124,28 @@ const eventsDisplay = (function () {
         const descLabel = makeText('fullview desc-label label ', 'Description:');
         const desc = makeText('fullview event-desc', eventObj.description);
 
+        // Create project tag and assign data attributes, then add eventListener
         const projLabel = makeText('fullview proj-label label', 'Project:');
-        const proj = makeText('fullview event-proj', eventsScript.getEventProjectTitle(eventObj));
+        // const proj = makeText('fullview event-proj', eventsScript.getEventProjectTitle(eventObj));
+        // proj.dataset.id = eventObj.projectTag;
+        // proj.dataset.mode = 'event-view';
+        // proj.dataset.link = eventObj.eventId;
 
+        // proj.addEventListener('click', projectsDisplay.showFullProject);
+
+        const proj = document.createElement('a');
+        proj.setAttribute('class', 'fullview event-proj');
+        proj.textContent = `${eventsScript.getEventProjectTitle(eventObj)}`;
+
+        if (eventObj.projectTag !== 'standalone') {
+            proj.classList.add('proj-link');
+            proj.dataset.id = eventObj.projectTag;
+            proj.dataset.mode = 'event-view';
+            proj.dataset.link = eventObj.eventId;
+            proj.addEventListener('click', projectsDisplay.showFullProject);
+        }
+        
+        // Create priority
         const prio = makeText('event-prio', eventObj.priority);
         prio.classList.add('fullview');
 

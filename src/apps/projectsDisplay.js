@@ -131,6 +131,25 @@ const projectsDisplay = (function () {
             projectId = trigger
         } else {
             projectId = this.dataset.id;
+            
+            // If full view was accessed by clicking project tag link from event full view
+            if (this.dataset.mode === 'event-view') {
+                console.log(this.hasAttribute('data-mode'));
+                const eventFullView = document.querySelector('div.event-fullview');
+                itemDisplay.removeChild(eventFullView);
+
+                // Adds additional data set to the back button
+                backBtn.dataset.mode = this.dataset.mode;
+
+                // Add an id link of the project to the back button
+                backBtn.dataset.link = this.dataset.link;
+
+                // Remove buttons in the ribbon
+                const editBtn = document.querySelector('button[value="edit-event"]');
+                const deleteBtn = document.querySelector('button[value="delete-event"]');
+                displayContent.removeActionBtn(editBtn, deleteBtn);
+
+            }
 
             // Activate timeFilter flag, used for addition attributes to elements
             if (this.hasAttribute('data-filter')) {
@@ -150,7 +169,7 @@ const projectsDisplay = (function () {
 
         //  Get project with the Id specified
         const projectObj = memoryHandler.getProject(projectId);
-
+        
         // Create and append project full view
         const projectFullView = createProjectFullView(projectObj);
         itemDisplay.appendChild(projectFullView);
@@ -167,7 +186,6 @@ const projectsDisplay = (function () {
 
     const createProjectFullView = function (projectObj) {
         // Create edit button appended on the action buttons ribbon (start) -
-        console.log(projectObj);
         const actionRibbon = document.querySelector('div#action-btns');
 
         // Ensures no existing action buttons
@@ -196,7 +214,7 @@ const projectsDisplay = (function () {
         const statusMarker = document.createElement('div');
         statusMarker.setAttribute('class', 'project-status');
 
-        // Create event title, description, project
+        // Create event title, description
         const title = makeText('fullview project-title', projectObj.title);
 
         const descLabel = makeText('fullview desc-label label ', 'Description:');

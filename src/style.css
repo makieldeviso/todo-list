@@ -564,7 +564,7 @@ div.event-fullview {
         "desc-label desc-label desc-label"
         "desc desc desc"
         "proj-label proj-label proj-label"
-        "proj proj proj"
+        "proj-link proj-link proj-link"
         "sched-label sched-label sched-label"
         "sched sched prio"
         "tasks tasks tasks"
@@ -611,6 +611,20 @@ p.fullview.desc-label {
 
 p.fullview.proj-label {
     grid-area: proj-label;
+}
+
+a.event-proj.fullview {
+    grid-area: proj-link;
+    color: var(--dark-orange);
+    font-size: calc(var(--header-font-size));
+    width: max-content;
+}
+
+a.proj-link.fullview:hover {
+    color: var(--base-orange);
+    text-decoration: underline;
+    text-underline-offset: 8px;
+    cursor: pointer;
 }
 
 p.fullview.sched-label {

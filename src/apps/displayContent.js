@@ -33,11 +33,11 @@ const displayContent = (function () {
         } else if (backAction === 'event-fullview' || backAction === 'project-fullview') {
             
             const mode = this.dataset.mode;
-            const projectLink = this.dataset.link;
+            const todoLink = this.dataset.link;
             const timeFilter = this.dataset.filter;
 
             if (mode !== undefined) {
-                clearItemDisplay(backAction);
+                clearItemDisplay(backAction);   
 
                 // Removes the additional datasets after executing clearItemDisplay function
                 this.removeAttribute('data-mode');
@@ -45,9 +45,11 @@ const displayContent = (function () {
 
                 // Show corresponding display, depending of the mode and action
                 if (mode === 'project-view') {
-                    projectsDisplay.showFullProject(projectLink);
+                    projectsDisplay.showFullProject(todoLink);
 
-                } 
+                } else if (mode === 'event-view') {
+                    eventsDisplay.showFullEvent(todoLink);
+                }
             
             } else if (timeFilter !== undefined) {
                 // This executes when using time filter
