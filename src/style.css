@@ -167,6 +167,10 @@ div#today {
     margin-top: var(--common-margin);
 }
 
+div#someday {
+    margin-bottom: var(--common-margin);
+}
+
 div#overdue {
     margin-bottom: var(--common-margin);
 }
@@ -186,17 +190,6 @@ div#priority-sum h2 {
     margin: auto;
 }
 
-svg#high-icon {
-    fill: green;
-}
-
-svg#mid-icon {
-    fill: orange;
-}
-
-svg#low-icon {
-    fill: red;
-}
 /* Priority Filter (end) - */
 
 /* Add (start) */
@@ -300,6 +293,18 @@ span.icon.events {
 
 span.icon.projects {
     background-image: url(./assets/projects-icon.svg);
+}
+
+span.icon.high-prio {
+    background-image: url(./assets/high-prio.svg);
+}
+
+span.icon.mid-prio {
+    background-image: url(./assets/mid-prio.svg);
+}
+
+span.icon.low-prio {
+    background-image: url(./assets/low-prio.svg);
 }
 
 

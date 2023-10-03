@@ -142,8 +142,16 @@ const displayContent = (function () {
         if (action === 'append') {
             const banner = document.createElement('h3');
             banner.setAttribute('id', 'filter-banner');
-            createSpan(banner, `${text} icon`, '');
-            createSpan(banner, 'main-text', formatting.toProper(text));
+
+            if (text.includes('prio')) {
+                createSpan(banner, `${text} icon`, '');
+                createSpan(banner, 'main-text', `${formatting.toProper(text).slice(0,-5)} Priority`);
+                
+            } else {
+                createSpan(banner, `${text} icon`, '');
+                createSpan(banner, 'main-text', formatting.toProper(text));
+            }
+            
 
             itemDisplay.appendChild(banner);
 

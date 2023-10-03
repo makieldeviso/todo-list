@@ -36,6 +36,14 @@ const displayContentPriorityFiltered = (function () {
         return priority;
     }
 
+    // Count priority filtered todo (array.length)
+    // Note: needs condition argument, then return the length of the filtered array
+    const countPriorityFiltered = function (condition) {
+        const todoArray = memoryHandler.getAll();
+        const filteredArray = priorityFilter(todoArray, condition);
+        return filteredArray.length;
+    }
+
     // Return array of todoItems(objects) filtered by priority condition argument
     const priorityFilter = function (objArray, condition) {
         const filteredArray = objArray.filter(obj => obj.priority === condition);
@@ -55,7 +63,7 @@ const displayContentPriorityFiltered = (function () {
             const sortedObj = displayContentTimeFiltered.sortProjectsAndEvents(filteredObj);
 
             // Create and append time filter banner to item display
-            displayContent.createFilterBanner('append', `${formatting.toProper(priority)} Priority`);
+            displayContent.createFilterBanner('append', `${priority}-prio`);
 
             // Create and append filtered projects and events previews
             createFilteredPreview(sortedObj, `${priority}-prio-view`);
@@ -72,6 +80,7 @@ const displayContentPriorityFiltered = (function () {
 
     return {displayPriorityFiltered, 
             convertDataSet,
+            countPriorityFiltered,
         }
 
 })();
