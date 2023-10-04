@@ -12,19 +12,27 @@
             <h1 id="page-title">Todo List</h1>
         </div>
 
-        <!-- <button id="sidebar-btn" aria-label="Menu">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>menu</title><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" /></svg>
-        </button> -->
+        <div id="date-banner">
+            <p id="banner-full-date">
+                <span id="banner-month">Oct</span>
+                <span id="banner-day">5</span><span class="separator">,</span>
+                <span id="banner-year">2023</span>
+            </p>
+            <p class="banner-weekday">
+                <span id="banner-weekday">Thursday</span>
+            </p>
+
+        </div>
     </header>
 
     <main>
         <div id="sidebar">
             <div id="events-cont">
 
-                <div id="inbox" class="category">
-                    <svg class="tab-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>inbox</title><path d="M19,15H15A3,3 0 0,1 12,18A3,3 0 0,1 9,15H5V5H19M19,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z" /></svg>
-                    <h3>Inbox</h3>
-                    <p id="inbox-count" data-count="5">5</p>
+                <div id="user" class="user-detail">
+                    <img id="user-pic" src="./assets/profile-sample.svg" alt="User profile picture">
+                    <p id="user-greet">Hello</p>
+                    <h3 id="user-name">User</h3>
                 </div>
 
                 <div id="today" class="category">
@@ -65,7 +73,6 @@
             </div>
 
             <div id="priority-sum">
-                <h2 class="filter-header">Priority Filter</h2>
 
                 <div id="high-prio" class="category">
                     <img src="./assets/high-prio.svg" alt="high priority icon" class="tab-icon">

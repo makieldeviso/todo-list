@@ -2,8 +2,28 @@ import { memoryHandler } from "./memoryHandler";
 import { displayContentTimeFiltered } from "../displayContentTimeFiltered";
 import { displayContentPriorityFiltered } from "../displayContentPriorityFiltered";
 import { formatting } from "./formatting";
+import { format, formatDistance } from 'date-fns'
 
 const onLoadScreen = (function () {
+    // Display current date info
+    const displayDate = function () {
+        // Note: create object with selector as keys and date units in string as value
+        // Then reiterate over the obj properties using for in.. to assign text contents to the DOM
+        const dateObj = {}
+        const addDateProp = function (unit, formatter) {
+            dateObj[unit] = format(new Date(), `${formatter}`);
+        }
+
+        addDateProp('month', 'MMM');
+        addDateProp('day', 'dd');
+        addDateProp('year', 'yyyy');
+        addDateProp('weekday', 'EEEE');
+
+        for (const unit in dateObj) {
+            const dateText = document.querySelector(`span#banner-${unit}`);
+            dateText.textContent = dateObj[unit];
+        }
+    }
 
     // Display counters for projects or events
     // Note: argument requires string (e.g. 'projects', 'events);
@@ -47,6 +67,7 @@ const onLoadScreen = (function () {
     }
 
     const loadCounters = function () {
+        displayDate();
         displayProjectEventCount();
         displayTimeCount();   
         displayPriorityCount();   
