@@ -13,14 +13,53 @@ import eventsIcon from '../assets/events-icon.svg'
 
 const displayContent = (function () {
 
+    // Revert display to default
+    const defaultDisplay = function (action) {
+        // Clears display
+        if (action !== 'today') {
+            clearItemDisplay('category-change');
+
+            // Removes dataset on the back button
+            const backBtn = document.querySelector('button#back-sidebar');
+            backBtn.dataset.action = 'default';
+            const addedDataset = ['filter', 'mode', 'link'];
+            addedDataset.forEach(dataset => {
+                if (backBtn.hasAttribute(`data-${dataset}`)) {
+                    backBtn.removeAttribute(`data-${dataset}`);
+                }
+        });
+
+        } else {
+            displayContentTimeFiltered.displayTimeFiltered('today');
+            highlightCategory(document.querySelector('div#today'));
+        } 
+    }
+
+    // Add UI highlight to selected category/ filter
+    const highlightCategory = function (categoryNode) {
+        const categories = Array.from(document.querySelectorAll('div.category'));
+        // Remove selected class of previous category
+        categories.some(node => {
+            if (node.getAttribute('class').includes('selected')) {
+                node.classList.remove('selected');
+                return true;
+            }
+        });
+
+        // Add selected class to new selected node 
+        categoryNode.classList.add('selected');
+    }
+
     const translateSidebar = function (action) {
         const sidebar = document.querySelector('div#sidebar');
+        const backBtn = document.querySelector('button#back-sidebar');
         
         if (action === true) {
             sidebar.classList.add('hidden');
 
         } else if (action === false) {
             sidebar.classList.remove('hidden');
+            backBtn.dataset.action = 'default';
         }
     }
 
@@ -43,6 +82,9 @@ const displayContent = (function () {
 
             } else if (typeFiltered) {
                 filterType = 'type-filtered';
+
+            } else {
+                filterType = 'default';
             }
 
             let condition
@@ -51,15 +93,22 @@ const displayContent = (function () {
 
             } else if (action.includes('preview')) {
                 condition = `${filterType}-preview`;
+            } else {
+                condition = `${filterType}`;
             }
 
             return condition;
         }
         const backCondition = checkActionType(backAction);
         
-        if (backCondition === 'type-filtered-preview') {
+        if (backCondition === 'default') {
+            return;
+            
+        } else if (backCondition === 'type-filtered-preview') {
             translateSidebar(false);
             clearItemDisplay(backAction);
+
+            defaultDisplay('today');
 
         } else if (backCondition === 'type-filtered-fullview') {
             
@@ -123,6 +172,8 @@ const displayContent = (function () {
             translateSidebar(false);
             clearItemDisplay('events-previews');
             clearItemDisplay('projects-previews');
+
+            defaultDisplay('today');
         }
     }
 
@@ -238,12 +289,26 @@ const displayContent = (function () {
     }
     
     const clearItemDisplay = function (action) {
-        // Reusable function
+        // Note: These variables might return null, conditions are specified which nodes will be used
+        const projectFullView = document.querySelector('div.project-fullview');
+        const eventFullView = document.querySelector('div.event-fullview');
+        const editEventBtn = document.querySelector('button[value="edit-event"]');
+        const deleteEventBtn = document.querySelector('button[value="delete-event"]');
+        const editProjectBtn = document.querySelector('button[value="edit-project"]');
+        const deleteProjectBtn = document.querySelector('button[value="delete-project"]');
+
+        // Reusable function, clears preview items
         const clearPreview = function (previewSelector) {
             // Note: previewSelector parameter is string used for querySelector
-            const displays = document.querySelectorAll(`div.${previewSelector}`);
+            const previews = document.querySelectorAll(`div.${previewSelector}`);
 
-            displays.forEach(preview => removeDisplay(preview));
+            // Check if node does not exist
+            const nullNode = Array.from(previews).some(node => node === null);
+
+            // if Nodes exists proceed to removal of nodes
+            if (!nullNode) {
+                previews.forEach(preview => removeDisplay(preview));
+            } 
         }
 
         if (action === 'projects-previews') {
@@ -254,26 +319,35 @@ const displayContent = (function () {
             
         } else if (action === 'event-fullview') {
             // Close/ remove event full view
-            const eventFullView = document.querySelector('div.event-fullview');
-            const editBtn = document.querySelector('button[value="edit-event"]');
-            const deleteBtn = document.querySelector('button[value="delete-event"]');
-
             removeDisplay(eventFullView);
 
             // Note: removeActionBtn accepts multiple buttons argument
-            removeActionBtn(editBtn, deleteBtn);
+            removeActionBtn(editEventBtn, deleteEventBtn);
   
         } else if (action === 'project-fullview') {
             // Close/ remove event full view
-            const projectFullView = document.querySelector('div.project-fullview');
-            const editBtn = document.querySelector('button[value="edit-project"]');
-            const deleteBtn = document.querySelector('button[value="delete-project"]');
-
             removeDisplay(projectFullView);
 
             // Note: removeActionBtn accepts multiple buttons argument
-            removeActionBtn(editBtn, deleteBtn);
+            removeActionBtn(editProjectBtn, deleteProjectBtn);
 
+        } else if (action === 'category-change') {
+            // Note: Removes all possible items on the item display
+
+            // Remove full views
+           const allFullViews = [projectFullView, eventFullView];
+           allFullViews.forEach(item => {
+                if (item !== null) {
+                    removeDisplay(item);
+                }
+           });
+
+           // Remove previews
+           clearPreview('project-preview');
+           clearPreview('event-preview');
+
+            // Remove action buttons
+           removeActionBtn(editEventBtn, deleteEventBtn, editProjectBtn, deleteProjectBtn);
         }
 
         // Remove filter banner
@@ -296,8 +370,7 @@ const displayContent = (function () {
         });
 
         // Clear Filter Banner
-        createFilterBanner('remove');
-            
+        createFilterBanner('remove');  
     }
 
     // Note: button event triggered function
@@ -312,6 +385,10 @@ const displayContent = (function () {
 
         } else {
             assignAction = `${this.getAttribute('id')}-previews`;
+
+            highlightCategory(this);
+            
+            defaultDisplay();
         }
         
         backBtn.dataset.action = assignAction;

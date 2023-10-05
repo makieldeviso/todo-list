@@ -114,9 +114,6 @@ span#banner-weekday {
     font-size: var(--common-font-size);
     color: var(--base-yellow);
 }
-
-
-
 /* HEADER (end) */
 
 /* MAIN (start) */
@@ -171,10 +168,6 @@ p#user-greet {
 h3#user-name {
     grid-area: name;
 }
-
-
-
-
 /* User information (end)*/ 
 
 /* Categories (start) -  */
@@ -201,6 +194,12 @@ div.category:hover {
     cursor: pointer;
 }
 
+@media (hover:hover) {
+    div.category.selected {
+        background-color: #f6d8c6;
+    }
+}
+
 div.category h3 {
     font-family: var(--header-font-style);
     font-size: calc(var(--common-font-size) * 1);
@@ -222,7 +221,6 @@ img.tab-icon {
  
 div#today {
     margin-top: var(--common-margin);
-    background-color: #f6d8c6;
 }
 
 div#someday {
@@ -247,7 +245,6 @@ div#priority-sum h2 {
     width: 95%;
     margin: auto;
 }
-
 /* Priority Filter (end) - */
 
 /* Add (start) */
@@ -256,7 +253,6 @@ div#add-button {
     justify-content: center;
     width: 100vw;
     overflow: hidden;
-
     position: fixed;
     bottom: 0;
     left: 0;
@@ -274,7 +270,6 @@ button#add {
     background-color: var(--dark-orange);
     border: 2px solid var(--off-white);
     box-shadow: 0 3px 3px 2px rgba(109, 108, 108, 0.5);
-
     display: flex;
 }
 
@@ -290,8 +285,6 @@ button#add svg {
 div#todo-display {
     background-color: var(--off-white);
     width: 100%;
-    /* height: 50vh; */
-    /* padding: var(--common-padding) 0; */
     display: flex;
     flex-direction: column;
     position: relative;
@@ -303,7 +296,6 @@ div#item-display{
     display: flex;
     flex-direction: column;
     gap: var(--common-margin);
-    /* padding-top: var(--common-padding); */
 }
 
 h3#filter-banner {
@@ -389,6 +381,11 @@ button.action-btn.back {
     border: none;
     border: 2px solid transparent;
 }
+
+button.action-btn.back[data-action="default"] {
+    cursor: auto;
+    filter: opacity(0.2);
+}
   
 button.action-btn.edit,
 button.action-btn.delete {    
@@ -413,7 +410,6 @@ button.action-btn[value="delete-project"] {
 button.action-btn span.icon {
     width: var(--header-font-size);
     height: var(--header-font-size);
-    
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -433,13 +429,11 @@ button.action-btn.delete span.icon {
     background-image: url('./assets/trash-white.png');
 }
 
-
 button.action-btn.edit span.text,
 button.action-btn.delete span.text {
     font-size: var(--header-font-size);
     color: white;
 }
-
 /* Action Btns (end) -- */
 
 /*  Event Preview (start) --*/
@@ -492,12 +486,14 @@ p.event-desc{
     grid-area: desc;
     font-size: calc(var(--header-font-size) * 0.8);
     color: var(--gray);
+    margin-top: calc(var(--common-margin) * 0.5);
 }
 
 p.event-proj {
     grid-area: proj;
     font-size: calc(var(--header-font-size) * 0.8);
     color: var(--gray);
+    align-self: center;
 }
 
 p.event-prio {
@@ -588,12 +584,11 @@ p.event-task-count {
     grid-area: task;
     text-align: right;
     font-size: calc(var(--header-font-size) * 0.7);  
-    margin-top: 5px;
+    margin-top: calc(var(--common-margin) * 0.5);
     display: flex;
     justify-content: flex-end;
     align-items: center;
     gap: 3px;
-
 }
 
 p.event-task-count.done {
@@ -611,7 +606,6 @@ p.event-desc {
 p.event-title {
     -webkit-line-clamp: 1;
 }
-
 
 /*  Event Preview (end) --*/
 
@@ -694,6 +688,7 @@ p.fullview.sched-label {
 
 p.fullview.event-sched {
     font-size: calc(var(--header-font-size) * 1.2);
+    padding-left: 0;
 }
 
 p.fullview.event-sched span.sched-date {
@@ -702,6 +697,7 @@ p.fullview.event-sched span.sched-date {
 
 p.fullview.event-sched span.sched-icon {
     width: calc(var(--header-font-size) * 1.3);
+    height: 100%;
     margin: unset;
 }
 
@@ -732,7 +728,6 @@ div.task-header {
 }
 
 div.task-header p.task-label {
-    /* margin: var(--common-margin) 0 0 0; */
     font-size: var(--header-font-size);
     font-family: var(--header-font-style);
 }
@@ -910,9 +905,7 @@ dialog#edit-event-prompt  form#event-form,
 dialog#edit-project-prompt  form#project-form{
     grid-area: form;
 }
-
 /* Edit modal (end)  --- */
-
 /* Event Full view (end) -- */
 
 /*  Project Preview (start) --*/
@@ -942,7 +935,6 @@ div.project-preview[data-status="done"] {
 }
 
 div.project-preview[data-status="overdue"] {
-    /* border: 5px solid red; */
     background-color: rgb(242, 41, 41);
 }
     
@@ -987,6 +979,7 @@ p.project-desc{
     grid-area: desc;
     font-size: calc(var(--header-font-size) * 0.8);
     color: var(--base-yellow);
+    align-self: center;
 }
 
 p.project-prio {
@@ -1081,7 +1074,7 @@ p.project-event-count {
     grid-area: event;
     text-align: right;
     font-size: calc(var(--header-font-size) * 0.7);  
-    margin-top: 5px;
+    margin-top: calc(var(--common-margin) * 0.5);
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -1097,17 +1090,7 @@ div.project-preview[data-status="done"] p.project-event-count.done {
     color: #54B435;
 }
 
-p.event-title, 
-p.event-desc {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
 /*  Project Preview (end) --*/
-
-
-
 /* Todo List Display (end) */
 
 /* Add Prompt Modal (start) */
@@ -1158,10 +1141,6 @@ button.close-modal {
     background-repeat: no-repeat;
 }
 
-/* button.close-modal svg {
-    fill: white;
-} */
-
 div#add-options button[data-selected="selected"] {
     border: 2px solid var(--dark-orange);
     box-shadow: 0 7px 5px 2px rgba(62, 62, 62, 0.3);
@@ -1210,7 +1189,6 @@ div#add-options button span.add-label {
     font-family: var(--header-font-style);
     font-size: var(--header-font-size);
 }
-
 
 /* form (start) */
 div.modal-cont form {
@@ -1335,7 +1313,6 @@ div.adder-comp {
 
 button.adder-btn {
     width: calc(30px + 0.5vw);
-    /* padding: calc(var(--common-padding) * 0.5); */
     height: calc(30px + 0.5vw);
     border: none;
     background-color: var(--dark-orange);
@@ -1354,7 +1331,6 @@ button.adder-btn:active {
 button.adder-btn svg {
     fill: white;
 }
-
 /* Save Buttons Container (start) */
 
 div.save-cont {
@@ -1404,11 +1380,9 @@ div#tasks-container input.new-task:disabled {
     border: none;
 }
 
-
 div.new-task {
     display: grid;
     grid-template-columns: max-content 1fr max-content max-content;
-    /* gap: calc(var(--common-margin) * 0.5); */
 }
 
 div.new-task button {
@@ -1446,7 +1420,6 @@ div.new-task button.edit-task.wait-save {
 div.new-task button.delete-task {
     background-image: url('./assets/trash.png');
 }
-
 
 div.new-task button:active {
     transition: transform 0.1s ease-in-out;
@@ -1494,14 +1467,8 @@ div.event-preview.event-project {
     margin-right: 0;
     padding-right: calc(var(--common-padding) * 2);
 }
-
 /* New event to project (end) */
-
 /* MAIN (end) */
-
-
-
-
 
 /* Project Full view (start) -- */
 div.project-fullview {
@@ -1867,5 +1834,51 @@ div.checkbox-input input:checked {
 }
 /* Modal checkbox (end) --- */
 
-
 /* Project Full view (end) -- */
+
+/* Media queries */
+
+/* Galaxy fold */
+@media only screen and (max-width: 375px) and (min-height: 500px) {
+
+    :root {
+        --title-font-size: calc(1.1rem + 1vw);
+        --header-font-size: calc(0.7rem + 1vw);
+        --common-font-size: calc(0.6rem + 1vw);
+    }
+
+    p.fullview.project-deadline,
+    p.fullview.event-sched {
+        font-size: var(--header-font-size);
+    }
+
+    p.fullview.project-prio,
+    p.fullview.event-prio {
+        width: calc(50px + 1vw);
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    div#sidebar {
+        position: relative;
+    }
+
+    div#sidebar.hidden {
+        transform: translateX(0);
+    }
+
+    main {
+        display: grid;
+        grid-template-columns: 30% 70%;
+        grid-template-areas: 
+            "sidebar display";
+    }
+
+    div#sidebar {
+        grid-area: sidebar;
+    }
+
+    div#todo-display {
+        grid-area: display;
+    }
+}
