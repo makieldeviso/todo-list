@@ -3,6 +3,7 @@ import { memoryHandler } from "./memoryHandler";
 import { projectsDisplay } from "./projectsDisplay";
 import { showModals } from "./showModals";
 import { onLoadScreen } from "./onLoadScreen";
+import { displayContent } from "./displayContent";
 
 const saveFormValuesProject = (function () {
 
@@ -112,7 +113,11 @@ const saveFormValuesProject = (function () {
             linkEventsToProject(newProject);
 
             // Close Modal
-            showModals.closeModal();
+            showModals.closeModal();    
+
+            // Direct item display to the full view of newly created project
+            displayContent.showDisplay('projects-previews', true);
+            projectsDisplay.showFullProject(newProject.projectId);
 
         } else if ('save-edit-project') {
             console.log(newProject);

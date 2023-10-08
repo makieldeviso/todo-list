@@ -3,6 +3,7 @@ import { onLoadScreen } from "./apps/onLoadScreen";
 
 import { displayContent } from "./apps/displayContent";
 import { showModals } from "./apps/showModals";
+import { displayContentTimeFiltered } from "./displayContentTimeFiltered";
 
 // Sidebar events
 displayContent.addSidebarEvents();
@@ -15,6 +16,9 @@ showModals.addButtonEvent();
 
 // On Load display events
 onLoadScreen.addOnLoadEvents();
+
+// Display today previews as default item display
+displayContentTimeFiltered.displayTimeFiltered('today');
 
 
 

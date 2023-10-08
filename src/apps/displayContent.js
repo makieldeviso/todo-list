@@ -14,25 +14,20 @@ import eventsIcon from '../assets/events-icon.svg'
 const displayContent = (function () {
 
     // Revert display to default
-    const defaultDisplay = function (action) {
+    const defaultDisplay = function () {
+        
         // Clears display
-        if (action !== 'today') {
-            clearItemDisplay('category-change');
+        clearItemDisplay('category-change');
 
-            // Removes dataset on the back button
-            const backBtn = document.querySelector('button#back-sidebar');
-            backBtn.dataset.action = 'default';
-            const addedDataset = ['filter', 'mode', 'link'];
-            addedDataset.forEach(dataset => {
-                if (backBtn.hasAttribute(`data-${dataset}`)) {
-                    backBtn.removeAttribute(`data-${dataset}`);
-                }
+        // Removes dataset on the back button
+        const backBtn = document.querySelector('button#back-sidebar');
+        backBtn.dataset.action = 'default';
+        const addedDataset = ['filter', 'mode', 'link'];
+        addedDataset.forEach(dataset => {
+            if (backBtn.hasAttribute(`data-${dataset}`)) {
+                backBtn.removeAttribute(`data-${dataset}`);
+            }
         });
-
-        } else {
-            displayContentTimeFiltered.displayTimeFiltered('today');
-            highlightCategory(document.querySelector('div#today'));
-        } 
     }
 
     // Add UI highlight to selected category/ filter
@@ -66,51 +61,13 @@ const displayContent = (function () {
     const backSideBar = function () {
         const backAction = this.dataset.action;
 
-        // Check conditions first on how the backSideBar function will execute
-        const checkActionType = function (action) {
-            const time = ['today', 'upcoming', 'someday', 'overdue'];
-            const timeFiltered = time.some(condition => action.includes(condition));
-            const todoType = ['event', 'project'];
-            const typeFiltered = todoType.some(condition => action.includes(condition));
-
-            let filterType;
-            if (action.includes('prio')) {
-                filterType = 'priority-filtered';
-
-            } else if (timeFiltered) {
-                filterType = 'time-filtered';
-
-            } else if (typeFiltered) {
-                filterType = 'type-filtered';
-
-            } else {
-                filterType = 'default';
-            }
-
-            let condition
-            if (action.includes('fullview')) {
-                condition = `${filterType}-fullview`;
-
-            } else if (action.includes('preview')) {
-                condition = `${filterType}-preview`;
-            } else {
-                condition = `${filterType}`;
-            }
-
-            return condition;
-        }
-        const backCondition = checkActionType(backAction);
-        
-        if (backCondition === 'default') {
+        if (backAction === 'default') {
             return;
             
-        } else if (backCondition === 'type-filtered-preview') {
+        } else if (backAction.includes('previews')) {
             translateSidebar(false);
-            clearItemDisplay(backAction);
 
-            defaultDisplay('today');
-
-        } else if (backCondition === 'type-filtered-fullview') {
+        } else if (backAction.includes('fullview')) {
             
             const mode = this.dataset.mode;
             const todoLink = this.dataset.link;
@@ -153,7 +110,6 @@ const displayContent = (function () {
                 // Removes the additional datasets after executing clearItemDisplay function
                 this.removeAttribute('data-filter');
 
-
             } else {
                 clearItemDisplay(backAction);
 
@@ -164,17 +120,7 @@ const displayContent = (function () {
                     showDisplay('projects-previews');
                 }
             }
-
-        } else if (
-            backCondition === 'time-filtered-preview'|| 
-            backCondition === 'priority-filtered-preview') {      
-
-            translateSidebar(false);
-            clearItemDisplay('events-previews');
-            clearItemDisplay('projects-previews');
-
-            defaultDisplay('today');
-        }
+        } 
     }
 
     // Reusable create and append span function
@@ -374,7 +320,7 @@ const displayContent = (function () {
     }
 
     // Note: button event triggered function
-    const showDisplay = function (action) {
+    const showDisplay = function (action, newSave) {
         const backBtn = document.querySelector('button#back-sidebar');
         
         // Add action attribute to back button
@@ -382,6 +328,15 @@ const displayContent = (function () {
         let assignAction;
         if (typeof action === 'string') {
             assignAction = action;
+
+            if (newSave) {
+                // If a new project is created, redirect user to project full view of new project
+                const category = action.slice(0, -9);
+
+                const categorySelected = document.querySelector(`div.category#${category}`);
+                highlightCategory(categorySelected);
+                defaultDisplay();
+            }
 
         } else {
             assignAction = `${this.getAttribute('id')}-previews`;

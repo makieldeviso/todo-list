@@ -16,6 +16,7 @@ button:hover {
     --base-blue: #5F9DF7;
     --base-yellow: #FFF9B0;
     --base-pink: #FFDEDE;
+    --base-green: #CBFFA9;
 
     --dark-orange: #FF731D;
     --dark-blue: #1746A2;
@@ -44,7 +45,8 @@ button:hover {
 body {
     background-color: var(--off-white);
     display: grid;
-    grid-template-rows: max-content 1fr max-content;
+    grid-template-rows: max-content 1fr;
+    height: 100vh;
 }
 
 header {
@@ -63,10 +65,10 @@ main {
     position: relative;
 }
 
-footer {
+/* footer {
     min-width: var(--min-width);
     width: 250px;
-}
+} */
 
 /* HEADER (start) */
 div#title-banner {
@@ -123,11 +125,15 @@ div#sidebar {
     width: 100%;
     padding-top: calc(var(--common-padding) * 2);
     background-color: var(--off-white);
-    position: fixed;
+    position: absolute;
     left: 0;
+    bottom: 0;
     transition: transform 0.2s ease-in-out;
     z-index: 1;
     height: 100%;
+
+    display: grid;
+    grid-template-rows: max-content 1fr max-content;
 }
 
 div#sidebar.hidden {
@@ -178,6 +184,7 @@ div#events-cont {
     margin: auto;
     border-bottom: 3px dotted var(--base-blue);
     padding-bottom: calc(var(--common-padding) * 2);
+    width: 100%;
 }
 
 div.category {
@@ -188,16 +195,6 @@ div.category {
     display: grid;
     grid-template-columns: max-content 1fr max-content;
     align-items: center;
-}
-
-div.category:hover {
-    cursor: pointer;
-}
-
-@media (hover:hover) {
-    div.category.selected {
-        background-color: #f6d8c6;
-    }
 }
 
 div.category h3 {
@@ -235,7 +232,7 @@ div#overdue {
 /* Priority Filter (start) - */
 div#priority-sum {
     margin-top: var(--common-margin);
-    border-bottom: 3px dotted var(--base-blue);
+    /* border-bottom: 3px dotted var(--base-blue); */
     padding-bottom: calc(var(--common-padding) * 2);
 }
 
@@ -251,13 +248,16 @@ div#priority-sum h2 {
 div#add-button {
     display: flex;
     justify-content: center;
-    width: 100vw;
+    align-items: center;
     overflow: hidden;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: var(--base-orange);
+    height: calc((50px + 1vw) * 2);
+    background-color: var(--off-white);
+    position: relative;
+
+    background-image: url('./assets/bg-orange.png');
+    background-position: bottom;
+    background-size: 100% 50%;
+    background-repeat: no-repeat;
 }
 
 button#add {
@@ -271,6 +271,9 @@ button#add {
     border: 2px solid var(--off-white);
     box-shadow: 0 3px 3px 2px rgba(109, 108, 108, 0.5);
     display: flex;
+    /* position: absolute;
+    bottom: 50%;
+    z-index: 3; */
 }
 
 button#add svg {
@@ -288,14 +291,16 @@ div#todo-display {
     display: flex;
     flex-direction: column;
     position: relative;
+    height: 100%;
 }
 
 div#item-display{
-    height: 85vh;
+    height: 100%;
     overflow-y:scroll;
     display: flex;
     flex-direction: column;
     gap: var(--common-margin);
+    background-color: white;    
 }
 
 h3#filter-banner {
@@ -359,11 +364,14 @@ span.icon.low-prio {
 /* Action Btns (start) -- */
 div#action-btns {
     width: 100%;
-    background-color: rgba(127, 132, 135, 0.3);
+    background-color: rgba(203, 255, 169, 0.5);
     padding: 0 var(--common-padding);
     display: grid;
     grid-template-columns: 1fr max-content max-content;
+    grid-template-rows: max-content;
     gap: 5px;
+
+    overflow: hidden;
 }
 
 button.action-btn {
@@ -376,15 +384,24 @@ button.action-btn {
 }
 
 button.action-btn.back {
-    width: max-content;
+    width: calc(var(--icon-size) * 1.5);
     background-color: transparent;
-    border: none;
     border: 2px solid transparent;
+    margin: 5px 0;
+    padding: calc(var(--common-padding) * 0.8);
+    background-image: url('./assets/back.png');
+    background-size: 70%;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-size: var(--header-font-size);
+
+    display: none;
 }
 
-button.action-btn.back[data-action="default"] {
-    cursor: auto;
-    filter: opacity(0.2);
+
+button.action-btn.back[data-action="event-fullview"],
+button.action-btn.back[data-action="project-fullview"] {
+    display: block;
 }
   
 button.action-btn.edit,
@@ -716,6 +733,7 @@ div.fullview.tasks-list {
     border: 2px solid var(--base-orange);
     border-radius: 10px;
     margin-top: calc(var(--common-margin) * 2);
+    padding-bottom: calc(var(--common-margin) * 0.5);
 }
 
 div.task-header {
@@ -748,6 +766,11 @@ div.fullview.tasks-list div.task {
     gap: 10px;
     padding-bottom: var(--common-padding);
     border-bottom: 1px solid var(--base-orange);
+}
+
+div.fullview.tasks-list div.task:last-of-type {
+    border-bottom: none;
+    padding-bottom: 0;
 }
 
 button.check {
@@ -1837,6 +1860,23 @@ div.checkbox-input input:checked {
 /* Project Full view (end) -- */
 
 /* Media queries */
+@media (hover:hover) {
+    
+    div.category:hover {
+        cursor: pointer;
+        background-color: rgba(255, 222, 222, 0.5);
+    }
+
+    div.category.selected {
+        background-color: var(--base-pink);
+    }
+}
+
+@media (hover: none) {
+    button.action-btn.back {
+        display: block;
+    }
+}
 
 /* Galaxy fold */
 @media only screen and (max-width: 375px) and (min-height: 500px) {
@@ -1880,5 +1920,9 @@ div.checkbox-input input:checked {
 
     div#todo-display {
         grid-area: display;
+    }
+
+    dialog#add-prompt {
+        width: 65%;
     }
 }

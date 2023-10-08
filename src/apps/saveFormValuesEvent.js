@@ -5,6 +5,7 @@ import { addTaskToEvent } from "./addTaskToEvent";
 import { eventsDisplay } from "./eventsDisplay";
 import { onLoadScreen } from "./onLoadScreen";
 import { eventsScript } from "./eventsScript";
+import { displayContent } from "./displayContent";
 
 const saveFormValuesEvent = (function () {
 
@@ -130,6 +131,10 @@ const saveFormValuesEvent = (function () {
         // If edit event modal is open, upon closing show full display of new event
         if (saveType === 'save-new-event') {
             showModals.closeModal();
+
+            // Direct item display to the full view of newly created event
+            displayContent.showDisplay('events-previews', true);
+            eventsDisplay.showFullEvent(newEvent.eventId);
             
         } else if (saveType === 'save-edit-event') {
             showModals.closeEventEdit();
