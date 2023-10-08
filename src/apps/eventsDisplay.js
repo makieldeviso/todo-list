@@ -121,18 +121,12 @@ const eventsDisplay = (function () {
         // Create event title, description, project
         const title = makeText('fullview event-title', eventObj.title);
 
-        const descLabel = makeText('fullview desc-label label ', 'Description:');
+        const descLabel = makeText('fullview event-desc-label label ', 'Description:');
         const desc = makeText('fullview event-desc', eventObj.description);
 
         // Create project tag and assign data attributes, then add eventListener
         const projLabel = makeText('fullview proj-label label', 'Project:');
-        // const proj = makeText('fullview event-proj', eventsScript.getEventProjectTitle(eventObj));
-        // proj.dataset.id = eventObj.projectTag;
-        // proj.dataset.mode = 'event-view';
-        // proj.dataset.link = eventObj.eventId;
-
-        // proj.addEventListener('click', projectsDisplay.showFullProject);
-
+        
         const proj = document.createElement('a');
         proj.setAttribute('class', 'fullview event-proj');
         proj.textContent = `${eventsScript.getEventProjectTitle(eventObj)}`;

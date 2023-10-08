@@ -291,17 +291,15 @@ div#todo-display {
 
 div#item-display{
     height: 100%;
-    overflow-y:scroll;
+    background-color: white;    
     display: flex;
     flex-direction: column;
-    gap: var(--common-margin);
-    background-color: white;    
-    padding-bottom: 20vh;
 }
 
 h3#filter-banner {
     font-size: var(--title-font-size);
     padding: var(--common-padding) calc(var(--common-padding) * 2);
+    margin-bottom: var(--common-margin);
     display: grid;
     grid-template-columns: max-content 1fr;
     align-items: center;
@@ -356,6 +354,11 @@ span.icon.low-prio {
     background-image: url(./assets/low-prio.svg);
 }
 
+div#previews-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--common-margin);
+}
 
 /* Action Btns (start) -- */
 div#action-btns {
@@ -627,24 +630,25 @@ div.event-fullview {
     padding: calc(var(--common-padding) * 2);
     display: grid;
     grid-template-columns: max-content max-content 1fr;
-    grid-template-rows: auto;
+    /* grid-template-rows: max-content; */
     grid-template-areas: 
-        "status title title"
-        "desc-label desc-label desc-label"
-        "desc desc desc"
-        "proj-label proj-label proj-label"
-        "proj-link proj-link proj-link"
-        "sched-label sched-label sched-label"
-        "sched sched prio"
-        "tasks tasks tasks"
-        "btns btns btns";
+        "efv-status efv-title efv-title"
+        "efv-desc-label efv-desc-label efv-desc-label"
+        "efv-desc efv-desc efv-desc"
+        "efv-proj-label efv-proj-label efv-proj-label"
+        "efv-proj-link efv-proj-link efv-proj-link"
+        "efv-sched-label efv-sched-label efv-sched-label"
+        "efv-sched efv-sched efv-prio"
+        "efv-tasks efv-tasks efv-tasks"
+        "efv-btns efv-btns efv-btns";
 
-    height: max-content;
-    border: 1px solid black;
+    overflow-y: scroll;
+    padding-bottom: 20vh;
+    height: 85vh;
 }   
 
 div.event-status {
-    grid-area: status;
+    grid-area: efv-status;
     width: var(--header-font-size);
     height: var(--header-font-size);
     background-position: center;
@@ -665,10 +669,16 @@ div.event-fullview[data-status="pending"] div.event-status {
 
 p.fullview.event-title, p.fullview.event-desc {
     display: block; /* removes limiting to 2 lines */
+    overflow: unset;
 }
 
 p.fullview.event-title {
+    grid-area: efv-title;
     font-size: calc(var(--header-font-size) * 1.3);
+}
+
+p.fullview.event-desc {
+    grid-area: efv-desc;
 }
 
 p.fullview.label {
@@ -677,16 +687,16 @@ p.fullview.label {
     font-size: calc(var(--header-font-size) * 0.9);
 }
 
-p.fullview.desc-label {
-    grid-area: desc-label;
+p.fullview.event-desc-label {
+    grid-area: efv-desc-label;
 }
 
 p.fullview.proj-label {
-    grid-area: proj-label;
+    grid-area: efv-proj-label;
 }
 
 a.event-proj.fullview {
-    grid-area: proj-link;
+    grid-area: efv-proj-link;
     color: var(--dark-orange);
     font-size: calc(var(--header-font-size) * 0.8);
     width: max-content;
@@ -700,10 +710,11 @@ a.proj-link.fullview:hover {
 }
 
 p.fullview.sched-label {
-    grid-area: sched-label;
+    grid-area: efv-sched-label;
 }
 
 p.fullview.event-sched {
+    grid-area: efv-sched;
     font-size: calc(var(--header-font-size) * 1.2);
     padding-left: 0;
 }
@@ -719,6 +730,7 @@ p.fullview.event-sched span.sched-icon {
 }
 
 p.fullview.event-prio {
+    grid-area: efv-prio;
     font-size: calc(var(--header-font-size) * 0.8);
     margin: 0;
     width: calc(100px + 1vw);
@@ -726,7 +738,7 @@ p.fullview.event-prio {
 }
 
 div.fullview.tasks-list {
-    grid-area: tasks;
+    grid-area: efv-tasks;
     display: flex;
     flex-direction: column;
     gap: calc(var(--common-margin) * 0.5);
@@ -803,7 +815,7 @@ div.fullview.tasks-list p.task {
 }
 
 div.event-action {
-    grid-area: btns;
+    grid-area: efv-btns;
     display: grid;
     grid-template-columns: 1fr;
     margin-top: calc(var(--common-margin) * 3);
@@ -1500,13 +1512,13 @@ div.project-fullview {
     display: grid;
     grid-template-columns: max-content max-content 1fr;
     grid-template-areas: 
-        "status title title"
-        "desc-label desc-label desc-label"
-        "desc desc desc"
-        "deadline-label deadline-label deadline-label"
-        "deadline deadline prio"
-        "events events events"
-        "btns btns btns";
+        "pfv-status pfv-title pfv-title"
+        "pfv-desc-label pfv-desc-label pfv-desc-label"
+        "pfv-desc pfv-desc pfv-desc"
+        "pfv-deadline-label pfv-deadline-label pfv-deadline-label"
+        "pfv-deadline pfv-deadline pfv-prio"
+        "pfv-events pfv-events pfv-events"
+        "pfv-btns pfv-btns pfv-btns";
 
     background-color: #f5d5c1;
 }   
@@ -1529,7 +1541,7 @@ div.project-fullview[data-status="done"] p.fullview.project-deadline span.deadli
 }
 
 div.project-status {
-    grid-area: status;
+    grid-area: pfv-status;
     width: var(--header-font-size);
     height: var(--header-font-size);
     background-position: center;
@@ -1552,12 +1564,9 @@ p.fullview.project-title, p.fullview.project-desc {
 }
 
 p.fullview.project-title {
+    grid-area: pfv-title;
     color: black;
     font-size: calc(var(--header-font-size) * 1.3);
-}
-
-p.fullview.project-desc {
-    color: var(--gray);
 }
 
 p.fullview.label {
@@ -1567,14 +1576,20 @@ p.fullview.label {
 }
 
 p.fullview.desc-label {
-    grid-area: desc-label;
+    grid-area: pfv-desc-label;
+}
+
+p.fullview.project-desc {
+    grid-area: pfv-desc;
+    color: var(--gray);
 }
 
 p.fullview.deadline-label {
-    grid-area: deadline-label;
+    grid-area: pfv-deadline-label
 }
 
 p.fullview.project-deadline {
+    grid-area: pfv-deadline;
     font-size: calc(var(--header-font-size) * 1.2);
     padding: 0;
     background-color: transparent;
@@ -1595,6 +1610,7 @@ p.fullview.project-deadline span.deadline-icon {
 }
 
 p.fullview.project-prio {
+    grid-area: pfv-prio;
     font-size: calc(var(--header-font-size) * 0.8);
     margin: 0;
     width: calc(100px + 1vw);
@@ -1602,7 +1618,7 @@ p.fullview.project-prio {
 }
 
 div.fullview.events-list {
-    grid-area: events;
+    grid-area: pfv-events;
     display: flex;
     flex-direction: column;
     gap: calc(var(--common-margin) * 0.5);
@@ -1623,7 +1639,6 @@ div.event-header {
 }
 
 div.event-header p.event-label {
-    /* margin: var(--common-margin) 0 0 0; */
     font-size: var(--header-font-size);
     font-family: var(--header-font-style);
 }
@@ -1664,7 +1679,7 @@ button.check {
 }
 
 div.project-action {
-    grid-area: btns;
+    grid-area: pfv-btns;
     display: grid;
     grid-template-columns: 1fr;
     margin-top: calc(var(--common-margin) * 3);
