@@ -134,21 +134,13 @@ const projectsDisplay = (function () {
             
             // If full view was accessed by clicking project tag link from event full view
             if (this.dataset.mode === 'event-view') {
-                console.log(this.hasAttribute('data-mode'));
-                const eventFullView = document.querySelector('div.event-fullview');
-                itemDisplay.removeChild(eventFullView);
+                // Change category to projects
+                // Note: Clear display to initiate category change
+                displayContent.defaultDisplay();
 
-                // Adds additional data set to the back button
-                backBtn.dataset.mode = this.dataset.mode;
-
-                // Add an id link of the project to the back button
-                backBtn.dataset.link = this.dataset.link;
-
-                // Remove buttons in the ribbon
-                const editBtn = document.querySelector('button[value="edit-event"]');
-                const deleteBtn = document.querySelector('button[value="delete-event"]');
-                displayContent.removeActionBtn(editBtn, deleteBtn);
-
+                // highlight projects category
+                const projectsCategory = document.querySelector('div.category#projects');
+                displayContent.highlightCategory(projectsCategory);
             }
 
             // Activate timeFilter flag, used for addition attributes to elements
@@ -158,7 +150,7 @@ const projectsDisplay = (function () {
         }
 
         // Clear display panel
-        displayContent.hardClearItemDisplay();
+        displayContent.createFilterBanner('remove');
         
         // Ensures the project full view is refreshed when changes is applied
         const projectFullViews = document.querySelectorAll('div.project-fullview');
@@ -312,13 +304,13 @@ const projectsDisplay = (function () {
 
 
     const displayProjectsToDOM = function () {
-        const itemDisplay = document.querySelector('div#item-display');
+        const previewsCont = document.querySelector('div#previews-container');
         
         const projects = memoryHandler.getProjects();
 
         projects.forEach(project => {
             const projectDisplay = createProjectPreview(project);
-            itemDisplay.appendChild(projectDisplay);
+            previewsCont.appendChild(projectDisplay);
         });
     }
 

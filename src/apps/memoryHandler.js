@@ -22,6 +22,26 @@ const memoryHandler = (function () {
                     "task-3": {
                         "task": "Buy fruits for salad at the market",
                         "status": "done"
+                    },
+                    "task-4": {
+                        "task": "Buy fruits for salad at the market",
+                        "status": "done"
+                    },
+                    "task-5": {
+                        "task": "Buy fruits for salad at the market",
+                        "status": "done"
+                    },
+                    "task-6": {
+                        "task": "Buy fruits for salad at the market",
+                        "status": "done"
+                    },
+                    "task-7": {
+                        "task": "Buy fruits for salad at the market",
+                        "status": "done"
+                    },
+                    "task-8": {
+                        "task": "Buy fruits for salad at the market",
+                        "status": "done"
                     }
                 },
                 "eventId": "ms.dodo'sbirthday1689724800000",

@@ -133,6 +133,7 @@ const displayContent = (function () {
     }
 
     // Create and append/ remove Filter Banner
+    // Note: Whenever a banner is created/ removed a previews-container is also created/ removed
     const createFilterBanner = function (action, text) {
         const itemDisplay = document.querySelector('div#item-display');
         
@@ -148,14 +149,19 @@ const displayContent = (function () {
                 createSpan(banner, `${text} icon`, '');
                 createSpan(banner, 'main-text', formatting.toProper(text));
             }
-            
 
             itemDisplay.appendChild(banner);
 
+            const previewsCont = document.createElement('div');
+            previewsCont.setAttribute('id', 'previews-container');
+            itemDisplay.appendChild(previewsCont);
+
         } else if (action === 'remove') {
             const banner = document.querySelector('h3#filter-banner');
+            const previewsCont = document.querySelector('div#previews-container');
             if (banner !== null) {
                 itemDisplay.removeChild(banner);
+                itemDisplay.removeChild(previewsCont);
             }
         }
     }
@@ -242,27 +248,12 @@ const displayContent = (function () {
         const deleteEventBtn = document.querySelector('button[value="delete-event"]');
         const editProjectBtn = document.querySelector('button[value="edit-project"]');
         const deleteProjectBtn = document.querySelector('button[value="delete-project"]');
+        const previewsCont = document.querySelector('div#previews-container');
 
-        // Reusable function, clears preview items
-        const clearPreview = function (previewSelector) {
-            // Note: previewSelector parameter is string used for querySelector
-            const previews = document.querySelectorAll(`div.${previewSelector}`);
+        if (action === 'projects-previews' || action === 'events-previews' ) {
+            // Remove filter banner and previews
+            createFilterBanner('remove');
 
-            // Check if node does not exist
-            const nullNode = Array.from(previews).some(node => node === null);
-
-            // if Nodes exists proceed to removal of nodes
-            if (!nullNode) {
-                previews.forEach(preview => removeDisplay(preview));
-            } 
-        }
-
-        if (action === 'projects-previews') {
-            clearPreview('project-preview');
-
-        } else if (action === 'events-previews') {
-            clearPreview('event-preview');
-            
         } else if (action === 'event-fullview') {
             // Close/ remove event full view
             removeDisplay(eventFullView);
@@ -280,7 +271,7 @@ const displayContent = (function () {
         } else if (action === 'category-change') {
             // Note: Removes all possible items on the item display
 
-            // Remove full views
+            // Remove full views or previews
            const allFullViews = [projectFullView, eventFullView];
            allFullViews.forEach(item => {
                 if (item !== null) {
@@ -288,35 +279,13 @@ const displayContent = (function () {
                 }
            });
 
-           // Remove previews
-           clearPreview('project-preview');
-           clearPreview('event-preview');
+           // Remove filter banner and previews
+           createFilterBanner('remove');
 
             // Remove action buttons
            removeActionBtn(editEventBtn, deleteEventBtn, editProjectBtn, deleteProjectBtn);
         }
 
-        // Remove filter banner
-        createFilterBanner('remove');
-    }
-
-    // Manually clear display panel of previews
-    // Removes projects and events previews
-    const hardClearItemDisplay = function () {
-        // Clear display panel
-        const projectPreviews = document.querySelectorAll('div.project-preview');
-        const eventPreviews = document.querySelectorAll('div.event-preview');
-
-        projectPreviews.forEach(preview => removeDisplay(preview));
-        eventPreviews.forEach(event => {
-            // if event preview is not part of a project fullview
-            if (event.dataset.mode !== 'project-view') {
-                removeDisplay(event);
-            }
-        });
-
-        // Clear Filter Banner
-        createFilterBanner('remove');  
     }
 
     // Note: button event triggered function
@@ -350,11 +319,13 @@ const displayContent = (function () {
 
         if (assignAction === 'events-previews') {
             createFilterBanner('append', 'events');
+
             eventsDisplay.displayEventsToDOM();
             translateSidebar(true);
             
         } else if (assignAction === 'projects-previews') {
             createFilterBanner('append', 'projects');
+
             projectsDisplay.displayProjectsToDOM();
             translateSidebar(true);
 
@@ -366,7 +337,6 @@ const displayContent = (function () {
             } else {
                 displayContentTimeFiltered.displayTimeFiltered(assignAction);
             }
-            
         }
         
     }
@@ -405,13 +375,14 @@ const displayContent = (function () {
             removeDisplay, 
             removeActionBtn, 
             clearItemDisplay, 
-            hardClearItemDisplay,
 
             createActionBtn,
             createSpan,
             createFilterBanner,
             createStatusMarker,
             createIndicatorIcon,
+            highlightCategory,
+            defaultDisplay,
         }
 
 })();

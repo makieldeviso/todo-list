@@ -63,6 +63,7 @@ main {
     min-width: var(--min-width);
     overflow: hidden;
     position: relative;
+    height: 100%;
 }
 
 /* footer {
@@ -270,17 +271,10 @@ button#add {
     background-color: var(--dark-orange);
     border: 2px solid var(--off-white);
     box-shadow: 0 3px 3px 2px rgba(109, 108, 108, 0.5);
-    display: flex;
-    /* position: absolute;
-    bottom: 50%;
-    z-index: 3; */
-}
-
-button#add svg {
-    fill: var(--off-white);
-    width: 80%;
-    height: 80%;
-    margin: auto;
+    background-image: url('./assets/add.svg');
+    background-repeat: no-repeat;
+    background-size: 70% 70%;
+    background-position: center;
 }
 /* Add (ends) */
 
@@ -288,8 +282,9 @@ button#add svg {
 div#todo-display {
     background-color: var(--off-white);
     width: 100%;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: max-content 1fr;
+    overflow: hidden;
     position: relative;
     height: 100%;
 }
@@ -301,6 +296,7 @@ div#item-display{
     flex-direction: column;
     gap: var(--common-margin);
     background-color: white;    
+    padding-bottom: 20vh;
 }
 
 h3#filter-banner {
@@ -631,6 +627,7 @@ div.event-fullview {
     padding: calc(var(--common-padding) * 2);
     display: grid;
     grid-template-columns: max-content max-content 1fr;
+    grid-template-rows: auto;
     grid-template-areas: 
         "status title title"
         "desc-label desc-label desc-label"
@@ -641,6 +638,9 @@ div.event-fullview {
         "sched sched prio"
         "tasks tasks tasks"
         "btns btns btns";
+
+    height: max-content;
+    border: 1px solid black;
 }   
 
 div.event-status {
@@ -688,7 +688,7 @@ p.fullview.proj-label {
 a.event-proj.fullview {
     grid-area: proj-link;
     color: var(--dark-orange);
-    font-size: calc(var(--header-font-size));
+    font-size: calc(var(--header-font-size) * 0.8);
     width: max-content;
 }
 
@@ -772,6 +772,7 @@ div.fullview.tasks-list div.task:last-of-type {
     border-bottom: none;
     padding-bottom: 0;
 }
+
 
 button.check {
     width: calc(15px + 0.5vw);
@@ -1177,14 +1178,14 @@ div#add-options button span.add-icon {
     width: var(--header-font-size);
     height: var(--header-font-size);
     margin: auto;
-    background-image: url('./assets/add.png');
+    background-image: url('./assets/add.svg');
     background-size: 70%;
     background-position: center;
     background-repeat: no-repeat;
 }
 
 div#add-options button[data-selected="selected"] span.add-icon {
-    background-image: url('./assets/add-selected.png');
+    background-image: url('./assets/add-selected.svg');
 }
 
 div#add-options {
@@ -1870,6 +1871,16 @@ div.checkbox-input input:checked {
     div.category.selected {
         background-color: var(--base-pink);
     }
+
+    button#add {
+        transition: all 0.2s ease-in-out;
+    }
+    button#add:hover {
+            filter: brightness(1.1);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 3px 2px rgba(109, 108, 108, 0.5);
+    }
+
 }
 
 @media (hover: none) {
@@ -1910,6 +1921,7 @@ div.checkbox-input input:checked {
     main {
         display: grid;
         grid-template-columns: 30% 70%;
+        grid-template-rows: 1fr;
         grid-template-areas: 
             "sidebar display";
     }
@@ -1925,4 +1937,21 @@ div.checkbox-input input:checked {
     dialog#add-prompt {
         width: 65%;
     }
+
+    /* div#add-button {
+        position: absolute;
+        bottom: 50px;
+        width: 100vw;
+        justify-content: flex-end;
+        background-color: transparent;
+        background-image: none;
+        
+    }
+
+    button#add {
+        margin: auto 100px auto auto;
+
+    } */
+
+
 }

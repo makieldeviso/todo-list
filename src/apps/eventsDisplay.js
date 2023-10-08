@@ -375,7 +375,7 @@ const eventsDisplay = (function () {
         }
          
         // Clear display panel
-        displayContent.hardClearItemDisplay();
+        displayContent.createFilterBanner('remove');
         
         // Ensures the event full view is refreshed when changes are applied
         const eventFullViews = document.querySelectorAll('div.event-fullview');
@@ -402,13 +402,13 @@ const eventsDisplay = (function () {
     }
 
     const displayEventsToDOM = function () {
-        const itemDisplay = document.querySelector('div#item-display');
+        const previewsCont = document.querySelector('div#previews-container');
 
         const events = memoryHandler.getEvents();
 
         events.forEach(event => {
             const eventDisplay = createEventDisplay(event);
-            itemDisplay.appendChild(eventDisplay);
+            previewsCont.appendChild(eventDisplay);
         });
 
     }

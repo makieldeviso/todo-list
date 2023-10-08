@@ -10,7 +10,7 @@ const displayContentPriorityFiltered = (function () {
     // Reusable create and append filtered preview to the item display
     const createFilteredPreview = function (objArray, filterName) {
         // Create and append project previews on itemDisplay
-        const itemDisplay = document.querySelector('div#item-display');
+        const previewsCont = document.querySelector('div#previews-container');
 
          objArray.forEach(obj => {
             // Note: conditional detect if obj is eventObj or projectObj
@@ -23,7 +23,7 @@ const displayContentPriorityFiltered = (function () {
             }
 
             preview.dataset.filter = filterName;
-            itemDisplay.appendChild(preview);
+            previewsCont.appendChild(preview);
         });
     }
 
