@@ -400,10 +400,16 @@ const eventsDisplay = (function () {
 
         const events = memoryHandler.getEvents();
 
-        events.forEach(event => {
-            const eventDisplay = createEventDisplay(event);
-            previewsCont.appendChild(eventDisplay);
-        });
+        if (events.length !== 0) {
+            events.forEach(event => {
+                const eventDisplay = createEventDisplay(event);
+                previewsCont.appendChild(eventDisplay);
+            });
+
+        } else {
+            const emptyNotif = displayContent.createEmptyPreviews('events');
+            previewsCont.appendChild(emptyNotif);
+        }
 
     }
 

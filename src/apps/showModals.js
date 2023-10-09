@@ -11,6 +11,7 @@ import { onLoadScreen } from "./onLoadScreen";
 import { projectsDisplay } from "./projectsDisplay";
 import { addEventToProject } from "./addEventToProject";
 import { displayContentTimeFiltered } from "../displayContentTimeFiltered";
+import { displayContentPriorityFiltered } from "../displayContentPriorityFiltered";
 
 const showModals = (function () {
     
@@ -192,12 +193,21 @@ const showModals = (function () {
         } else {
 
             if (this.hasAttribute('data-filter')) {
-                const timeFilter = displayContentTimeFiltered.convertDataSet(this.dataset.filter);
 
-                backBtn.dataset.action = `${timeFilter}-previews`;
+                if (this.dataset.filter.includes('prio')) {
+                    const prioFilter = displayContentPriorityFiltered.convertDataSet(this.dataset.filter);
+                    backBtn.dataset.action = `${prioFilter}-prio-previews`;
 
-                // Display time filtered previews
-                displayContentTimeFiltered.displayTimeFiltered(timeFilter);
+                    // Display prio filtered previews
+                    displayContentPriorityFiltered.displayPriorityFiltered(prioFilter);
+                    
+                } else {
+                    const timeFilter = displayContentTimeFiltered.convertDataSet(this.dataset.filter);
+                    backBtn.dataset.action = `${timeFilter}-previews`;
+
+                    // Display time filtered previews
+                    displayContentTimeFiltered.displayTimeFiltered(timeFilter);
+                }
 
             } else {
                 backBtn.dataset.action = 'events-previews';
@@ -315,10 +325,18 @@ const showModals = (function () {
 
         
         if (this.hasAttribute('data-filter')) {
-            const timeFilter = displayContentTimeFiltered.convertDataSet(this.dataset.filter);
-            backBtn.dataset.action = `${timeFilter}-previews`;
-            displayContentTimeFiltered.displayTimeFiltered(timeFilter);
 
+            if (this.dataset.filter.includes('prio')) {
+                const prioFilter = displayContentPriorityFiltered.convertDataSet(this.dataset.filter);
+                backBtn.dataset.action = `${prioFilter}-prio-previews`;
+                displayContentPriorityFiltered.displayPriorityFiltered(prioFilter);
+
+            } else {
+                const timeFilter = displayContentTimeFiltered.convertDataSet(this.dataset.filter);
+                backBtn.dataset.action = `${timeFilter}-previews`;
+                displayContentTimeFiltered.displayTimeFiltered(timeFilter);
+            }
+            
         } else {
             backBtn.dataset.action = 'projects-previews';
             displayContent.createFilterBanner('append', 'projects');

@@ -10,6 +10,7 @@ import pendingOrangeIcon from '../assets/pending-orange.svg';
 import doneIcon from '../assets/done.svg';
 import projectsIcon from '../assets/projects-icon.svg'
 import eventsIcon from '../assets/events-icon.svg'
+import emptyIcon from '../assets/empty.svg';
 
 const displayContent = (function () {
 
@@ -228,16 +229,40 @@ const displayContent = (function () {
     const createIndicatorIcon = function (todoType) {
         const icon = new Image();
 
+        let assignClass;
         if (todoType === 'projects') {
             icon.src = projectsIcon;
-        } else {
+            assignClass = 'indicator';
+
+        } else if (todoType === 'events') {
             icon.src = eventsIcon;
+            assignClass = 'indicator';
+
+        } else if (todoType === 'empty') {
+            icon.src = emptyIcon;
+            assignClass = 'indicator-empty';
         }
  
         icon.setAttribute('alt', `${todoType}-icon`);
-        icon.setAttribute('class', 'indicator-icon');
+        icon.setAttribute('class', `${assignClass}-icon`);
 
         return icon;
+    }
+
+    // Create empty previews notification
+    const createEmptyPreviews = function (category) {
+        const notifCont = document.createElement('div');
+        notifCont.setAttribute('class', 'empty-notif');
+
+        const emptyIcon = createIndicatorIcon('empty');
+        const messageText = document.createElement('p');
+        messageText.setAttribute('class', 'empty-msg');
+        messageText.textContent = `No ${formatting.toProper(category)}`;
+
+        const components = [emptyIcon, messageText];
+        components.forEach(comp => notifCont.appendChild(comp));
+
+        return notifCont;
     }
     
     const clearItemDisplay = function (action) {
@@ -379,6 +404,7 @@ const displayContent = (function () {
             createActionBtn,
             createSpan,
             createFilterBanner,
+            createEmptyPreviews,
             createStatusMarker,
             createIndicatorIcon,
             highlightCategory,

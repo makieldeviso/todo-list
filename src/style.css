@@ -360,6 +360,43 @@ div#previews-container {
     gap: var(--common-margin);
 }
 
+div.empty-notif {
+    width: max-content;
+    text-align: center;
+    border-radius: 20px;
+    display: grid;
+    grid-template-areas: 
+        "empty-icon"
+        "empty-msg";
+    margin: auto;
+    margin-top: 10vh;
+}
+
+img.indicator-empty-icon {
+    grid-area: empty-icon;
+    height: 20vw;
+    width: 20vw;
+    animation: hop 0.5s ease-in-out 0.1s 1;
+    margin: auto;
+}
+
+@keyframes hop {
+    0% {transform: translateY(0);}
+    25% {transform: translateY(-10px);}
+    50% {transform: translateY(0);}
+    75% {transform: translateY(-5px);}
+    100% {transform: translateY(0);}
+}
+
+div.empty-notif p.empty-msg {
+    grid-area: empty-msg;
+    font-size: var(--header-font-size);
+    font-family: var(--header-font-style);
+    color: #99d0f5;
+    font-weight: bold;
+}
+
+
 /* Action Btns (start) -- */
 div#action-btns {
     width: 100%;

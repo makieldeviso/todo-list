@@ -12,26 +12,33 @@ const displayContentPriorityFiltered = (function () {
         // Create and append project previews on itemDisplay
         const previewsCont = document.querySelector('div#previews-container');
 
-         objArray.forEach(obj => {
-            // Note: conditional detect if obj is eventObj or projectObj
-            let preview;
-            if (obj.hasOwnProperty('projectId')) {
-                preview = projectsDisplay.createProjectPreview(obj);
+        if (objArray.length !== 0) {
+            objArray.forEach(obj => {
+                // Note: conditional detect if obj is eventObj or projectObj
+                let preview;
+                if (obj.hasOwnProperty('projectId')) {
+                    preview = projectsDisplay.createProjectPreview(obj);
+    
+                } else if (obj.hasOwnProperty('eventId')) {
+                    preview = eventsDisplay.createEventDisplay(obj);
+                }
+    
+                preview.dataset.filter = filterName;
+                previewsCont.appendChild(preview);
+            });
 
-            } else if (obj.hasOwnProperty('eventId')) {
-                preview = eventsDisplay.createEventDisplay(obj);
-            }
-
-            preview.dataset.filter = filterName;
-            previewsCont.appendChild(preview);
-        });
+        } else {
+            const emptyNotif = displayContent.createEmptyPreviews(`${convertDataSet(filterName)} Priority`);
+            previewsCont.appendChild(emptyNotif);
+        }
+         
     }
 
     // Dataset converter
-    const convertDataSet = function (datasetString) {
+    const convertDataSet = function (priorityString) {
         const priorityConditions = ['high', 'mid', 'low'];
 
-        const priority = priorityConditions.find(time => datasetString.includes(time));
+        const priority = priorityConditions.find(prio => priorityString.includes(prio));
 
         return priority;
     }

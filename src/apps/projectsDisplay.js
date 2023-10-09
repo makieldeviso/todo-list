@@ -303,15 +303,21 @@ const projectsDisplay = (function () {
     }
 
 
+    // Display project previews on DOM
     const displayProjectsToDOM = function () {
         const previewsCont = document.querySelector('div#previews-container');
         
         const projects = memoryHandler.getProjects();
 
-        projects.forEach(project => {
-            const projectDisplay = createProjectPreview(project);
-            previewsCont.appendChild(projectDisplay);
-        });
+        if (projects.length !== 0) {
+            projects.forEach(project => {
+                const projectDisplay = createProjectPreview(project);
+                previewsCont.appendChild(projectDisplay);
+            });
+        } else {
+            const emptyNotif = displayContent.createEmptyPreviews('projects');
+            previewsCont.appendChild(emptyNotif);
+        }
     }
 
 

@@ -11,19 +11,26 @@ const displayContentTimeFiltered = (function () {
         // Create and append project previews on itemDisplay
         const previewsCont = document.querySelector('div#previews-container');
 
-         objArray.forEach(obj => {
-            // Note: conditional detect if obj is eventObj or projectObj
-            let preview;
-            if (obj.hasOwnProperty('projectId')) {
-                preview = projectsDisplay.createProjectPreview(obj);
+        if (objArray.length !== 0) {
+            objArray.forEach(obj => {
+                // Note: conditional detect if obj is eventObj or projectObj
+                let preview;
+                if (obj.hasOwnProperty('projectId')) {
+                    preview = projectsDisplay.createProjectPreview(obj);
+    
+                } else if (obj.hasOwnProperty('eventId')) {
+                    preview = eventsDisplay.createEventDisplay(obj);
+                }
+    
+                preview.dataset.filter = filterName;
+                previewsCont.appendChild(preview);
+            });
 
-            } else if (obj.hasOwnProperty('eventId')) {
-                preview = eventsDisplay.createEventDisplay(obj);
-            }
-
-            preview.dataset.filter = filterName;
-            previewsCont.appendChild(preview);
-        });
+        } else {
+            const emptyNotif = displayContent.createEmptyPreviews(convertDataSet(filterName));
+            previewsCont.appendChild(emptyNotif);
+        }
+         
     }
 
     // Return array of todoItems(objects) filtered by time condition argument
