@@ -151,12 +151,15 @@ const addTaskToEvent = (function () {
     
     const deleteTask = function () {
         const buttonId = this.dataset.id;
+        // console.log(newTasks);
 
         // Remove task from the newTasks Obj;
         delete newTasks[`${buttonId}`];
 
         const oldTaskKeys = Object.keys(newTasks); // Array of the newTasks property keys
+        console.log(oldTaskKeys);
 
+    
         // Rename newTasks properties
         // Create temporary object for the new properties
         const tempObj = {}
@@ -166,6 +169,7 @@ const addTaskToEvent = (function () {
             
             tempObj[`task-${i + 1}`] = savedValue;
         }
+        console.log(tempObj);
 
         // Deletes old task
         oldTaskKeys.forEach( key => delete newTasks[key] );
@@ -179,6 +183,19 @@ const addTaskToEvent = (function () {
         const tasksCont = document.querySelector('div#tasks-container');
         const taskForDeleteCont = document.querySelector(`div[data-id='${buttonId}']`);
         tasksCont.removeChild(taskForDeleteCont);
+
+        // Replace data-id to components
+        const taskElement = document.querySelectorAll('div.new-task');
+        for(let i = 0; i < taskElement.length; i++) {
+            const container = taskElement[i];
+            const listMark = taskElement[i].querySelector('button.list-mark');
+            const input = taskElement[i].querySelector('input.new-task');
+            const editBtn= taskElement[i].querySelector('button.edit-task');
+            const deleteBtn= taskElement[i].querySelector('button.delete-task');
+
+            const components = [listMark, input, editBtn, deleteBtn, container];
+            components.forEach(comp => comp.dataset.id = `task-${i + 1}`);
+        }
     }
 
     const addNewTaskEvent = function (action) {

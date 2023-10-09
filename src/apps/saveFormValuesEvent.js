@@ -98,9 +98,11 @@ const saveFormValuesEvent = (function () {
             // If same title and due date is created add additional id indicator
             const events = memoryHandler.getEvents();
             const sameId = events.filter(event => event['eventId'].includes(newEventId));
-
-            if (sameId.length > 0) {
-                newEventId = `${titleId + eventSchedule}(${sameId.length + 1})`;
+            
+            if (eventForModId === undefined) {
+                if (sameId.length > 0) {
+                    newEventId = `${titleId + eventSchedule}(${sameId.length + 1})`;
+                }
             }
 
             object['eventId'] = newEventId;

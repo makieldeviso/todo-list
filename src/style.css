@@ -40,6 +40,10 @@ button:hover {
     --common-padding: calc(5px + 0.5vw);
 
     --icon-size: calc(20px + 0.5vw);
+
+    --header-height: 10vh;
+    --main-height: 85vh;
+    --footer-height: 5vh;
 }
 
 body {
@@ -57,19 +61,19 @@ header {
     display: grid;
     grid-template-columns: 1fr max-content;
     overflow: hidden;
+    height: var(--header-height);
 }
 
 main {
     min-width: var(--min-width);
     overflow: hidden;
     position: relative;
-    height: 100%;
+    height: var(--main-height);
 }
 
-/* footer {
-    min-width: var(--min-width);
-    width: 250px;
-} */
+footer {
+   height: var(--footer-height);
+}
 
 /* HEADER (start) */
 div#title-banner {
@@ -131,7 +135,7 @@ div#sidebar {
     bottom: 0;
     transition: transform 0.2s ease-in-out;
     z-index: 1;
-    height: 100%;
+    height: var(--main-height);
 
     display: grid;
     grid-template-rows: max-content 1fr max-content;
@@ -286,7 +290,7 @@ div#todo-display {
     grid-template-rows: max-content 1fr;
     overflow: hidden;
     position: relative;
-    height: 100%;
+    height: var(--main-height);
 }
 
 div#item-display{
@@ -294,6 +298,7 @@ div#item-display{
     background-color: white;    
     display: flex;
     flex-direction: column;
+    overflow-y: hidden;
 }
 
 h3#filter-banner {
@@ -667,7 +672,7 @@ div.event-fullview {
     padding: calc(var(--common-padding) * 2);
     display: grid;
     grid-template-columns: max-content max-content 1fr;
-    /* grid-template-rows: max-content; */
+    grid-template-rows: repeat(9, max-content);
     grid-template-areas: 
         "efv-status efv-title efv-title"
         "efv-desc-label efv-desc-label efv-desc-label"
@@ -680,8 +685,7 @@ div.event-fullview {
         "efv-btns efv-btns efv-btns";
 
     overflow-y: scroll;
-    padding-bottom: 20vh;
-    height: 85vh;
+    height: 100%;
 }   
 
 div.event-status {
@@ -1548,6 +1552,7 @@ div.project-fullview {
     padding: calc(var(--common-padding) * 2);
     display: grid;
     grid-template-columns: max-content max-content 1fr;
+    grid-template-rows: repeat(7, max-content);
     grid-template-areas: 
         "pfv-status pfv-title pfv-title"
         "pfv-desc-label pfv-desc-label pfv-desc-label"
@@ -1558,6 +1563,8 @@ div.project-fullview {
         "pfv-btns pfv-btns pfv-btns";
 
     background-color: #f5d5c1;
+    overflow-y: scroll;
+    height: 100%;
 }   
 
 div.project-fullview[data-status="done"] {
@@ -1598,6 +1605,7 @@ div.project-fullview[data-status="pending"] div.project-status {
 
 p.fullview.project-title, p.fullview.project-desc {
     display: block; /* removes limiting to 2 lines */
+    overflow: unset;
 }
 
 p.fullview.project-title {
