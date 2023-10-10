@@ -332,10 +332,13 @@ const displayContent = (function () {
             }
 
         } else {
-            // Note: Stop execution when category is currently selected and is currently in previews view
+            // Note: Stop execution when category is currently selected,
+            // is currently in previews view and is larger 768 (px);
             const selected = this.getAttribute('class').includes('selected');
             const previewView = document.querySelector('h3#filter-banner') !== null;
-            if (selected && previewView ) {
+            const largeScreen = window.innerWidth >= 768;
+            
+            if (selected && previewView && largeScreen ) {
                 return;
             }
 
