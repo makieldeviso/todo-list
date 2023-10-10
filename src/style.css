@@ -42,8 +42,8 @@ button:hover {
     --icon-size: calc(20px + 0.5vw);
 
     --header-height: 10vh;
-    --main-height: 85vh;
-    --footer-height: 5vh;
+    --main-height: 90vh;
+    --footer-height: 0vh;
 }
 
 body {
@@ -73,13 +73,48 @@ main {
 
 footer {
    height: var(--footer-height);
+   overflow: hidden;
+   background-color: var(--dark-orange);
 }
+
+/* div#footer-cont {
+    display: grid;
+    margin: 5px 0 0 0;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    justify-items: center;
+}
+
+div#footer-cont p {
+    font-size: var(--common-font-size);
+    color: white;
+}
+
+div#footer-cont p a {
+    text-decoration: none;
+    color: white;
+}
+
+div#footer-cont p a:visited {
+    color: white;
+}
+
+div#footer-cont p a:active {
+    color: white;
+    transform: scale(1.1);
+}
+
+div#footer-cont p a:hover {
+    cursor: pointer;
+    color: var(--base-pink);
+} */
 
 /* HEADER (start) */
 div#title-banner {
     display: grid;
     grid-template-columns:max-content 1fr;
     width: max-content;
+    align-items: center;
 }
 
 img#logo {
@@ -138,7 +173,12 @@ div#sidebar {
     height: var(--main-height);
 
     display: grid;
-    grid-template-rows: max-content 1fr max-content;
+    grid-template-rows: max-content max-content 1fr max-content;
+    grid-template-areas:
+        "user-details"
+        "main-categories"
+        "priority-categories"
+        "add-buttons-cont" ;
 }
 
 div#sidebar.hidden {
@@ -148,6 +188,7 @@ div#sidebar.hidden {
 
 /* User information (start)*/ 
 div#user {
+    grid-area: user-details;
     display: grid;
     grid-template-areas:
         "pic greet"
@@ -155,8 +196,10 @@ div#user {
     grid-template-columns:max-content 1fr;
     column-gap: 10px;  
     width: 100%;
+    height: max-content;
     margin: auto;
-    padding: calc(var(--common-padding) * 0.5) calc(var(--common-padding) * 2);
+    padding: calc(var(--common-padding) * 2);
+    padding-top: 0;
 }
 
 img#user-pic {
@@ -182,12 +225,13 @@ h3#user-name {
 /* User information (end)*/ 
 
 /* Categories (start) -  */
-div#events-cont {
+div#main-categories-cont {
+    grid-area: main-categories;
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: auto;
-    border-bottom: 3px dotted var(--base-blue);
+    border-bottom: 1px solid var(--base-pink);
     padding-bottom: calc(var(--common-padding) * 2);
     width: 100%;
 }
@@ -235,13 +279,14 @@ div#overdue {
 /* Categories (end) -  */
 
 /* Priority Filter (start) - */
-div#priority-sum {
+div#priority-categories {
+    grid-area: priority-categories;
     margin-top: var(--common-margin);
     /* border-bottom: 3px dotted var(--base-blue); */
     padding-bottom: calc(var(--common-padding) * 2);
 }
 
-div#priority-sum h2 {
+div#priority-categories h2 {
     font-family: var(--header-font-style);
     font-size: calc(var(--common-font-size) * 1.1);
     width: 95%;
@@ -251,9 +296,12 @@ div#priority-sum h2 {
 
 /* Add (start) */
 div#add-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    grid-area: add-buttons-cont;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: max-content;
+    justify-items: center;
+    align-content: center;
     overflow: hidden;
     height: calc((50px + 1vw) * 2);
     background-color: var(--off-white);
@@ -280,6 +328,12 @@ button#add {
     background-size: 70% 70%;
     background-position: center;
 }
+
+button#new-event-front,
+button#new-project-front {
+    display: none;
+}
+
 /* Add (ends) */
 
 /* Todo List Display (start) */
@@ -363,6 +417,9 @@ div#previews-container {
     display: flex;
     flex-direction: column;
     gap: var(--common-margin);
+    height: 100%;
+    overflow: auto;
+    padding-bottom: 20vh;
 }
 
 div.empty-notif {
@@ -410,7 +467,7 @@ div#action-btns {
     display: grid;
     grid-template-columns: 1fr max-content max-content;
     grid-template-rows: max-content;
-    gap: 5px;
+    gap: var(--common-margin);
 
     overflow: hidden;
 }
@@ -457,12 +514,23 @@ button.action-btn.delete {
     border-radius: 10px;
     border: 2px solid white;
     background-color: var(--dark-orange);
+    transition: transform 0.3s ease-in-out;
 }
+
+button.action-btn.edit:hover,
+button.action-btn.delete:hover {
+    filter: brightness(1.1);
+}
+
+button.action-btn.edit:active,
+button.action-btn.delete:active {
+    transform: scale(0.9);
+}
+
 
 button.action-btn[value="edit-project"],
 button.action-btn[value="delete-project"] {
     background-color: var(--darkest-color);
-    border-radius: 0;
 }
 
 button.action-btn span.icon {
@@ -686,6 +754,7 @@ div.event-fullview {
 
     overflow-y: scroll;
     height: 100%;
+    padding-bottom: 5vh;
 }   
 
 div.event-status {
@@ -889,10 +958,11 @@ dialog#complete-event-prompt,
 dialog#delete-event-prompt,
 dialog#delete-project-prompt {
     width: 95vw;
-    /* height: 50vh; */
+    max-width: 700px;
     margin: auto;
     border: 1px solid var(--base-orange);
     border-radius: 10px;
+    
 }
 
 dialog#complete-event-prompt div.modal-cont,
@@ -952,7 +1022,8 @@ div.delete-content div.save-cont {
 dialog#edit-event-prompt,
 dialog#edit-project-prompt {
     width: 95vw;
-    height: 95vh;
+    max-width: 700px;
+    height: 90vh;
     margin: auto;
     border: 1px solid var(--base-orange);
     border-radius: 10px;
@@ -1173,10 +1244,15 @@ div.project-preview[data-status="done"] p.project-event-count.done {
 /* Add Prompt Modal (start) */
 dialog#add-prompt {
     width: 95vw;
-    height: 95vh;
+    max-width: 700px;
+    height: 90vh;
     margin: auto;
     border: 1px solid var(--base-orange);
     border-radius: 10px;
+}
+
+dialog {
+    box-shadow: 0 0 10px 5px rgba(255, 115, 29, 0.5);
 }
 
 dialog::backdrop {
@@ -1545,6 +1621,41 @@ div.event-preview.event-project {
     padding-right: calc(var(--common-padding) * 2);
 }
 /* New event to project (end) */
+
+/* New individual todo form modal (start)  --- */
+dialog#add-prompt.individual {
+    width: 95vw;
+    max-width: 700px;
+    height: 90vh;
+    margin: auto;
+    border: 1px solid var(--base-orange);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+dialog#add-prompt.individual div.modal-cont {
+    grid-template-columns: 1fr max-content;
+    grid-template-rows: max-content 1fr;
+    grid-template-areas:
+        "banner exit-btn"
+        "form form";
+}
+
+dialog#add-prompt.individual p.modal-banner {
+    grid-area: banner;
+}
+
+dialog#add-prompt.individual button.close-modal {
+    grid-area: exit-btn;
+}
+
+dialog#add-prompt.individual form#event-form,
+dialog#add-prompt.individual form#project-form {
+    grid-area: form;
+}
+
+/* New individual todo form modal (end) */
+
 /* MAIN (end) */
 
 /* Project Full view (start) -- */
@@ -1565,6 +1676,7 @@ div.project-fullview {
     background-color: #f5d5c1;
     overflow-y: scroll;
     height: 100%;
+    padding-bottom: 5vh;
 }   
 
 div.project-fullview[data-status="done"] {
@@ -1820,37 +1932,6 @@ div.delete-content div.save-cont {
 }
 /* Completion prompt modal (end) --- */
 
-/* Edit modal (start)  --- */
-dialog#edit-event-prompt {
-    width: 95vw;
-    height: 95vh;
-    margin: auto;
-    border: 1px solid var(--base-orange);
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-dialog#edit-event-prompt div.modal-cont {
-    grid-template-columns: 1fr max-content;
-    grid-template-rows: max-content 1fr;
-    grid-template-areas:
-        "banner exit-btn"
-        "form form";
-}
-
-dialog#edit-event-prompt p.modal-banner {
-    grid-area: banner;
-}
-
-dialog#edit-event-prompt  button.close-modal{
-    grid-area: exit-btn;
-}
-
-dialog#edit-event-prompt  form#event-form{
-    grid-area: form;
-}
-/* Edit modal (end)  --- */
-
 /* Modal checkbox (start) --- */
 div.checkbox-cont {
     border: 1px solid white;
@@ -1988,30 +2069,97 @@ div.checkbox-input input:checked {
 
     div#sidebar {
         grid-area: sidebar;
+
+        grid-template-rows: max-content max-content max-content 1fr;
+        grid-template-areas:
+            "user-details"
+            "add-buttons-cont"
+            "main-categories"
+            "priority-categories"
     }
 
+    /* Change add button layout (start) - */
+    div#add-button {
+        background-image: none;
+        height: max-content;
+        margin: var(--common-margin) 0;
+        padding: calc(var(--common-padding) * 2);
+        border: 1px solid var(--base-pink);
+        gap: var(--common-margin);
+        background-color: #f5e2d6;
+    }
+
+    button#new-event-front, 
+    button#new-project-front {
+        display: grid;
+
+        padding: calc(var(--common-padding) * 0.5) var(--common-padding);
+        border-radius: 10px;
+        border: 2px solid white;
+        background-color: var(--dark-orange);
+        color: white;
+        box-shadow: 0 2px 2px 1px rgba(62, 62, 62, 0.3);
+
+        width: 80%;
+        min-width: max-content;
+        justify-self: start;
+        grid-template-columns: max-content 1fr;
+        align-items: center;
+        transition: transform 0.2s ease-in-out,
+            box-shadow 0.2s ease-in-out,
+            background-color 0.2s ease-in-out;
+    }
+
+    button#new-event-front:hover, 
+    button#new-project-front:hover {
+        background-color: white;
+        border: 2px solid var(--dark-orange);
+        color: var(--dark-orange);
+        transform: translateX(3px);
+        box-shadow: -3px 2px 2px 1px rgba(62, 62, 62, 0.3);
+    }
+
+    button#new-event-front:hover span.add-icon, 
+    button#new-project-front:hover span.add-icon {
+        background-image: url('./assets/add-selected.svg');
+    }
+
+    button#new-event-front span.add-icon,
+    button#new-project-front span.add-icon {
+        width: var(--header-font-size);
+        height: var(--header-font-size);
+        margin: auto;
+        background-image: url('./assets/add.svg');
+        background-size: 70%;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    button#new-event-front span.add-label,
+    button#new-project-front span.add-label {
+        font-family: var(--header-font-style);
+        font-size: calc(var(--common-font-size) * 1.1);
+        text-align: left;
+    }
+
+    button#add {
+        display: none;
+    }
+    /* Change add button layout (end) - */
+    
     div#todo-display {
         grid-area: display;
     }
 
-    dialog#add-prompt {
+    dialog#add-prompt,
+    dialog#edit-event-prompt,
+    dialog#edit-project-prompt,
+    dialog#complete-event-prompt, 
+    dialog#complete-project-prompt, 
+    dialog#delete-event-prompt, 
+    dialog#delete-project-prompt {
         width: 65%;
     }
 
-    /* div#add-button {
-        position: absolute;
-        bottom: 50px;
-        width: 100vw;
-        justify-content: flex-end;
-        background-color: transparent;
-        background-image: none;
-        
-    }
-
-    button#add {
-        margin: auto 100px auto auto;
-
-    } */
-
-
+    
 }

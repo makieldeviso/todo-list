@@ -255,7 +255,6 @@ const createModal = (function () {
     // Projects prompts (start)
     // Creates event completion prompt
     const createProjectCompletionPrompt = function (projectId) {
-        console.log(projectId);
         const projectObj = memoryHandler.getProject(projectId);
         const totalEvents = projectsScripts.countEventsOfProject(projectObj);
         const projectEventsCompleted = projectsScripts.projectEventsCompleted(projectObj);

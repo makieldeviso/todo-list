@@ -54,7 +54,6 @@ const addProjectForm = (function () {
 
         // If add Event Form is existing, cancel execution
         if (existingForm !== null) {
-            console.log('nope');
             return;
         }
 

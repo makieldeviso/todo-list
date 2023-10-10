@@ -151,15 +151,12 @@ const addTaskToEvent = (function () {
     
     const deleteTask = function () {
         const buttonId = this.dataset.id;
-        // console.log(newTasks);
 
         // Remove task from the newTasks Obj;
         delete newTasks[`${buttonId}`];
 
         const oldTaskKeys = Object.keys(newTasks); // Array of the newTasks property keys
-        console.log(oldTaskKeys);
 
-    
         // Rename newTasks properties
         // Create temporary object for the new properties
         const tempObj = {}
@@ -169,7 +166,6 @@ const addTaskToEvent = (function () {
             
             tempObj[`task-${i + 1}`] = savedValue;
         }
-        console.log(tempObj);
 
         // Deletes old task
         oldTaskKeys.forEach( key => delete newTasks[key] );
@@ -211,7 +207,6 @@ const addTaskToEvent = (function () {
     }
 
     const changeTaskStatus = function () {
-        // console.log(this.dataset.status);
         const taskForMod = newTasks[`${this.dataset.id}`];
         const taskStatus = taskForMod.status;   
 

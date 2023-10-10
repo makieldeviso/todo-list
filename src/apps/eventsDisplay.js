@@ -82,16 +82,10 @@ const eventsDisplay = (function () {
         } else {
             counter.classList.remove('done');
         }
-
-        console.log(memoryHandler.getEvents());
     }
 
     // Event Full View Maker
     const createEventFullView = function (eventObj) {
-        // Create edit button appended on the action buttons ribbon (start) -
-        console.log(eventObj);
-        const actionRibbon = document.querySelector('div#action-btns');
-
         // Ensures no existing action buttons
         const existingEditBtn = document.querySelector('button[value="edit-event"]');
         const existingDeleteBtn = document.querySelector('button[value="delete-event"]');

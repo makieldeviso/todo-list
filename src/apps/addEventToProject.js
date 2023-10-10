@@ -83,7 +83,6 @@ const addEventToProject = (function () {
         eventOption.disabled = true;
 
         addEventsToDOM(eventObj);
-        console.log(newProjectEvents);
     }
 
     const unlinkEvent = function () {
@@ -114,7 +113,6 @@ const addEventToProject = (function () {
 
         // Reactivate option from the selection
         eventOption.disabled = false;
-        console.log(newProjectEvents);
     }
 
     const addEventToProjectEvent = function (btn) {

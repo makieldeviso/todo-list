@@ -7,6 +7,8 @@ import { onLoadScreen } from "./onLoadScreen";
 import { eventsScript } from "./eventsScript";
 import { displayContent } from "./displayContent";
 
+import { format, differenceInCalendarDays } from 'date-fns';
+
 const saveFormValuesEvent = (function () {
 
     // Reusable DOM value getter function
@@ -90,9 +92,10 @@ const saveFormValuesEvent = (function () {
         const eventId = function (object) {
             const eventTitle = object.title;
             const eventSchedule = object.schedule.valueOf();
+            const timeStamp = format(new Date(), 'Hms');
 
             const titleId = eventTitle.split(" ").map(word => `${word.toLowerCase()}`).join('');
-            let newEventId = `${titleId + eventSchedule}`;
+            let newEventId = `${titleId + eventSchedule + timeStamp}`;
 
             // Double check and ensure no duplication of id
             // If same title and due date is created add additional id indicator

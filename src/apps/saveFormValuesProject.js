@@ -5,6 +5,8 @@ import { showModals } from "./showModals";
 import { onLoadScreen } from "./onLoadScreen";
 import { displayContent } from "./displayContent";
 
+import { format, differenceInCalendarDays } from 'date-fns';
+
 const saveFormValuesProject = (function () {
 
     // Validates project form input fields
@@ -49,8 +51,7 @@ const saveFormValuesProject = (function () {
     // Note: validated first
     const saveProjectForm = function () {
         const saveType = this.getAttribute('id');
-
-        // save-edit-project
+        const projectForModId = this.dataset.project;
 
         // Validates form before saving
         const validationErrors = validateProjectForm();
@@ -84,17 +85,20 @@ const saveFormValuesProject = (function () {
         const projectId = function (object) {
             const projectTitle = object.title;
             const projectDeadline = object.deadline.valueOf();
+            const timeStamp = format(new Date(), 'Hms');
 
             const titleId = projectTitle.split(" ").map(word => `${word.toLowerCase()}`).join('');
-            let newProjectId = `${titleId + projectDeadline}`;
+            let newProjectId = `${titleId + projectDeadline + timeStamp}`;
 
             // Double check and ensure no duplication of id
             // If same title and due date is created add additional id indicator
             const projects = memoryHandler.getProjects();
             const sameId = projects.filter(project => project['projectId'].includes(newProjectId));
 
-            if (sameId.length > 0) {
-                newProjectId = `${titleId + projectDeadline}(${sameId.length + 1})`;
+            if (projectForModId === undefined) {
+                if (sameId.length > 0) {
+                    newProjectId = `${titleId + projectDeadline}(${sameId.length + 1})`;
+                }
             }
 
             object['projectId'] = newProjectId;
@@ -120,8 +124,6 @@ const saveFormValuesProject = (function () {
             projectsDisplay.showFullProject(newProject.projectId);
 
         } else if ('save-edit-project') {
-            console.log(newProject);
-            const projectForModId = this.dataset.project;
             const currentObj = memoryHandler.getProject(this.dataset.project);
 
             // Replace old project obj with new obj, then link link/relink events to project

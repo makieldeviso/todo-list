@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/ff4bf87dd5.js" crossorigin="anonymous"></script>
     <title>Todo List</title>
 </head>
 <body>
@@ -27,13 +28,14 @@
 
     <main>
         <div id="sidebar">
-            <div id="events-cont">
 
-                <div id="user" class="user-detail">
-                    <img id="user-pic" src="./assets/profile-sample.svg" alt="User profile picture">
-                    <p id="user-greet">Hello</p>
-                    <h3 id="user-name">User</h3>
-                </div>
+            <div id="user" class="user-detail">
+                <img id="user-pic" src="./assets/profile-sample.svg" alt="User profile picture">
+                <p id="user-greet">Hello</p>
+                <h3 id="user-name">User</h3>
+            </div>
+            
+            <div id="main-categories-cont">
 
                 <div id="today" class="category selected">
                     <img src="./assets/today-icon.svg" alt="today-icon" class="tab-icon">
@@ -72,7 +74,7 @@
                 </div>
             </div>
 
-            <div id="priority-sum">
+            <div id="priority-categories">
 
                 <div id="high-prio" class="category">
                     <img src="./assets/high-prio.svg" alt="high priority icon" class="tab-icon">
@@ -94,6 +96,16 @@
             </div>
   
             <div id="add-button">
+                <button id="new-event-front" value="new-event">
+                    <span class="add-icon"></span>
+                    <span class="add-label">New Event</span>
+                </button>
+
+                <button id="new-project-front" value="new-project">
+                    <span class="add-icon"></span>
+                    <span class="add-label">New Project</span>
+                </button>
+
                 <button id="add">
                     &nbsp;
                 </button>
@@ -114,6 +126,11 @@
         
     </main>
 
-    <footer></footer>
+    <footer>
+        <!-- <div id="footer-cont">
+            <p>Copyright <i class="fa-regular fa-copyright"></i> 2023 - Fred Mark Baldeviso</p>
+            <p id="github-link"><a href="https://github.com/makieldeviso">makieldeviso <i class="fa-brands fa-github"></i></a></p>
+        </div> -->
+    </footer>
 </body>
 </html>

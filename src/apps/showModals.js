@@ -12,34 +12,73 @@ import { projectsDisplay } from "./projectsDisplay";
 import { addEventToProject } from "./addEventToProject";
 import { displayContentTimeFiltered } from "../displayContentTimeFiltered";
 import { displayContentPriorityFiltered } from "../displayContentPriorityFiltered";
+import { createFormComponents } from "./createFormComponents";
 
 const showModals = (function () {
     
     // Opens Modal and adds required eventListeners to elements inside the modal
     const showAddOptions = function () {
 
+        // Note: action type refers if the screen size is the small or large
+        // Used since add prompt layout is different for small and large screen  
+        let actionType;
+        let bannerText;
+        if (this.id === 'new-event-front') {
+            actionType = 'largeScEvent';
+            bannerText = 'Create New Event';
+        } else if (this.id === 'new-project-front') {
+            actionType = 'largeScProject';
+            bannerText = 'Create New Project';
+        } else {
+            actionType = 'smallSc';
+        }
+
         // Create dialog/ modal element
         createModal.createNewModal('add');
-        createModal.createAddOptionsBtns();
-        
+
         const addPromptModal = document.querySelector('dialog#add-prompt');
+        const modalCont = document.querySelector('div.modal-cont');
         const closeBtn = document.querySelector('button#close-add');
-        const addOptionsBtns = document.querySelectorAll('div#add-options button');
+        
+        if (actionType === 'smallSc') {
+            // Note: executes this conditional on smaller screen
+            createModal.createAddOptionsBtns();
+
+            const addOptionsBtns = document.querySelectorAll('div#add-options button');
+
+            // Add UX related event to add options buttons
+            addOptionsBtns.forEach(btn => btn.addEventListener('click', modalUX.markAddOptionsBtn))
+
+            // Opens modal with add new event form as default
+            addEventForm.newEventForm('default');
+
+            // Add additional event listeners upon show modal
+            addEventForm.addEventFormEvent();
+            addProjectForm.addProjectFormEvent();
+
+        } else {
+            // Note: executes this conditional on larger screen
+            // Adds additional class to dialog element for styling
+            addPromptModal.classList.add('individual');
+            
+            // Adds new  banner
+            const newEventBanner = createModal.createBanner(bannerText);
+            modalCont.appendChild(newEventBanner);
+
+            if (actionType === 'largeScEvent') {
+                // Adds new event form
+                addEventForm.newEventForm('default');
+
+            } else if (actionType === 'largeScProject') {
+                // Adds new project form
+                addProjectForm.newProjectForm('default');
+            }
+        }
 
         addPromptModal.showModal();
 
         // Add eventListener to close-add/ close modal button
         closeBtn.addEventListener('click', closeModal);
-
-        // Add UX related event to add options buttons
-        addOptionsBtns.forEach(btn => btn.addEventListener('click', modalUX.markAddOptionsBtn))
-
-        // Opens modal with add new event form as default
-        addEventForm.newEventForm('default');
-
-        // Add additional event listeners upon show modal
-        addEventForm.addEventFormEvent();
-        addProjectForm.addProjectFormEvent();
     } 
 
     // Opens prompt before completing an event (start)
@@ -251,8 +290,12 @@ const showModals = (function () {
 
     // Adds event listener to addButton
     const addButtonEvent = function () {
-        const addButton = document.querySelector('button#add');
-        addButton.addEventListener('click', showAddOptions);
+        const addBtn = document.querySelector('button#add');
+        const newEventBtn = document.querySelector('button#new-event-front');
+        const newProjectBtn = document.querySelector('button#new-project-front');
+
+        const btnsArray = [addBtn, newEventBtn, newProjectBtn];
+        btnsArray.forEach(btn => btn.addEventListener('click', showAddOptions));
     }
 
     // Add event listener to event completion button
@@ -384,8 +427,6 @@ const showModals = (function () {
         // Removes modal from the DOM
         const main = document.querySelector('main');
         main.removeChild(editProjectModal);
-
-        console.log(addEventToProject.getProjectEvents());
     }
 
     // PROJECT COMPLETION
@@ -442,11 +483,6 @@ const showModals = (function () {
     }
     // Opens prompt before completing an event (end)
 
-    
-
-
-
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // Add event listener to project completion button
     const addCompletionPromptProject = function (button) {
         button.addEventListener('click', showProjectCompletionPrompt);

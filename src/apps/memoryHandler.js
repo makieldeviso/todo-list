@@ -166,8 +166,6 @@ const memoryHandler = (function () {
     const unlinkEventToProject = function (id) {
         const eventId = id;
         getEventForMod(eventId).projectTag = "standalone";
-
-        console.log(getEvent(eventId));
     }
 
 
@@ -242,7 +240,6 @@ const deleteEventFromProject = function (eventId, projectId) {
     const tempEvents = {};
     for (const key in projectEvents) {
         if (projectEvents[key] !== eventId) {
-            console.log(projectEvents[key])
             tempEvents[`event-${Object.keys(tempEvents).length + 1}`] = projectEvents[key];
         }
     }
@@ -289,8 +286,6 @@ const modifyEventLink = function (eventForMod, newEventId, oldProjectTag, newPro
 const completeProject = function (id) {
     const projectObj = getProjectForMod(id);
 
-    console.log(id);
-
     projectObj.projectStatus = 'done';
 
     // add property completion
@@ -322,11 +317,7 @@ const deleteProject = function (id) {
         unlinkEventToProject(eventLink);
     }
 
-    projects.splice(projectForModIndex, 1);
-
-    console.log(projects);
-    console.log(events);
-    
+    projects.splice(projectForModIndex, 1);    
 }
 
 const replaceProject = function (id, currentObj, newObj) {
