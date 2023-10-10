@@ -6,6 +6,7 @@ import { onLoadScreen } from "./onLoadScreen";
 import { displayContent } from "./displayContent";
 
 import { format, differenceInCalendarDays } from 'date-fns';
+import { addProjectForm } from "./addProjectForm";
 
 const saveFormValuesProject = (function () {
 
@@ -152,7 +153,8 @@ const saveFormValuesProject = (function () {
 
     // Clear project form
     const clearProjectForm = function () {
-        console.log('clear project! - test');
+        addProjectForm.removeProjectForm();
+        addProjectForm.newProjectForm('new-project');
     }
 
     // Add event listeners to the save/clear buttons
