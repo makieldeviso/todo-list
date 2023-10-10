@@ -419,7 +419,7 @@ div#previews-container {
     gap: var(--common-margin);
     height: 100%;
     overflow: auto;
-    padding-bottom: 20vh;
+    padding: 5px 0 20vh;
 }
 
 div.empty-notif {
@@ -578,6 +578,23 @@ div.event-preview {
         "marker title sched"
         "indicator proj prio"
         ". desc task";
+
+    animation: add-preview 0.2s ease-in-out;
+}
+
+div.event-preview[data-mode="project-view"] {
+    animation: none;
+}
+
+@keyframes add-preview {
+    0% {
+        filter: opacity(0);
+        transform: translateX(100%);
+    }
+
+    100% {
+        filter: opacity(1);
+    }
 }
 
 div.event-preview[data-status="done"] {
@@ -587,10 +604,6 @@ div.event-preview[data-status="done"] {
 div.event-preview[data-status="overdue"] {
     border-color: red;
     background-color: rgba(255, 0, 0, 0.1);
-}
-
-div.event-preview:hover {
-    cursor: pointer;
 }
     
 div.event-preview[data-status="done"] p.event-title {
@@ -1063,8 +1076,6 @@ div.project-preview {
     grid-template-rows: repeat(3, max-content);
     padding: var(--common-padding);
     border: 2px solid var(--base-yellow);
-    box-shadow: 
-        0 0 1px 2px rgba(33, 42, 62, 0.2);
     column-gap: var(--common-padding);
     margin: 0 calc(var(--common-margin) * 0.5);
     background-color: var(--dark-orange);
@@ -1074,7 +1085,7 @@ div.project-preview {
         "indicator desc prio"
         ". . event";
 
-    transition: filter 0.1s ease-in-out;
+    animation: add-preview 0.2s ease-in-out;
 }
  
 div.project-preview[data-status="done"] {
@@ -1085,12 +1096,7 @@ div.project-preview[data-status="done"] {
 div.project-preview[data-status="overdue"] {
     background-color: rgb(242, 41, 41);
 }
-    
-div.project-preview:hover {
-    cursor: pointer;
-    filter: brightness(1.1);
-}
-    
+        
 img.marker {
     grid-area: marker;
     width: 100%;
@@ -1253,6 +1259,19 @@ dialog#add-prompt {
 
 dialog {
     box-shadow: 0 0 10px 5px rgba(255, 115, 29, 0.5);
+    animation: pop-modal 0.3s ease-in-out;
+}
+
+@keyframes pop-modal {
+    0% {
+        filter: opacity(0.5);
+        transform: scale(0.1);
+    }
+
+    100% {
+        filter: opacity(1);
+        transform: scale(1);
+    }
 }
 
 dialog::backdrop {
@@ -2022,6 +2041,20 @@ div.checkbox-input input:checked {
             box-shadow: 0 5px 3px 2px rgba(109, 108, 108, 0.5);
     }
 
+    div.event-preview,
+    div.project-preview {
+        width: 95%;
+        transition: 
+            transform 0.2s ease-in-out,
+            box-shadow 0.2s ease-in-out;
+    }
+    
+    div.event-preview:hover,
+    div.project-preview:hover {
+        cursor: pointer;
+        transform: translateX(10px);
+        box-shadow: 0 0 5px 3px #CBFFA9;
+    }
 }
 
 @media (hover: none) {

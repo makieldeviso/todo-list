@@ -273,7 +273,6 @@ const displayContent = (function () {
         const deleteEventBtn = document.querySelector('button[value="delete-event"]');
         const editProjectBtn = document.querySelector('button[value="edit-project"]');
         const deleteProjectBtn = document.querySelector('button[value="delete-project"]');
-        const previewsCont = document.querySelector('div#previews-container');
 
         if (action === 'projects-previews' || action === 'events-previews' ) {
             // Remove filter banner and previews
@@ -333,6 +332,13 @@ const displayContent = (function () {
             }
 
         } else {
+            // Note: Stop execution when category is currently selected and is currently in previews view
+            const selected = this.getAttribute('class').includes('selected');
+            const previewView = document.querySelector('h3#filter-banner') !== null;
+            if (selected && previewView ) {
+                return;
+            }
+
             assignAction = `${this.getAttribute('id')}-previews`;
 
             highlightCategory(this);
