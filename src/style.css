@@ -2194,5 +2194,17 @@ div.checkbox-input input:checked {
         width: 65%;
     }
 
+    /* Allows category highlighting on tablet size (start) - */
+    @media (hover:none) {
+        div.category.selected {
+            background-color: var(--base-pink);
+        }
+
+        button.action-btn.back {
+            display: none;
+        }
+    }
+    /* Allows category highlighting on tablet size (end) - */
+    
     
 }
