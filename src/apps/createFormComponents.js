@@ -100,12 +100,6 @@ const createFormComponents = (function () {
         newBtn.setAttribute('id', dataId);
         newBtn.setAttribute('class', 'adder-btn');
 
-        // Create and append button icon
-        const buttonIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        buttonIcon.setAttribute('viewBox', '0 0 24 24');
-        buttonIcon.innerHTML = '<title>plus</title><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"></path>'
-        newBtn.appendChild(buttonIcon);
-
         return newBtn;
     }
     

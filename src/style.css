@@ -204,8 +204,8 @@ div#user {
 
 img#user-pic {
     grid-area: pic;
-    width: calc(var(--logo-size) * 0.8);
-    height: calc(var(--logo-size) * 0.8);
+    width: calc(var(--logo-size) * 1.3);
+    height: calc(var(--logo-size) * 1.3);
     object-fit: cover;
     border-radius: 50%;
     border: 1px solid var(--base-orange);
@@ -221,6 +221,7 @@ p#user-greet {
 
 h3#user-name {
     grid-area: name;
+    font-size: var(--header-font-size);
 }
 /* User information (end)*/ 
 
@@ -436,8 +437,8 @@ div.empty-notif {
 
 img.indicator-empty-icon {
     grid-area: empty-icon;
-    height: 20vw;
-    width: 20vw;
+    height: 150px;
+    width: 150px;
     animation: hop 0.5s ease-in-out 0.1s 1;
     margin: auto;
 }
@@ -1494,6 +1495,11 @@ button.adder-btn {
     justify-content: center;
     align-items: center;
     box-shadow: 0 2px 2px 1px rgba(62, 62, 62, 0.3);
+
+    background-image: url('./assets/add.svg');
+    background-size: 80% 80%;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 button.adder-btn:active {
@@ -2021,8 +2027,29 @@ div.checkbox-input input:checked {
 /* Project Full view (end) -- */
 
 /* Media queries */
+/* Desktop */
 @media (hover:hover) {
-    
+
+    :root {
+        --title-font-size: 2rem;
+        --header-font-size: 1.5rem;
+        --common-font-size: 1.3rem;
+
+        --common-margin: 15px;
+        --common-padding: 10px;
+
+        --icon-size: 25px;
+        --logo-size: 45px;
+    }
+
+    body {
+        min-width: 450px;
+        max-width: 1440px;
+        margin: auto;
+        overflow: hidden;
+        box-shadow: 0 0 10px 5px rgba(255, 115, 29, 0.5);
+    }
+
     div.category:hover {
         cursor: pointer;
         background-color: rgba(255, 222, 222, 0.5);
@@ -2032,7 +2059,13 @@ div.checkbox-input input:checked {
         background-color: var(--base-pink);
     }
 
+    div#add-button {
+        height: 120px;
+    }
+
     button#add {
+        width: 60px;
+        height: 60px;
         transition: all 0.2s ease-in-out;
     }
     button#add:hover {
@@ -2055,7 +2088,171 @@ div.checkbox-input input:checked {
         transform: translateX(10px);
         box-shadow: 0 0 5px 3px #CBFFA9;
     }
+    /* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+
+    @media only screen and (min-width: 768px) {
+        div#sidebar {
+            position: relative;
+        }
+    
+        div#sidebar.hidden {
+            transform: translateX(0);
+        }
+    
+        main {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            grid-template-rows: 1fr;
+            grid-template-areas: 
+                "sidebar display";
+        }
+    
+        div#sidebar {
+            grid-area: sidebar;
+    
+            grid-template-rows: max-content max-content max-content 1fr;
+            grid-template-areas:
+                "user-details"
+                "add-buttons-cont"
+                "main-categories"
+                "priority-categories"
+        }
+    
+        /* Change add button layout (start) - */
+        div#add-button {
+            background-image: none;
+            height: max-content;
+            margin: var(--common-margin) 0;
+            padding: calc(var(--common-padding) * 2);
+            border: 1px solid var(--base-pink);
+            gap: var(--common-margin);
+            background-color: #f5e2d6;
+        }
+    
+        button#new-event-front, 
+        button#new-project-front {
+            display: grid;
+    
+            padding: calc(var(--common-padding) * 0.5) var(--common-padding);
+            border-radius: 10px;
+            border: 2px solid white;
+            background-color: var(--dark-orange);
+            color: white;
+            box-shadow: 0 2px 2px 1px rgba(62, 62, 62, 0.3);
+    
+            width: 80%;
+            min-width: max-content;
+            justify-self: start;
+            grid-template-columns: max-content 1fr;
+            align-items: center;
+            transition: transform 0.2s ease-in-out,
+                box-shadow 0.2s ease-in-out,
+                background-color 0.2s ease-in-out;
+        }
+    
+        button#new-event-front:hover, 
+        button#new-project-front:hover {
+            background-color: white;
+            border: 2px solid var(--dark-orange);
+            color: var(--dark-orange);
+            transform: translateX(3px);
+            box-shadow: -3px 2px 2px 1px rgba(62, 62, 62, 0.3);
+        }
+    
+        button#new-event-front:hover span.add-icon, 
+        button#new-project-front:hover span.add-icon {
+            background-image: url('./assets/add-selected.svg');
+        }
+    
+        button#new-event-front span.add-icon,
+        button#new-project-front span.add-icon {
+            width: var(--header-font-size);
+            height: var(--header-font-size);
+            margin: auto;
+            background-image: url('./assets/add.svg');
+            background-size: 70%;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    
+        button#new-event-front span.add-label,
+        button#new-project-front span.add-label {
+            font-family: var(--header-font-style);
+            font-size: calc(var(--common-font-size) * 1.1);
+            text-align: left;
+        }
+    
+        button#add {
+            display: none;
+        }
+        /* Change add button layout (end) - */
+        
+        div#todo-display {
+            grid-area: display;
+        }
+    
+        dialog#add-prompt.individual,
+        dialog#edit-event-prompt,
+        dialog#edit-project-prompt,
+        dialog#complete-event-prompt, 
+        dialog#complete-project-prompt, 
+        dialog#delete-event-prompt, 
+        dialog#delete-project-prompt {
+            width: 650px;
+            min-width: 650px;
+        }
+
+        p.modal-banner {
+            font-size: calc(var(--header-font-size) * 1.1);
+        }
+
+        div#prio-btns-cont {
+            gap: calc(var(--common-margin) * 2);
+        }
+    
+        button.prio-btn {
+            width: 80%;
+        }
+    
+        button.clear, button.save {
+            width: 15vw;
+            font-size: calc(var(--header-font-size) * 1.1);
+        }
+    
+        div.save-cont {
+            gap: calc(var(--common-margin) * 3);
+        }
+    
+        /* Allows category highlighting on tablet size (start) - */
+        @media (hover:none) {
+            div.category.selected {
+                background-color: var(--base-pink);
+            }
+    
+            button.action-btn.back {
+                display: none;
+            }
+        }
+        /* Allows category highlighting on tablet size (end) - */
+    }
+    
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @media (hover: none) {
     button.action-btn.back {
@@ -2063,8 +2260,19 @@ div.checkbox-input input:checked {
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
 /* Galaxy fold */
-@media only screen and (max-width: 375px) and (min-height: 500px) {
+/* @media only screen and (max-width: 375px) and (min-height: 500px) and (hover:none) {
 
     :root {
         --title-font-size: calc(1.1rem + 1vw);
@@ -2083,128 +2291,52 @@ div.checkbox-input input:checked {
     }
 }
 
-@media only screen and (min-width: 768px) {
-    div#sidebar {
-        position: relative;
-    }
 
-    div#sidebar.hidden {
-        transform: translateX(0);
-    }
+
+@media only screen and (min-width: 1024px) {
 
     main {
-        display: grid;
-        grid-template-columns: 30% 70%;
-        grid-template-rows: 1fr;
-        grid-template-areas: 
-            "sidebar display";
-    }
-
-    div#sidebar {
-        grid-area: sidebar;
-
-        grid-template-rows: max-content max-content max-content 1fr;
-        grid-template-areas:
-            "user-details"
-            "add-buttons-cont"
-            "main-categories"
-            "priority-categories"
-    }
-
-    /* Change add button layout (start) - */
-    div#add-button {
-        background-image: none;
-        height: max-content;
-        margin: var(--common-margin) 0;
-        padding: calc(var(--common-padding) * 2);
-        border: 1px solid var(--base-pink);
-        gap: var(--common-margin);
-        background-color: #f5e2d6;
+        grid-template-columns: 300px 1fr;
     }
 
     button#new-event-front, 
     button#new-project-front {
-        display: grid;
-
-        padding: calc(var(--common-padding) * 0.5) var(--common-padding);
-        border-radius: 10px;
-        border: 2px solid white;
-        background-color: var(--dark-orange);
-        color: white;
-        box-shadow: 0 2px 2px 1px rgba(62, 62, 62, 0.3);
-
-        width: 80%;
-        min-width: max-content;
-        justify-self: start;
-        grid-template-columns: max-content 1fr;
-        align-items: center;
-        transition: transform 0.2s ease-in-out,
-            box-shadow 0.2s ease-in-out,
-            background-color 0.2s ease-in-out;
+        width: 200px;
     }
 
-    button#new-event-front:hover, 
-    button#new-project-front:hover {
-        background-color: white;
-        border: 2px solid var(--dark-orange);
-        color: var(--dark-orange);
-        transform: translateX(3px);
-        box-shadow: -3px 2px 2px 1px rgba(62, 62, 62, 0.3);
+    div#previews-container {
+        padding-left: calc(var(--common-padding) * 2);
     }
 
-    button#new-event-front:hover span.add-icon, 
-    button#new-project-front:hover span.add-icon {
-        background-image: url('./assets/add-selected.svg');
+    div.event-preview, 
+    div.project-preview {
+        width: 70%;
+        grid-template-columns: 20px 1fr max-content;
     }
 
-    button#new-event-front span.add-icon,
-    button#new-project-front span.add-icon {
-        width: var(--header-font-size);
-        height: var(--header-font-size);
-        margin: auto;
-        background-image: url('./assets/add.svg');
-        background-size: 70%;
-        background-position: center;
-        background-repeat: no-repeat;
+    img.indicator-empty-icon {
+        height: 200px;
+        width: 200px;
     }
 
-    button#new-event-front span.add-label,
-    button#new-project-front span.add-label {
-        font-family: var(--header-font-style);
-        font-size: calc(var(--common-font-size) * 1.1);
-        text-align: left;
+    p.event-sched span.sched-icon {
+        width: 20px;
+        height: 20px;
     }
 
-    button#add {
-        display: none;
-    }
-    /* Change add button layout (end) - */
-    
-    div#todo-display {
-        grid-area: display;
+    button.check {
+        width: 25px;
+        height: 25px;
     }
 
-    dialog#add-prompt,
-    dialog#edit-event-prompt,
-    dialog#edit-project-prompt,
-    dialog#complete-event-prompt, 
-    dialog#complete-project-prompt, 
-    dialog#delete-event-prompt, 
-    dialog#delete-project-prompt {
-        width: 65%;
+    div.event-fullview {
+        padding: calc(var(--common-padding) * 3);
+        grid-template-columns: max-content max-content minmax(max-content, 900px);
     }
 
-    /* Allows category highlighting on tablet size (start) - */
-    @media (hover:none) {
-        div.category.selected {
-            background-color: var(--base-pink);
-        }
-
-        button.action-btn.back {
-            display: none;
-        }
+    div.modal-cont {
+        padding: calc(var(--common-padding) * 2);
+        padding-bottom: calc(var(--common-padding) * 3);
     }
-    /* Allows category highlighting on tablet size (end) - */
-    
-    
 }
+ */
