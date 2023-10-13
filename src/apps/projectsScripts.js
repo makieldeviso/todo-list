@@ -1,5 +1,6 @@
 import { memoryHandler } from "./memoryHandler";
 import { eventsScript } from "./eventsScript";
+import { displayContentTimeFiltered } from "../displayContentTimeFiltered";
 
 const projectsScripts = (function () {
 
@@ -30,7 +31,10 @@ const projectsScripts = (function () {
             projectEventObj.push(eventSearch);
         }
         
-        return projectEventObj; //return array of objects
+        // Sort events from earliest to farthest schedule
+        const sortedEvents = displayContentTimeFiltered.sortProjectsAndEvents(projectEventObj);
+
+        return sortedEvents; //return array of objects
     }
 
     const countEventsOfProject = function (project) {

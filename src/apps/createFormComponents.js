@@ -124,7 +124,7 @@ const createFormComponents = (function () {
         const taskInput = document.createElement('input');
         taskInput.setAttribute('id', 'add-task-input');
         taskInput.setAttribute('type', 'text');
-        taskInput.setAttribute('maxlength', '50');
+        // taskInput.setAttribute('maxlength', '50');
 
         //Create create task button - lvl-2 child, lvl-3 parent
         const addTaskBtn = adderBtn('add-task-btn');

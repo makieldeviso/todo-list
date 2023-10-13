@@ -231,7 +231,7 @@ const projectsDisplay = (function () {
         displayContent.createSpan(deadline, 'deadline-date', dateString);
          // Create sched (end) --
 
-        // Create tasks list (start) --
+        // Create events list (start) --
         const eventsListCont = document.createElement('div');
         eventsListCont.setAttribute('class', 'fullview events-list');
 

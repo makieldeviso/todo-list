@@ -217,9 +217,17 @@ const countProjects = function () {
 
 const getProjectForMod = function (projectId) {
     // Find the project from the memory
-    const projectIndex = projects.findIndex(project => project.projectId === projectId);
 
-    return projects[projectIndex];
+    let projectForMod;
+    if (projectId !== 'standalone') {
+        const projectIndex = projects.findIndex(project => project.projectId === projectId);
+        projectForMod = projects[projectIndex];
+
+    } else {
+        projectForMod = 'standalone';
+    }
+
+    return projectForMod;
 }
 
 const addEventToProject = function (projectId, eventId) {
@@ -252,10 +260,12 @@ const modifyEventLink = function (eventForMod, newEventId, oldProjectTag, newPro
     const projectForMod = getProjectForMod(oldProjectTag);
 
     if (oldProjectTag === newProjectTag) {
-        if (eventForMod === newEventId) {
-            return
+        // if the same project tag and eventId was not changed or if event is mot linked to a project
+        if (eventForMod === newEventId || projectForMod === 'standalone' ) {
+            return;
 
         } else {
+            // if projectTag is still the same but the title and/or schedule was changed
             const projectEvents = projectForMod.eventLinks;
 
             for (const event in projectEvents) {
@@ -264,7 +274,6 @@ const modifyEventLink = function (eventForMod, newEventId, oldProjectTag, newPro
                     break;
                 }
             }
-
             return
         }
     } 
@@ -276,6 +285,7 @@ const modifyEventLink = function (eventForMod, newEventId, oldProjectTag, newPro
         addEventToProject(newProjectTag, newEventId);
 
     } else {
+        // Transfer event from one project to another
         deleteEventFromProject(eventForMod, oldProjectTag);
         addEventToProject(newProjectTag, newEventId);
     }
