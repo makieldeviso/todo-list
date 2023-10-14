@@ -515,8 +515,6 @@ button.action-btn.back {
     background-position: center;
     background-repeat: no-repeat;
     font-size: var(--header-font-size);
-
-    display: none;
 }
 
 
@@ -2055,7 +2053,6 @@ div.checkbox-input input:checked {
 
 /* /* DESKTOP  (START) - */
 @media (hover:hover) {
-
     :root {
         --title-font-size: 1.2rem;
         --header-font-size: 1rem;
@@ -2161,7 +2158,18 @@ div.checkbox-input input:checked {
         
         background-color: rgba(0, 128, 0, 0.3);
     }
-    
+
+    button.action-btn.back {
+        display: none;
+    }
+
+    @media only screen and (max-width: 767px) {
+        button.action-btn.back {
+            display: block;
+        }
+    }
+}
+
     /* DESKTOP 768 PX (start) -  */
     @media only screen and (min-width: 768px) {
         :root {
@@ -2412,66 +2420,83 @@ div.checkbox-input input:checked {
         }
     }
     /* DESKTOP 1440 PX (end) */
-}  
 /* DESKTOP  (end) -  */
 
-@media (hover: none) {
-    button.action-btn.back {
-        display: block;
+/* TABLET SIZE TOUCH (start) -  */
+
+@media (hover:none) {
+    
+    @media only screen and (min-width: 768px) {
+        :root {
+            --header-height: max-content;
+            --main-height: 100%;
+            --footer-height: 0vh;
+        }
+
+        main {
+            grid-template-columns: 300px 1fr;
+        }
+
+        button.action-btn.back {
+            display: none;
+        }
+
+        button#new-event-front, button#new-project-front {
+            width: 100%;
+        }
+
+        button#new-event-front span.add-label,
+        button#new-project-front span.add-label {
+            font-size: calc(var(--header-font-size) * 1.05);
+        }
+
+        div.category.selected {
+            background-color: var(--base-pink);
+        }
     }
+
+    /* Once touch device screen reach 1024px remove vw and vh from size calculations */
+    /* Then restore other property values */
+    @media only screen and (min-width: 1024px) {
+        :root {
+            --title-font-size: 1.2rem;
+            --header-font-size: 1rem;
+            --common-font-size: 0.8rem;
+            --common-margin: 12px;
+            --common-padding: 8px;
+            --icon-size: 20px;
+            --logo-size: 40px;
+            --small-btn-size: 18px;
+        }
+
+        main {
+            grid-template-columns: 250px 1fr;
+        }
+
+        button#new-event-front, button#new-project-front {
+            width: 150px;
+        }
+
+        button#new-event-front span.add-label,
+        button#new-project-front span.add-label {
+            font-size: calc(var(--header-font-size) * 1.1);
+        }
+    } 
 }
-
-/* Allows category highlighting on tablet size (start) - */
-/* @media (hover:none) {
-    div.category.selected {
-        background-color: var(--base-pink);
-    }
-
-    button.action-btn.back {
-        display: none;
-    }
-} */
-
-
-/* Galaxy fold */
-/* @media only screen and (max-width: 375px) and (min-height: 500px) and (hover:none) {
-
-    :root {
-        --title-font-size: calc(1.1rem + 1vw);
-        --header-font-size: calc(0.7rem + 1vw);
-        --common-font-size: calc(0.6rem + 1vw);
-    }
-
-    p.fullview.project-deadline,
-    p.fullview.event-sched {
-        font-size: var(--header-font-size);
-    }
-
-    p.fullview.project-prio,
-    p.fullview.event-prio {
-        width: calc(50px + 1vw);
-    }
-}
-*/
 
  /* firefox scrollbar (start)-- */
- /* div#item-display,
- div.event-fullview,
- div.project-fullview,
+ 
  div#sidebar {
    scrollbar-color: transparent transparent;
    scrollbar-width: thin;
  }
  
- div#item-display:hover,
- div.event-fullview:hover,
- div.project-fullview:hover,
  div#sidebar:hover {
-   scrollbar-color: var(--base-color) var(--base-contrast-color);
- } */
+   scrollbar-color: var(--base-contrast-color) transparent;
+ }
 
  * {
-    scrollbar-color: var(--gray) var(--dark-orange);
+    scrollbar-color: var(--dark-orange) transparent ;
  }
  /* firefox scrollbar (end)-- */
  
@@ -2479,19 +2504,21 @@ div.checkbox-input input:checked {
  /* Initially hides scroll-bar --- */
  ::-webkit-scrollbar {
    width: 10px;
+   height: 15px;
  }
  
  ::-webkit-scrollbar-thumb:hover {
-   background-color: var(--dark-orange);
+   background-color: #fc8f4c;
  }
  
  ::-webkit-scrollbar-track {
-   background-color: rgba(203, 255, 169, 0.5);
+   background-color: transparent;
  }
 
  ::-webkit-scrollbar-thumb {
-    background-color: var(--base-orange);
+    background-color: var(--dark-orange);
     border-radius: 5px;
+    border: 2px solid white;
   }
 
  div#sidebar::-webkit-scrollbar-track,
