@@ -2,118 +2,86 @@ import { differenceInCalendarDays } from 'date-fns';
 import { projectsScripts } from './projectsScripts';
 
 const memoryHandler = (function () {
+    // Checks validity of local strorage value
+    const getStorageArray = function (todoType) {
+        const storageStringified = JSON.stringify(localStorage);
+        const allItems = JSON.parse(storageStringified);
+
+        if (todoType === 'events') {
+            const events = [];
+            for (const item in allItems) {
+                
+                const value = JSON.parse(allItems[item]);
+                
+                if (value.hasOwnProperty('eventId')) {
+                    events.push(value);
+                }
+            }
+
+            return events;
+        } 
+
+        if (todoType === 'projects') {
+            const projects = [];
+            for (const item in allItems) {
+                const value = JSON.parse(allItems[item]);
+            
+                if (value.hasOwnProperty('projectId')) {
+                    projects.push(value);
+                }
+            }
+
+            return projects;
+        }
+    }   
+
+    // Replace/ set value of the todo item in the local storage
+    // If id does not exist, create new key value pair
+    const reassignStorageItem = function (id, newValue ) {
+        // Note: id -> localStorage item key
+        // newValue -> Object, assigned as a new value for id
+        
+        localStorage.setItem(id, JSON.stringify(newValue));
+    }
+
     // Events (start) -
-    const placeholderEvents = [
-            {
-                "title": "Ms. Dodo's Birthday",
-                "description": "60th Birthday, food committee",
-                "schedule": new Date(),
-                "projectTag": "newprojecttest1693267200000",
-                "priority": "high",
-                "tasks": {
-                    "task-1": {
-                        "task": "Contact catering and order foods",
-                        "status": "done"
-                    },
-                    "task-2": {
-                        "task": "Get cake from bakeshop",
-                        "status": "done"
-                    },
-                    "task-3": {
-                        "task": "Buy fruits for salad at the market",
-                        "status": "done"
-                    },
-                    "task-4": {
-                        "task": "Buy fruits for salad at the market",
-                        "status": "done"
-                    },
-                    "task-5": {
-                        "task": "Buy fruits for salad at the market",
-                        "status": "done"
-                    },
-                    "task-6": {
-                        "task": "Buy fruits for salad at the market",
-                        "status": "done"
-                    },
-                    "task-7": {
-                        "task": "Buy fruits for salad at the market",
-                        "status": "done"
-                    },
-                    "task-8": {
-                        "task": "Buy fruits for salad at the market",
-                        "status": "done"
-                    }
-                },
-                "eventId": "ms.dodo'sbirthday1689724800000",
-                "eventStatus": 'pending',
-            },
-
-            {
-                "title": "Do your thing",
-                "description": "Do your thing",
-                "schedule": new Date(2024, 9, 1),
-                "projectTag": "newprojecttest1693267200000",
-                "priority": "mid",
-                "tasks": {
-                    "task-1": {
-                        "task": "Hello",
-                        "status": "pending"
-                    },
-                    "task-2": {
-                        "task": "Hello World",
-                        "status": "done"
-                    },
-                    "task-3": {
-                        "task": "Hello World 123",
-                        "status": "done"
-                    }
-                },
-                "eventId": "doyourthing",
-                "eventStatus": 'pending',
-            },
-    ];
-    
-    const events = [...placeholderEvents];
-
     const saveEvent = function(newEvent) {
-        events.unshift(newEvent);
+        // Save new event using reassignStorageItem function
+        reassignStorageItem(newEvent.eventId, newEvent);
     };
 
     const getEvents = function () {
+        const events = getStorageArray('events');
         return events;
     }
 
     const getEvent = function (id) {
-        const events = getEvents();
-
-        const requiredEvent = events.find(event => event.eventId === id);
-        return requiredEvent;
-    }
-
-    const getEventForMod = function (id) {
-        const eventIndex = events.findIndex(event => event.eventId === id);
-        const eventObj = events[eventIndex];
+        const eventObj = JSON.parse(localStorage.getItem(id));
 
         return eventObj;
     }
 
     const getEventTasks = function (id) {
-        const eventObj = getEventForMod(id);
+        const eventObj = getEvent(id);
         const eventTasksList = eventObj.tasks;
 
         return eventTasksList;
     }
 
     const changeTaskStatus = function (id, number, statusChange) {
-        const eventTasksList = getEventTasks(id);
-        
-        eventTasksList[`${number}`].status = statusChange;
-    }
 
-    const changeEventStatus = function (id) {
-        const eventObj = getEventForMod(id);
-        
-        eventObj.eventStatus = 'done';
+        // Get temporary object
+        const eventObj = getEvent(id);
+
+        // Get tasks list of event for mod then change status
+        const eventTasksList = getEventTasks(id);
+        eventTasksList[`${number}`].status = statusChange;
+
+        // Assign tasks value to the temporary event Obj
+        eventObj.tasks = eventTasksList;
+
+        // Replace/ set value of the event in the local storage with the changes in tasks list value
+        reassignStorageItem(id, eventObj);
     }
 
     const countEvents = function () {
@@ -121,9 +89,9 @@ const memoryHandler = (function () {
         return eventsCount;
     }
 
-     // Mark complete an event
-     const completeEvent = function (id) {
-        const eventObj = getEventForMod(id);
+    // Mark complete an event
+    const completeEvent = function (id) {
+        const eventObj = getEvent(id);
 
         eventObj.eventStatus = 'done';
 
@@ -143,71 +111,51 @@ const memoryHandler = (function () {
         }
 
         eventObj.completion = completionRemark;
+
+        reassignStorageItem(id, eventObj);
     }
 
-    const replaceEvent = function (id, obj) {
-        const eventForModIndex = events.findIndex(event => event.eventId === id);
-        
-        events.splice(eventForModIndex, 1, obj);
+    const replaceEvent = function (oldId, newEventObj) {
+        localStorage.removeItem(oldId);
+        reassignStorageItem(newEventObj.eventId, newEventObj);
     }
 
     const deleteEvent = function (id) {
-        const eventForModIndex = events.findIndex(event => event.eventId === id);
-        
-        events.splice(eventForModIndex, 1);
+        localStorage.removeItem(id);
     }
 
     const linkEventToProject = function (eventId, projectId) {
-        const eventForMod = getEventForMod(eventId);
+        const eventObj = getEvent(eventId);
+        eventObj.projectTag = projectId;
 
-        eventForMod.projectTag = projectId;
+        reassignStorageItem(eventId, eventObj);
     }
 
     const unlinkEventToProject = function (id) {
-        const eventId = id;
-        getEventForMod(eventId).projectTag = "standalone";
+        const eventObj = getEvent(id);
+        eventObj.projectTag = 'standalone';
+
+        reassignStorageItem(id, eventObj);
     }
 
 
 // Events (end) -
 
 // Projects (start) -
-const placeholderProjects = [
-    {
-        "title": "New Project Test",
-        "description": "Project Test Description",
-        "deadline": new Date(2023, 7, 30),
-        "priority": "high",
-        "eventLinks": {"event-1": "ms.dodo'sbirthday1689724800000", "event-2": "doyourthing"},
-        "projectId": "newprojecttest1693267200000",
-        "projectStatus": 'pending',
-    },  
-
-    {
-        "title": "New Project Test-2",
-        "description": "Project Test Description-2",
-        "deadline": new Date(2023, 9, 3 ),
-        "priority": "high",
-        "eventLinks": {},
-        "projectId": "newprojecttest1693267200001",
-        "projectStatus": 'pending',
-    }
-
-];
-
-const projects = [...placeholderProjects];
 
 const saveProject = function (projectObj) {
-    projects.unshift(projectObj);
+    // Save new event using reassignStorageItem function
+    reassignStorageItem(projectObj.projectId, projectObj);
 }
 
 const getProjects = function () {
+    const projects = getStorageArray('projects')
     return projects;
 }
 
 const getProject = function (id) {
-    const projectObj = getProjects().find(obj => obj.projectId === id);
-    return projectObj
+    const projectObj = JSON.parse(localStorage.getItem(id));
+    return projectObj;
 }
 
 const countProjects = function () {
@@ -220,8 +168,7 @@ const getProjectForMod = function (projectId) {
 
     let projectForMod;
     if (projectId !== 'standalone') {
-        const projectIndex = projects.findIndex(project => project.projectId === projectId);
-        projectForMod = projects[projectIndex];
+        projectForMod = getProject(projectId);
 
     } else {
         projectForMod = 'standalone';
@@ -238,6 +185,8 @@ const addEventToProject = function (projectId, eventId) {
 
     // Modify the project by adding a new event link
     projectForMod.eventLinks[`event-${eventsCount + 1}`] = eventId;
+
+    reassignStorageItem(projectId, projectForMod);
 }
 
 const deleteEventFromProject = function (eventId, projectId) {
@@ -254,6 +203,8 @@ const deleteEventFromProject = function (eventId, projectId) {
 
     // Assign new value to the eventLinks
     projectForMod.eventLinks = tempEvents;
+
+    reassignStorageItem(projectId, projectForMod);
 }
 
 const modifyEventLink = function (eventForMod, newEventId, oldProjectTag, newProjectTag) {
@@ -267,6 +218,7 @@ const modifyEventLink = function (eventForMod, newEventId, oldProjectTag, newPro
         } else {
             // if projectTag is still the same but the title and/or schedule was changed
             const projectEvents = projectForMod.eventLinks;
+            console.log(projectEvents);
 
             for (const event in projectEvents) {
                 if (projectEvents[event] === eventForMod) {
@@ -274,6 +226,9 @@ const modifyEventLink = function (eventForMod, newEventId, oldProjectTag, newPro
                     break;
                 }
             }
+            projectForMod.eventLinks = projectEvents;
+            reassignStorageItem(oldProjectTag, projectForMod);
+            
             return
         }
     } 
@@ -314,11 +269,12 @@ const completeProject = function (id) {
     }
 
     projectObj.completion = completionRemark;
+
+    reassignStorageItem(id, projectObj);
 }
 
 const deleteProject = function (id) {
     const projectForMod = getProjectForMod(id);
-    const projectForModIndex = getProjects().findIndex(project => project.projectId === id);
     const projectEvents = projectForMod.eventLinks;
     
     // unlink the project from the events
@@ -327,17 +283,14 @@ const deleteProject = function (id) {
         unlinkEventToProject(eventLink);
     }
 
-    projects.splice(projectForModIndex, 1);    
+    localStorage.removeItem(id);   
 }
 
 const replaceProject = function (id, currentObj, newObj) {
-    const projectForModIndex  = projects.findIndex(project => project.projectId === `${id}`);
-
     // unlink Events
     const currentProjectEvents = currentObj.eventLinks;
     for (const eventKey in currentProjectEvents) {
         unlinkEventToProject(currentProjectEvents[eventKey]);
-        
     }
     
     // relink event
@@ -345,8 +298,10 @@ const replaceProject = function (id, currentObj, newObj) {
     for (const eventKey in newProjectEvents) {
         linkEventToProject(newProjectEvents[eventKey], newObj.projectId );
     }
-      
-    projects.splice(projectForModIndex, 1, newObj);
+    
+    // Delete former project then add new keyValue in the local storage
+    localStorage.removeItem(id);
+    reassignStorageItem(newObj.projectId, newObj);
 }
 
 // Get/ return consolidated array of unfiltered and unsorted array of project and event objects
@@ -356,7 +311,6 @@ const getAll = function () {
 
     return [...projects, ...events];
 }
-
 
 // Projects (end) -
 
@@ -368,7 +322,7 @@ const getAll = function () {
             getEvent, 
             changeTaskStatus, 
             getEventTasks, 
-            changeEventStatus,
+            // changeEventStatus,
             countEvents,
             completeEvent,
             replaceEvent,

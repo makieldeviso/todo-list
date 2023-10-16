@@ -2099,7 +2099,7 @@ div.checkbox-input input:checked {
         background-color: var(--base-pink);
     }
 
-    @media screen and (max-width: 767px) and (hover:hover) {
+    @media screen and (max-width: 717px) and (hover:hover) {
         div.category.selected {
             background-color: transparent;
         }
@@ -2185,7 +2185,7 @@ div.checkbox-input input:checked {
         display: none;
     }
 
-    @media only screen and (max-width: 767px) {
+    @media only screen and (max-width: 717px) {
         button.action-btn.back {
             display: block;
         }

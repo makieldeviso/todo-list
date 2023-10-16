@@ -75,7 +75,7 @@ const saveFormValuesProject = (function () {
         const newProject = createProject (
             valueGet('#project-title'), 
             valueGet('#project-desc'),
-            new Date(valueGet('#project-deadline')),
+            (new Date(valueGet('#project-deadline'))).valueOf(),
             valueGet('button.prio-btn[data-selected="selected"]')
         );
 
@@ -85,7 +85,7 @@ const saveFormValuesProject = (function () {
         // Create an id for the newProject object
         const projectId = function (object) {
             const projectTitle = object.title;
-            const projectDeadline = object.deadline.valueOf();
+            const projectDeadline = object.deadline;
             const timeStamp = format(new Date(), 'Hms');
 
             const titleId = projectTitle.split(" ").map(word => `${word.toLowerCase()}`).join('');

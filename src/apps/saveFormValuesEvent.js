@@ -76,7 +76,7 @@ const saveFormValuesEvent = (function () {
         const newEvent = createEvent(
             valueGet('#event-title'),
             valueGet('#event-desc'),
-            new Date(valueGet('#event-schedule')), // object date
+            (new Date(valueGet('#event-schedule'))).valueOf(), // object date
             valueGet('#event-project'),
             valueGet('button.prio-btn[data-selected="selected"]')
         )
@@ -91,7 +91,7 @@ const saveFormValuesEvent = (function () {
         // Create an id for the newEvent object
         const eventId = function (object) {
             const eventTitle = object.title;
-            const eventSchedule = object.schedule.valueOf();
+            const eventSchedule = object.schedule;
             const timeStamp = format(new Date(), 'Hms');
 
             const titleId = eventTitle.split(" ").map(word => `${word.toLowerCase()}`).join('');

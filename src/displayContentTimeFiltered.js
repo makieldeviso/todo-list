@@ -1,5 +1,5 @@
 import { memoryHandler } from "./apps/memoryHandler";
-import { format, differenceInCalendarDays  } from 'date-fns';
+import { format, differenceInCalendarDays, parseISO  } from 'date-fns';
 import { displayContent } from "./apps/displayContent";
 import { eventsDisplay } from "./apps/eventsDisplay";
 import { projectsDisplay } from "./apps/projectsDisplay";
@@ -77,6 +77,7 @@ const displayContentTimeFiltered = (function () {
     // Note: needs condition argument, then return the length of the filtered array
     const countTimeFiltered = function (condition) {
         const todoArray = memoryHandler.getAll();
+        
         const filteredArray = timeFilter(todoArray, condition);
         return filteredArray.length;
     }
