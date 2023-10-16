@@ -134,6 +134,8 @@ const eventsDisplay = (function () {
         }
         
         // Create priority
+        const prioLabel = makeText('fullview prio-label label', 'Priority:');
+
         const prio = makeText('event-prio', eventObj.priority);
         prio.classList.add('fullview');
 
@@ -242,7 +244,7 @@ const eventsDisplay = (function () {
         // Create action btns (end) --
 
         // Note: components must be arranged according to order inside the array
-        const fullviewComponents = [statusMarker, title, descLabel, desc, projLabel, proj, schedLabel, sched, prio, tasksListCont, actionBtnsCont];
+        const fullviewComponents = [statusMarker, title, descLabel, desc, projLabel, proj, schedLabel, sched, prioLabel, prio, tasksListCont, actionBtnsCont];
         fullviewComponents.forEach(component => newFullEvent.appendChild(component));
 
         return newFullEvent;

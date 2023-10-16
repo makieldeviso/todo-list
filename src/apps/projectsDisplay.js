@@ -212,8 +212,7 @@ const projectsDisplay = (function () {
         const descLabel = makeText('fullview desc-label label ', 'Description:');
         const desc = makeText('fullview project-desc', projectObj.description);
 
-        // const projLabel = makeText('fullview proj-label label', 'Project:');
-        // const proj = makeText('fullview event-proj', getEventProjectTitle(projectObj));
+        const prioLabel = makeText('fullview project-prio-label label ', 'Priority:');
 
         const prio = makeText('project-prio', projectObj.priority);
         prio.classList.add('fullview');
@@ -295,7 +294,7 @@ const projectsDisplay = (function () {
         // Create action btns (end) --
 
         // Note: components must be arranged according to order inside the array
-        const fullviewComponents = [statusMarker, title, descLabel, desc, deadlineLabel, deadline, prio, eventsListCont, actionBtnsCont];
+        const fullviewComponents = [statusMarker, title, descLabel, desc, deadlineLabel, deadline, prioLabel, prio, eventsListCont, actionBtnsCont];
         fullviewComponents.forEach(component => newFullProject.appendChild(component));
 
         return newFullProject;

@@ -783,7 +783,7 @@ div.event-fullview {
         "efv-desc efv-desc efv-desc"
         "efv-proj-label efv-proj-label efv-proj-label"
         "efv-proj-link efv-proj-link efv-proj-link"
-        "efv-sched-label efv-sched-label efv-sched-label"
+        "efv-sched-label efv-sched-label efv-prio-label"
         "efv-sched efv-sched efv-prio"
         "efv-tasks efv-tasks efv-tasks"
         "efv-btns efv-btns efv-btns";
@@ -874,11 +874,17 @@ p.fullview.event-sched span.sched-icon {
     margin: unset;
 }
 
+p.fullview.prio-label {
+    grid-area: efv-prio-label;
+    width: calc(80px + 1vw);
+    justify-self: end;
+}
+
 p.fullview.event-prio {
     grid-area: efv-prio;
     font-size: calc(var(--header-font-size) * 0.8);
     margin: 0;
-    width: calc(100px + 1vw);
+    width: calc(80px + 1vw);
     min-width: max-content;
 }
 
@@ -1715,7 +1721,7 @@ div.project-fullview {
         "pfv-status pfv-title pfv-title"
         "pfv-desc-label pfv-desc-label pfv-desc-label"
         "pfv-desc pfv-desc pfv-desc"
-        "pfv-deadline-label pfv-deadline-label pfv-deadline-label"
+        "pfv-deadline-label pfv-deadline-label pfv-prio-label"
         "pfv-deadline pfv-deadline pfv-prio"
         "pfv-events pfv-events pfv-events"
         "pfv-btns pfv-btns pfv-btns";
@@ -1813,11 +1819,17 @@ p.fullview.project-deadline span.deadline-icon {
     margin: unset;
 }
 
+p.fullview.project-prio-label {
+    grid-area: pfv-prio-label;
+    width: calc(80px + 1vw);
+    justify-self: end;
+}
+
 p.fullview.project-prio {
     grid-area: pfv-prio;
     font-size: calc(var(--header-font-size) * 0.8);
     margin: 0;
-    width: calc(100px + 1vw);
+    width: calc(80px + 1vw);
     min-width: max-content;
 }
 
@@ -2083,6 +2095,12 @@ div.checkbox-input input:checked {
         background-color: var(--base-pink);
     }
 
+    @media screen and (max-width: 767px) and (hover:hover) {
+        div.category.selected {
+            background-color: transparent;
+        }
+    }
+
     div#add-button {
         height: 120px;
     }
@@ -2169,9 +2187,24 @@ div.checkbox-input input:checked {
         }
     }
 }
+    /* Galaxy Fold */
+    @media only screen and (max-width: 374px) {
+        p.fullview.event-sched,
+        p.fullview.project-deadline {
+            font-size: calc(var(--header-font-size) * 0.9);
+        }
+
+        p.fullview.event-prio,
+        p.fullview.prio-label,
+        p.fullview.project-prio-label,
+        p.fullview.project-prio {
+            width: 50px;
+            min-width: max-content;
+        }
+    }
 
     /* DESKTOP 768 PX (start) -  */
-    @media only screen and (min-width: 768px) {
+    @media only screen and (min-width: 717px) {
         :root {
             --header-height: 65px;
             --main-height: calc(100vh - 65px);
