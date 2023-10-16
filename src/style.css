@@ -1424,6 +1424,7 @@ div.comp-container select {
     text-align: left;
     padding: calc(var(--common-padding) * 0.5);
     font-size: var(--common-font-size);
+    border: 1px solid black;
 }
 
 div.comp-container input.error,
@@ -1670,8 +1671,9 @@ button.unlink-event {
 
 div.event-preview.event-project {
     border-radius: 10px 0 10px 10px;
-    margin-right: 0;
+    margin: 0;
     padding-right: calc(var(--common-padding) * 2);
+    animation: none;
 }
 /* New event to project (end) */
 
@@ -2121,12 +2123,41 @@ div.checkbox-input input:checked {
             box-shadow: 0 5px 3px 2px rgba(109, 108, 108, 0.5);
     }
 
+    input:hover,
+    textarea:hover,
+    select:hover {
+        box-shadow: 0 0 3px 2px rgba(153, 208, 245, 0.5);
+    }
+
     div.event-preview:not([data-mode="project-view"]),
     div.project-preview{
         width: 95%;
         transition: 
             transform 0.2s ease-in-out,
             box-shadow 0.2s ease-in-out;
+    }
+
+    div.event-preview.event-project {
+        width: 100%;
+    }
+
+    div.event-preview.event-project:hover {
+       transform: none;
+    }
+
+    button.unlink-event {
+        width: calc(var(--icon-size) * 1.5);
+        height: calc(var(--icon-size) * 1.5);
+        transition: all 0.2s ease-in-out;
+    }
+
+    button.unlink-event:hover {
+        filter: brightness(1.3);
+        border-radius: 0;
+    }
+
+    button.adder-btn:hover {
+        filter: brightness(1.3);
     }
 
     div.event-preview,
@@ -2151,6 +2182,12 @@ div.checkbox-input input:checked {
         transform: translateX(10px);
     }
 
+    div.event-preview.event-project:hover {
+        transform: none;
+        box-shadow: none;
+        cursor: unset;
+    }
+    
     div.new-task button.list-mark[data-status="new"]:hover,
     div.new-task button.list-mark[data-status="pending"]:hover,
     button.check[value="pending"]:hover {
