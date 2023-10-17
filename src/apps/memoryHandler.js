@@ -72,9 +72,9 @@ const memoryHandler = (function () {
 
         // Get temporary object
         const eventObj = getEvent(id);
-
+        
         // Get tasks list of event for mod then change status
-        const eventTasksList = getEventTasks(id);
+        const eventTasksList = getEventTasks(eventObj.eventId);
         eventTasksList[`${number}`].status = statusChange;
 
         // Assign tasks value to the temporary event Obj

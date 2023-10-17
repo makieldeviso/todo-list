@@ -65,12 +65,11 @@ const eventsDisplay = (function () {
             this.value = newValue;
         }
 
-        const eventTasks = memoryHandler.getEventTasks(eventId);
-
         // Changes memory of event 
         memoryHandler.changeTaskStatus(eventId, taskNumber, newValue);
 
         // Active change of task counter
+        const eventTasks = memoryHandler.getEventTasks(eventId);
         const counter = document.querySelector(`div.fullview.tasks-list p.event-task-count[data-id="${eventId}"]`);
         const counterDone = counter.querySelector('span.done');
           
