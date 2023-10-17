@@ -510,7 +510,7 @@ button.action-btn.back {
     border: 2px solid transparent;
     margin: 5px 0;
     padding: calc(var(--common-padding) * 0.8);
-    background-image: url('./assets/back.png');
+    background-image: url('./assets/back.svg');
     background-size: 70%;
     background-position: center;
     background-repeat: no-repeat;
@@ -565,15 +565,15 @@ button.action-btn span.icon {
 button.action-btn.back span.icon {
     width: calc(var(--header-font-size) * 1.2);
     height: calc(var(--header-font-size) * 1.2);
-    background-image: url('./assets/back.png');
+    background-image: url('./assets/back.svg');
 }
 
 button.action-btn.edit span.icon {
-    background-image: url('./assets/pencil-white.png');
+    background-image: url('./assets/pencil-white.svg');
 }
 
 button.action-btn.delete span.icon {
-    background-image: url('./assets/trash-white.png');
+    background-image: url('./assets/trash-white.svg');
 }
 
 button.action-btn.edit span.text,
@@ -712,7 +712,7 @@ p.event-sched span.sched-icon {
 }
 
 p.event-sched span.sched-icon.overdue {
-    background-image: url('./assets/calendar-overdue.png');
+    background-image: url('./assets/calendar-overdue.svg');
 }
 
 p.event-sched span.sched-icon.overdue~span {
@@ -720,7 +720,7 @@ p.event-sched span.sched-icon.overdue~span {
 }
 
 p.event-sched span.sched-icon.today {
-    background-image: url('./assets/calendar-today.png');
+    background-image: url('./assets/calendar-today.svg');
 }
 
 p.event-sched span.sched-icon.far {
@@ -729,15 +729,15 @@ p.event-sched span.sched-icon.far {
 
 /* if completed */
 p.event-sched span.sched-icon.early{
-    background-image: url('./assets/calendar-early.png');
+    background-image: url('./assets/calendar-early.svg');
 }
 
 p.event-sched span.sched-icon.on-time{
-    background-image: url('./assets/calendar-on-time.png');
+    background-image: url('./assets/calendar-on-time.svg');
 }
 
 p.event-sched span.sched-icon.late{
-    background-image: url('./assets/calendar-late.png');
+    background-image: url('./assets/calendar-late.svg');
 }
 
 p.event-task-count {
@@ -804,7 +804,7 @@ div.event-status {
 }
 
 div.event-fullview[data-status="done"] div.event-status {
-    background-image: url('./assets/done.png');
+    background-image: url('./assets/done.svg');
 }
 
 div.event-fullview[data-status="pending"] div.event-status {
@@ -1224,7 +1224,7 @@ p.project-deadline span.deadline-icon {
 }
 
 p.project-deadline span.deadline-icon.overdue {
-    background-image: url('./assets/calendar-overdue.png');
+    background-image: url('./assets/calendar-overdue.svg');
 }
 
 p.project-deadline span.deadline-icon.overdue~span {
@@ -1232,7 +1232,7 @@ p.project-deadline span.deadline-icon.overdue~span {
 }
 
 p.project-deadline span.deadline-icon.today {
-    background-image: url('./assets/calendar-today.png');
+    background-image: url('./assets/calendar-today.svg');
 }
 
 p.project-deadline span.deadline-icon.far {
@@ -1241,15 +1241,15 @@ p.project-deadline span.deadline-icon.far {
 
 /* if completed */
 p.project-deadline span.deadline-icon.early{
-    background-image: url('./assets/calendar-early.png');
+    background-image: url('./assets/calendar-early.svg');
 }
 
 p.project-deadline span.deadline-icon.on-time{
-    background-image: url('./assets/calendar-on-time.png');
+    background-image: url('./assets/calendar-on-time.svg');
 }
 
 p.project-deadline span.deadline-icon.late{
-    background-image: url('./assets/calendar-late.png');
+    background-image: url('./assets/calendar-late.svg');
 }
 
 p.project-event-count {
@@ -1335,7 +1335,7 @@ button.close-modal {
     background-color: var(--dark-orange);
     box-shadow: 0 2px 2px 1px rgba(62, 62, 62, 0.3);
 
-    background-image: url('./assets/close.png');
+    background-image: url('./assets/close.svg');
     background-size: 70%;
     background-position: center;
     background-repeat: no-repeat;
@@ -1617,15 +1617,15 @@ div.new-task button.list-mark[data-status="done"] {
 }
 
 div.new-task button.edit-task {
-    background-image: url('./assets/pencil.png');
+    background-image: url('./assets/pencil.svg');
 }
 
 div.new-task button.edit-task.wait-save {
-    background-image: url('./assets/save.png');
+    background-image: url('./assets/save.svg');
 }
 
 div.new-task button.delete-task {
-    background-image: url('./assets/trash.png');
+    background-image: url('./assets/trash.svg');
 }
 
 div.new-task button:active {
@@ -1663,7 +1663,7 @@ button.unlink-event {
     border-radius: 0 10px 10px 0;
     background-color: transparent;
 
-    background-image: url('./assets/close-orange.png');
+    background-image: url('./assets/close-orange.svg');
     background-size: 70%;
     background-position: center;
     background-repeat: no-repeat;
@@ -1763,7 +1763,7 @@ div.project-status {
 }
 
 div.project-fullview[data-status="done"] div.project-status {
-    background-image: url('./assets/done.png');
+    background-image: url('./assets/done.svg');
 }
 
 div.project-fullview[data-status="pending"] div.project-status {
