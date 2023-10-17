@@ -2543,7 +2543,7 @@ div.checkbox-input input:checked {
     /* Then restore other property values */
     @media only screen and (min-width: 1024px) {
         :root {
-            --title-font-size: 2rem;
+            --title-font-size: 1.2rem;
             --header-font-size: 1rem;
             --common-font-size: 0.8rem;
             --common-margin: 12px;
