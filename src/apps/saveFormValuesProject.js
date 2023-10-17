@@ -61,8 +61,8 @@ const saveFormValuesProject = (function () {
         }
 
         // Factory function to create initial project object
-        const createProject = function (title, description, deadline, priority) {
-            return {title, description, deadline, priority}
+        const createProject = function (title, description, deadline, priority, creationDate) {
+            return {title, description, deadline, priority, creationDate}
         }
 
         // Reusable DOM value getter function
@@ -76,7 +76,8 @@ const saveFormValuesProject = (function () {
             valueGet('#project-title'), 
             valueGet('#project-desc'),
             (new Date(valueGet('#project-deadline'))).valueOf(),
-            valueGet('button.prio-btn[data-selected="selected"]')
+            valueGet('button.prio-btn[data-selected="selected"]'),
+            (new Date()).valueOf(),
         );
 
         // Add eventLinks object as property to newProject
@@ -86,7 +87,7 @@ const saveFormValuesProject = (function () {
         const projectId = function (object) {
             const projectTitle = object.title;
             const projectDeadline = object.deadline;
-            const timeStamp = format(new Date(), 'Hms');
+            const timeStamp = format(new Date(), 'HHmmss');
 
             const titleId = projectTitle.split(" ").map(word => `${word.toLowerCase()}`).join('');
             let newProjectId = `${titleId + projectDeadline + timeStamp}`;

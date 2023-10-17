@@ -18,10 +18,6 @@ showModals.addButtonEvent();
 // On Load display events
 onLoadScreen.addOnLoadEvents();
 
-// console.log(JSON.parse(JSON.stringify(localStorage)));
-console.log(memoryHandler.getEvents());
-console.log(memoryHandler.getProjects());
-
 // Display today previews as default item display
 displayContentTimeFiltered.displayTimeFiltered('today');
 

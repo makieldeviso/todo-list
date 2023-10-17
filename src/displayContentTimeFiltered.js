@@ -104,7 +104,7 @@ const displayContentTimeFiltered = (function () {
         });
         
             return sortedObj;
-        }
+    }
     
     // Dataset converter
     const convertDataSet = function (datasetString) {
@@ -130,12 +130,12 @@ const displayContentTimeFiltered = (function () {
             displayContent.createFilterBanner('append', time);
 
             // Sort project and event objects from upcoming to farthest time
-            // Note: todayArray is not sorted, order is projects then events
+            // Note: todayArray is not sorted by schedule/ deadline, order is sorted with creation date
             let sortedObj;
             if (time !== 'today') {
                 sortedObj = sortProjectsAndEvents(timeObjArray);
             } else {
-                sortedObj = timeObjArray;
+                sortedObj = timeObjArray.sort((a, b) => b.creationDate - a.creationDate);
             }
     
             // Create and append filtered projects and events previews

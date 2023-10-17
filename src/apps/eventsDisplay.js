@@ -394,9 +394,11 @@ const eventsDisplay = (function () {
         const previewsCont = document.querySelector('div#previews-container');
 
         const events = memoryHandler.getEvents();
+        // Sorts events for display from latest creation date to oldest
+        const sortedEvents = events.toSorted((a, b) => b.creationDate - a.creationDate); 
 
         if (events.length !== 0) {
-            events.forEach(event => {
+            sortedEvents.forEach(event => {
                 const eventDisplay = createEventDisplay(event);
                 previewsCont.appendChild(eventDisplay);
             });

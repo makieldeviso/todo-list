@@ -307,9 +307,11 @@ const projectsDisplay = (function () {
         const previewsCont = document.querySelector('div#previews-container');
         
         const projects = memoryHandler.getProjects();
+        // Sorts projects for display from latest creation date to oldest
+        const sortedProjects = projects.toSorted((a, b) => b.creationDate - a.creationDate);
 
         if (projects.length !== 0) {
-            projects.forEach(project => {
+            sortedProjects.forEach(project => {
                 const projectDisplay = createProjectPreview(project);
                 previewsCont.appendChild(projectDisplay);
             });

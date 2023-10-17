@@ -218,7 +218,6 @@ const modifyEventLink = function (eventForMod, newEventId, oldProjectTag, newPro
         } else {
             // if projectTag is still the same but the title and/or schedule was changed
             const projectEvents = projectForMod.eventLinks;
-            console.log(projectEvents);
 
             for (const event in projectEvents) {
                 if (projectEvents[event] === eventForMod) {

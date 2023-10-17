@@ -67,8 +67,8 @@ const saveFormValuesEvent = (function () {
         }
 
         // Factory function to create initial event object
-        const createEvent = function (title, description, schedule, projectTag, priority) {
-            return {title, description, schedule, projectTag, priority}
+        const createEvent = function (title, description, schedule, projectTag, priority, creationDate) {
+            return {title, description, schedule, projectTag, priority, creationDate}
         }
 
         // Execute factory function, to make event object
@@ -78,7 +78,8 @@ const saveFormValuesEvent = (function () {
             valueGet('#event-desc'),
             (new Date(valueGet('#event-schedule'))).valueOf(), // object date
             valueGet('#event-project'),
-            valueGet('button.prio-btn[data-selected="selected"]')
+            valueGet('button.prio-btn[data-selected="selected"]'),
+            (new Date()).valueOf(),
         )
     
         // Add tasks to the newEvent object
@@ -92,7 +93,7 @@ const saveFormValuesEvent = (function () {
         const eventId = function (object) {
             const eventTitle = object.title;
             const eventSchedule = object.schedule;
-            const timeStamp = format(new Date(), 'Hms');
+            const timeStamp = format(new Date(), 'HHmmss');
 
             const titleId = eventTitle.split(" ").map(word => `${word.toLowerCase()}`).join('');
             let newEventId = `${titleId + eventSchedule + timeStamp}`;
