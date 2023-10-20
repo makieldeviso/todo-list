@@ -1,10 +1,10 @@
 import css from "./style.css";
 import { onLoadScreen } from "./apps/onLoadScreen";
-
 import { displayContent } from "./apps/displayContent";
 import { showModals } from "./apps/showModals";
 import { displayContentTimeFiltered } from "./displayContentTimeFiltered";
 import { memoryHandler } from "./apps/memoryHandler";
+import { editUsername } from "./apps/editUsername";
 
 // Sidebar events
 displayContent.addSidebarEvents();
@@ -14,6 +14,9 @@ displayContent.backBtnEvents();
 
 // Add button event
 showModals.addButtonEvent();
+
+// Add edit username event
+editUsername.addUsernameEditEvent();
 
 // On Load display events
 onLoadScreen.addOnLoadEvents();

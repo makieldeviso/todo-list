@@ -276,6 +276,11 @@ const projectsDisplay = (function () {
 
             if (countDoneEvents !== countEvents) {
                 completeBtn.disabled = true;
+
+                const message = document.createElement('p');
+                message.setAttribute('class', 'message incomplete');
+                message.innerHTML = 'Accomplish events to enable project completion.';
+                actionBtnsCont.appendChild(message);
             }
 
             // Add event listener through module
@@ -283,6 +288,7 @@ const projectsDisplay = (function () {
             showModals.addCompletionPromptProject(completeBtn);
 
             actionBtnsCont.appendChild(completeBtn);
+
         } else {
             const message = document.createElement('p');
             message.setAttribute('class', 'message');

@@ -91,38 +91,6 @@ footer {
    background-color: var(--dark-orange);
 }
 
-/* div#footer-cont {
-    display: grid;
-    margin: 5px 0 0 0;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr;
-    justify-items: center;
-}
-
-div#footer-cont p {
-    font-size: var(--common-font-size);
-    color: white;
-}
-
-div#footer-cont p a {
-    text-decoration: none;
-    color: white;
-}
-
-div#footer-cont p a:visited {
-    color: white;
-}
-
-div#footer-cont p a:active {
-    color: white;
-    transform: scale(1.1);
-}
-
-div#footer-cont p a:hover {
-    cursor: pointer;
-    color: var(--base-pink);
-} */
-
 /* HEADER (start) */
 div#title-banner {
     display: grid;
@@ -210,7 +178,7 @@ div#user {
         "pic name";
     grid-template-columns:max-content 1fr;
     align-items: center;
-    column-gap: 10px;  
+    column-gap: 10px; 
     width: 100%;
     height: max-content;
     margin: auto;
@@ -236,10 +204,47 @@ p#user-greet {
     align-self: end;
 }
 
-h3#user-name {
+div#username-space {
     grid-area: name;
-    font-size: calc(var(--header-font-size) * 1.1);
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr max-content;
+    align-items: center;
+    gap: 3px;
 }
+
+input#username {
+    font-size: calc(var(--header-font-size) * 1.1);
+    font-weight: bold;
+    width: 100%;
+}
+
+input#username:disabled {
+    color: black;
+    border: none;
+    background-color: transparent;
+}
+
+input#username:disabled:hover {
+    box-shadow: none;
+}
+
+button#edit-username {
+    width: calc(var(--icon-size) * 0.9);
+    height: calc(var(--icon-size) * 0.9);
+    border: none;
+    background-color: transparent;
+    
+    background-image: url('./assets/pencil.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+button#edit-username[data-action="save"] {
+    background-image: url('./assets/save.svg');
+}
+
 /* User information (end)*/ 
 
 /* Categories (start) -  */
@@ -937,7 +942,6 @@ div.fullview.tasks-list div.task:last-of-type {
     padding-bottom: 0;
 }
 
-
 button.check {
     width: var(--small-btn-size);
     height: var(--small-btn-size);
@@ -1586,6 +1590,7 @@ div#tasks-container input.new-task {
 
 div#tasks-container input.new-task:disabled {
     border: none;
+    color: black;
 }
 
 div.new-task {
@@ -1902,6 +1907,7 @@ div.project-action {
     display: grid;
     grid-template-columns: 1fr;
     margin-top: calc(var(--common-margin) * 3);
+    row-gap: 5px;
 }
 
 button[value="complete-project"] {
@@ -1926,6 +1932,11 @@ div.project-action p.message {
     text-align: center;
     margin-top: var(--common-margin);
     color: #54B435;
+}
+
+div.project-action p.message.incomplete {
+    font-size: calc(var(--header-font-size) * 0.8);
+    color: black;
 }
 
 /* Completion and delete prompt modal (start) --- */
@@ -2093,6 +2104,11 @@ div.checkbox-input input:checked {
         min-width: 450px;
     }
 
+    button#edit-username:hover {
+        filter: brightness(1.1);
+        transform: scale(1.1);
+    }
+
     div.category:hover {
         cursor: pointer;
         background-color: rgba(255, 222, 222, 0.5);
@@ -2144,6 +2160,10 @@ div.checkbox-input input:checked {
 
     div.event-preview.event-project:hover {
        transform: none;
+    }
+
+    div#tasks-container input.new-task:disabled:hover {
+        box-shadow: none;
     }
 
     button.unlink-event {
@@ -2501,6 +2521,12 @@ div.checkbox-input input:checked {
         div.empty-notif {
             width: calc(100vw - 250px);
             max-width: calc(1440px - 300px);
+        }
+
+        div.event-preview.event-project:hover {
+            transform: none;
+            box-shadow: none;
+            cursor: unset;
         }
     }
     /* DESKTOP 1440 PX (end) */

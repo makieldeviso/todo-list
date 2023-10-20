@@ -7,7 +7,7 @@ const projectsScripts = (function () {
 
     const getProperty = function (id, prop) {
         const projectObj = memoryHandler.getProject(id);
-        const projectProperty =projectObj[prop];
+        const projectProperty = projectObj[prop];
         return projectProperty;
     }
 

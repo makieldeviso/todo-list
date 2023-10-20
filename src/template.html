@@ -33,7 +33,17 @@
             <div id="user" class="user-detail">
                 <img id="user-pic" src="./assets/profile-sample.svg" alt="User profile picture">
                 <p id="user-greet">Hello</p>
-                <h3 id="user-name">User</h3>
+                <div id="username-space">
+                    <input type="text" id="username" value="User" maxlength="12" disabled>
+                    <button 
+                        id="edit-username" 
+                        value="edit-username" 
+                        type="button" 
+                        data-action="edit"
+                        title="Change Name">
+                    </button>
+                </div>
+                
             </div>
             
             <div id="main-categories-cont">

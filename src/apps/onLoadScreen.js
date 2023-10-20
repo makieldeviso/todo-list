@@ -3,6 +3,7 @@ import { displayContentTimeFiltered } from "../displayContentTimeFiltered";
 import { displayContentPriorityFiltered } from "../displayContentPriorityFiltered";
 import { formatting } from "./formatting";
 import { format, formatDistance } from 'date-fns'
+import { editUsername } from "./editUsername";
 
 const onLoadScreen = (function () {
     // Display current date info
@@ -75,11 +76,11 @@ const onLoadScreen = (function () {
 
     const addOnLoadEvents = function () {
         window.addEventListener('load', loadCounters);
+        window.addEventListener('load', editUsername.displayUsername);
     }
 
-    return {loadCounters,
-            addOnLoadEvents,
-        };
+    return { loadCounters, addOnLoadEvents };
+
 })();
 
 export {onLoadScreen}
