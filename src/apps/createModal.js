@@ -122,16 +122,16 @@ const createModal = (function () {
 
             const input = document.createElement('input');
             input.setAttribute('type', 'checkbox');
-            input.setAttribute('id', event['projectId'] );
-            input.setAttribute('name', event['projectId'] ); 
-            input.setAttribute('value', event['projectId'] ); 
+            input.setAttribute('id', event['eventId'] );
+            input.setAttribute('name', event['eventId'] ); 
+            input.setAttribute('value', event['eventId'] ); 
 
             if (projectStatus === 'done') {
                 input.checked = true;
             }
 
             const inputLabel = document.createElement('label');
-            inputLabel.setAttribute('for', event['projectId']);
+            inputLabel.setAttribute('for', event['eventId']);
             inputLabel.textContent = event.title;
 
             inputCont.appendChild(input);
