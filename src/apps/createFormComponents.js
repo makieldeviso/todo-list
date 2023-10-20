@@ -187,12 +187,7 @@ const createFormComponents = (function () {
         
         const events = memoryHandler.getEvents();
         const standaloneEvents = events.filter((eventObj) => eventObj.projectTag === 'standalone');
-        standaloneEvents.forEach(event => {
-            const eventOption = document.createElement('option');
-            eventOption.setAttribute('value', event.eventId);
-            eventOption.textContent = event.title;
-            eventSelect.appendChild(eventOption);
-        });
+        standaloneEvents.forEach(event => addOption(event));
         // Create options for events select (end) -
 
         // Create add event btn then link corresponding evenListener

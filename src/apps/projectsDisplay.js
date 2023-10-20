@@ -182,9 +182,9 @@ const projectsDisplay = (function () {
 
         // Ensures no existing action buttons
         const existingEditBtn = document.querySelector('button[value="edit-project"]');
-        if (existingEditBtn !== null) {
-            displayContent.removeActionBtn(existingEditBtn);
-        }
+        const existingDeleteBtn = document.querySelector('button[value="delete-project"]');
+
+        displayContent.removeActionBtn(existingEditBtn, existingDeleteBtn);
 
         // Conditional don't add edit button if event is completed
         if (projectObj.projectStatus !== 'done') {

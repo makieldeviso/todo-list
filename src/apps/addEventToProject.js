@@ -1,5 +1,6 @@
 import { memoryHandler } from "./memoryHandler";
 import { eventsDisplay } from "./eventsDisplay";
+import { showModals } from "./showModals";
 
 const addEventToProject = (function () {
     let newProjectEvents = {};
