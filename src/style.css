@@ -2022,6 +2022,7 @@ div.checkbox-input input:checked~label {
 
 fieldset.events-checkbox label {
     color: var(--gray);
+    font-size: var(--common-font-size);
 }
 
 fieldset.events-checkbox {
@@ -2034,6 +2035,7 @@ fieldset.events-checkbox legend {
     text-align: center;
     margin: 0 0 var(--common-margin);
     padding: 0 var(--common-padding);
+    font-size: var(--common-font-size);
 }
 
 fieldset.events-checkbox div {
@@ -2057,8 +2059,8 @@ div.checkbox-input input {
     border: 1px solid var(--gray);
     background-color: var(--off-white);
     border-radius: 3px;
-    width: calc(var(--common-font-size) * 1.1);
-    height: calc(var(--common-font-size) * 1.1);
+    width: calc(var(--icon-size) * 0.7);
+    height: calc(var(--icon-size) * 0.7);
     outline: none;
     cursor: pointer;
 }
@@ -2458,6 +2460,10 @@ div.checkbox-input input:checked {
         a.event-proj.fullview,
         p.fullview.project-desc {
             font-size: calc(var(--common-font-size) * 1.2);
+        }
+
+        div.checkbox-cont {
+            width: 75%;
         }
 
     }
