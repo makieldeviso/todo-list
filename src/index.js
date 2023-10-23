@@ -3,7 +3,6 @@ import { onLoadScreen } from "./apps/onLoadScreen";
 import { displayContent } from "./apps/displayContent";
 import { showModals } from "./apps/showModals";
 import { displayContentTimeFiltered } from "./displayContentTimeFiltered";
-import { memoryHandler } from "./apps/memoryHandler";
 import { editUsername } from "./apps/editUsername";
 
 // Sidebar events

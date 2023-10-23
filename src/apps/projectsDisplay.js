@@ -173,7 +173,6 @@ const projectsDisplay = (function () {
             backBtn.dataset.filter = this.dataset.filter;
             deleteBtn.dataset.filter = this.dataset.filter;
         }
-
     }
 
     const createProjectFullView = function (projectObj) {

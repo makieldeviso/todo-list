@@ -1,38 +1,33 @@
 import { differenceInCalendarDays } from 'date-fns';
-import { projectsScripts } from './projectsScripts';
 
 const memoryHandler = (function () {
-    // Checks validity of local strorage value
+    // Checks validity of local storage value
     const getStorageArray = function (todoType) {
+        // Get all items from local storage
         const storageStringified = JSON.stringify(localStorage);
+
+        // Parse the items into objects. 
+        // Note: object values at this point are still strings
         const allItems = JSON.parse(storageStringified);
 
-        if (todoType === 'events') {
-            const events = [];
-            for (const item in allItems) {
-                
-                const value = JSON.parse(allItems[item]);
-                
-                if (value.hasOwnProperty('eventId')) {
-                    events.push(value);
-                }
+        // Create property key from todoType argument. e.g. to eventId or projectId
+        const todoTypeProperty = `${todoType.slice(0, -1)}Id`;
+
+        // Reiterate over the local storage key value pairs
+        // Check weather it is an event or object using the todoType parameter
+        // Push the todo Object(parsed) to todoArray then return array
+        const allItemsKeys = Object.keys(allItems);
+        const todoArray = [];
+        allItemsKeys.forEach(key => {
+            const valueObj = JSON.parse(allItems[key]);
+
+            if (Object.hasOwn(valueObj, `${todoTypeProperty}`)) {
+                todoArray.push(valueObj);
             }
+        });
 
-            return events;
-        } 
+        return todoArray;
 
-        if (todoType === 'projects') {
-            const projects = [];
-            for (const item in allItems) {
-                const value = JSON.parse(allItems[item]);
-            
-                if (value.hasOwnProperty('projectId')) {
-                    projects.push(value);
-                }
-            }
-
-            return projects;
-        }
     }   
 
     // Replace/ set value of the todo item in the local storage
@@ -97,7 +92,7 @@ const memoryHandler = (function () {
 
         // add property completion
         const completionDate = new Date();
-        const schedule = eventObj.schedule;
+        const {schedule} = eventObj;
         const deadlineAlert =  differenceInCalendarDays(schedule, completionDate);
 
         let completionRemark;
@@ -181,7 +176,7 @@ const addEventToProject = function (projectId, eventId) {
     const projectForMod = getProjectForMod(projectId);
 
     // Count current number for events for identification
-    const eventsCount = projectsScripts.countEventsOfProject(projectForMod);
+    const eventsCount = Object.keys(projectForMod.eventLinks).length;
 
     // Modify the project by adding a new event link
     projectForMod.eventLinks[`event-${eventsCount + 1}`] = eventId;
@@ -195,11 +190,12 @@ const deleteEventFromProject = function (eventId, projectId) {
     
     // Create temp object that reassign event keys and omit event for deletion
     const tempEvents = {};
-    for (const key in projectEvents) {
+    const eventLinksKeys = Object.keys(projectEvents);
+    eventLinksKeys.forEach(key => {
         if (projectEvents[key] !== eventId) {
             tempEvents[`event-${Object.keys(tempEvents).length + 1}`] = projectEvents[key];
         }
-    }
+    });
 
     // Assign new value to the eventLinks
     projectForMod.eventLinks = tempEvents;
@@ -214,17 +210,20 @@ const modifyEventLink = function (eventForMod, newEventId, oldProjectTag, newPro
         // if the same project tag and eventId was not changed or if event is mot linked to a project
         if (eventForMod === newEventId || projectForMod === 'standalone' ) {
             return;
+        }
 
-        } else {
+        if ( eventForMod !== newEventId ) {
             // if projectTag is still the same but the title and/or schedule was changed
             const projectEvents = projectForMod.eventLinks;
-
-            for (const event in projectEvents) {
-                if (projectEvents[event] === eventForMod) {
-                    projectEvents[event] = newEventId;
+            
+            const eventLinks = Object.keys(projectEvents);
+            for (let i = 0; i < eventLinks.length; i++) {
+                if (projectEvents[`${eventLinks[i]}`] === eventForMod) {
+                    projectEvents[`${eventLinks[i]}`] = newEventId;
                     break;
-                }
+                } 
             }
+
             projectForMod.eventLinks = projectEvents;
             reassignStorageItem(oldProjectTag, projectForMod);
             
@@ -277,10 +276,11 @@ const deleteProject = function (id) {
     const projectEvents = projectForMod.eventLinks;
     
     // unlink the project from the events
-    for (const key in projectEvents) {
+    const eventLinks = Object.keys(projectEvents);
+    eventLinks.forEach(key => {
         const eventLink = projectEvents[key];
         unlinkEventToProject(eventLink);
-    }
+    })
 
     localStorage.removeItem(id);   
 }
@@ -288,15 +288,19 @@ const deleteProject = function (id) {
 const replaceProject = function (id, currentObj, newObj) {
     // unlink Events
     const currentProjectEvents = currentObj.eventLinks;
-    for (const eventKey in currentProjectEvents) {
+
+    const eventKeys = Object.keys(currentProjectEvents);
+    eventKeys.forEach(eventKey => {
         unlinkEventToProject(currentProjectEvents[eventKey]);
-    }
+    })
+
     
     // relink event
     const newProjectEvents = newObj.eventLinks;
-    for (const eventKey in newProjectEvents) {
+    const newEventKeys = Object.keys(newProjectEvents);
+    newEventKeys.forEach(eventKey => {
         linkEventToProject(newProjectEvents[eventKey], newObj.projectId );
-    }
+    })
     
     // Delete former project then add new keyValue in the local storage
     localStorage.removeItem(id);
@@ -313,7 +317,6 @@ const getAll = function () {
 
 // Projects (end) -
 
-
     return {
         // Events
             getEvents, 
@@ -321,7 +324,6 @@ const getAll = function () {
             getEvent, 
             changeTaskStatus, 
             getEventTasks, 
-            // changeEventStatus,
             countEvents,
             completeEvent,
             replaceEvent,

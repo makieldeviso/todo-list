@@ -1,10 +1,21 @@
+import { format, differenceInCalendarDays } from 'date-fns';
 import { memoryHandler } from "./apps/memoryHandler";
-import { format, differenceInCalendarDays, parseISO  } from 'date-fns';
+import { formatting } from './apps/formatting';
+
 import { displayContent } from "./apps/displayContent";
 import { eventsDisplay } from "./apps/eventsDisplay";
 import { projectsDisplay } from "./apps/projectsDisplay";
 
 const displayContentTimeFiltered = (function () {
+
+    // Dataset converter
+    const convertDataSet = function (datasetString) {
+        const timeConditions = ['today', 'upcoming', 'someday', 'overdue'];
+
+        const assignAction = timeConditions.find(time => datasetString.includes(time));
+
+        return assignAction;
+    }
 
     // Reusable create and append filtered preview to the item display
     const createFilteredPreview = function (objArray, filterName) {
@@ -15,10 +26,10 @@ const displayContentTimeFiltered = (function () {
             objArray.forEach(obj => {
                 // Note: conditional detect if obj is eventObj or projectObj
                 let preview;
-                if (obj.hasOwnProperty('projectId')) {
+                if (Object.hasOwn(obj, 'projectId')) {
                     preview = projectsDisplay.createProjectPreview(obj);
     
-                } else if (obj.hasOwnProperty('eventId')) {
+                } else if (Object.hasOwn(obj, 'eventId')) {
                     preview = eventsDisplay.createEventDisplay(obj);
                 }
     
@@ -38,36 +49,40 @@ const displayContentTimeFiltered = (function () {
         const filteredObj = objArray.filter(obj => {
             let objDeadline;
             let objStatus;
-            if (obj.hasOwnProperty('projectId')) {
+            if (Object.hasOwn(obj, 'projectId')) {
                 objDeadline = obj.deadline;
                 objStatus = obj.projectStatus;
-            } else if (obj.hasOwnProperty('eventId')) {
+
+            } else if (Object.hasOwn(obj, 'eventId')) {
                 objDeadline = obj.schedule;
                 objStatus = obj.eventStatus;
             }
 
             const dayDiff = differenceInCalendarDays(objDeadline, new Date());
             
+            let requiredObj;
             if (condition === 'upcoming') {
                 if (dayDiff <= 7 && dayDiff > 0) {
-                    return obj;
+                    requiredObj = obj;
                 }
             } else if (condition === 'someday') {
                 if (dayDiff >= 1) {
-                    return obj;
+                    requiredObj = obj;
                 }
             } else if (condition === 'today') {
                 const todayDateFormatted = format(new Date(),'MMMM, dd, yyyy');
                 const objDeadlineFormatted = format(objDeadline,'MMMM, dd, yyyy');
 
                 if (todayDateFormatted === objDeadlineFormatted) {
-                    return obj;
+                    requiredObj = obj;
                 }
             } else if (condition === 'overdue' && objStatus === 'pending') {
                 if (dayDiff < 0) {
-                    return obj;
+                    requiredObj = obj;
                 }
             }
+
+            return requiredObj;
         });
 
         return filteredObj
@@ -80,39 +95,6 @@ const displayContentTimeFiltered = (function () {
         
         const filteredArray = timeFilter(todoArray, condition);
         return filteredArray.length;
-    }
-
-    // Merge projectObjs and eventObjs into an array, then sort from upcoming to far time schedule/ deadline
-    // Note: projectObj and eventObjs parameter needs array arguments
-    const sortProjectsAndEvents = function (objectsArray) {
-        const sortedObj = objectsArray.sort((a, b) => {
-            let aTime;
-            let bTime;
-
-            if (a.hasOwnProperty('projectId')) {
-                aTime = a.deadline;
-            } else if (a.hasOwnProperty('eventId')) {
-                aTime = a.schedule;
-            }
-
-            if (b.hasOwnProperty('projectId')) {
-                bTime = b.deadline;
-            } else if (b.hasOwnProperty('eventId')) {
-                bTime = b.schedule;
-            }
-            return aTime - bTime
-        });
-        
-            return sortedObj;
-    }
-    
-    // Dataset converter
-    const convertDataSet = function (datasetString) {
-        const timeConditions = ['today', 'upcoming', 'someday', 'overdue'];
-
-        const assignAction = timeConditions.find(time => datasetString.includes(time));
-
-        return assignAction;
     }
 
     // Reminder: As much as possible don't pass converted argument, use dataset
@@ -133,7 +115,7 @@ const displayContentTimeFiltered = (function () {
             // Note: todayArray is not sorted by schedule/ deadline, order is sorted with creation date
             let sortedObj;
             if (time !== 'today') {
-                sortedObj = sortProjectsAndEvents(timeObjArray);
+                sortedObj = formatting.sortProjectsAndEvents(timeObjArray);
             } else {
                 sortedObj = timeObjArray.sort((a, b) => b.creationDate - a.creationDate);
             }
@@ -152,7 +134,6 @@ const displayContentTimeFiltered = (function () {
     }
 
     return {displayTimeFiltered, 
-            sortProjectsAndEvents,
             timeFilter, 
             countTimeFiltered,
             convertDataSet,

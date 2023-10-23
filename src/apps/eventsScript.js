@@ -1,13 +1,7 @@
-import { memoryHandler } from "./memoryHandler";
-import { format } from 'date-fns';
 import { differenceInCalendarDays } from 'date-fns' ;
-import { projectsScripts } from "./projectsScripts";
-
+import { memoryHandler } from "./memoryHandler";
 
 const eventsScript = (function () {
-
-    // const events = memoryHandler.getEvents();
-
     // Get array of tasks in an event
     const taskArrayOfEvent = function (eventTasks) {
         // Note: tasks is object
@@ -87,7 +81,8 @@ const eventsScript = (function () {
         if (obj.projectTag === 'standalone') {
             projectTitle = 'Standalone';
         } else {
-            projectTitle = projectsScripts.getProperty(obj.projectTag, 'title')
+            const projectObj = memoryHandler.getProject(obj.projectTag);
+            projectTitle = projectObj.title;
         }
 
         return projectTitle;

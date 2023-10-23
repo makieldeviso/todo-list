@@ -18,7 +18,7 @@ const editUsername = (function () {
         }
     }
 
-    const editUsername = function () {
+    const getUsername = function () {
         const inputBox = document.querySelector('input#username');
 
         // Change button UI
@@ -50,8 +50,8 @@ const editUsername = (function () {
         inputBox.removeEventListener('blur', saveUsername);
 
         // Temporarily remove click listener to edit button to remove conflict with blur event
-        saveEditBtn.removeEventListener('click', editUsername);
-        setTimeout(() => saveEditBtn.addEventListener('click', editUsername), 200);
+        saveEditBtn.removeEventListener('click', getUsername);
+        setTimeout(() => saveEditBtn.addEventListener('click', getUsername), 200);
         
         // Save username to local storage
         const newUsername = JSON.stringify(inputBox.value);
@@ -63,7 +63,7 @@ const editUsername = (function () {
 
     const addUsernameEditEvent = function () {
         const usernameEditBtn = document.querySelector('button#edit-username');
-        usernameEditBtn.addEventListener('click', editUsername);
+        usernameEditBtn.addEventListener('click', getUsername);
     }
 
     return {addUsernameEditEvent, displayUsername}

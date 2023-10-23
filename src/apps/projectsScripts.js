@@ -1,9 +1,8 @@
+import { differenceInCalendarDays } from 'date-fns' ;
 import { memoryHandler } from "./memoryHandler";
-import { eventsScript } from "./eventsScript";
-import { displayContentTimeFiltered } from "../displayContentTimeFiltered";
+import { formatting } from './formatting';
 
 const projectsScripts = (function () {
-
 
     const getProperty = function (id, prop) {
         const projectObj = memoryHandler.getProject(id);
@@ -12,9 +11,23 @@ const projectsScripts = (function () {
     }
 
     const checkDeadline = function (dateToCheck) {
-        // Note: Borrows function from eventsScript module
-        // Decided to bring in this module to remove confusion
-        return eventsScript.checkDeadline(dateToCheck);
+        const today = new Date();
+        
+        const daysApart = differenceInCalendarDays(dateToCheck, today);
+
+        let deadlineAlert;
+
+        if (daysApart < 0) {
+            deadlineAlert = 'overdue';
+        } else if (daysApart === 0) {
+            deadlineAlert = 'today';
+        } else if (daysApart > 0 && daysApart <= 7) {
+            deadlineAlert = 'upcoming';
+        } else if (daysApart > 7) {
+            deadlineAlert = 'far';
+        }
+
+        return deadlineAlert;
     }
 
     const getProjectEvents = function (project) {
@@ -32,9 +45,9 @@ const projectsScripts = (function () {
         }
         
         // Sort events from earliest to farthest schedule
-        const sortedEvents = displayContentTimeFiltered.sortProjectsAndEvents(projectEventObj);
+        const sortedEvents = formatting.sortProjectsAndEvents(projectEventObj);
 
-        return sortedEvents; //return array of objects
+        return sortedEvents; // return array of objects
     }
 
     const countEventsOfProject = function (project) {
@@ -47,7 +60,7 @@ const projectsScripts = (function () {
 
     const countDoneEvents = function (project) {
         const projectEvents = getProjectEvents(project);
-
+    
         const doneEvents = projectEvents.filter(event => event.eventStatus === 'done');
         const doneEventsCount = doneEvents.length;
 

@@ -1,7 +1,7 @@
 import { memoryHandler } from "./apps/memoryHandler";
-import { displayContent } from "./apps/displayContent";
-import { displayContentTimeFiltered } from "./displayContentTimeFiltered";
 import { formatting } from "./apps/formatting";
+
+import { displayContent } from "./apps/displayContent";
 import { eventsDisplay } from "./apps/eventsDisplay";
 import { projectsDisplay } from "./apps/projectsDisplay";
 
@@ -67,7 +67,7 @@ const displayContentPriorityFiltered = (function () {
             const filteredObj = priorityFilter(todoArray, priority);
 
             // Sort project and event objects from upcoming to farthest time
-            const sortedObj = displayContentTimeFiltered.sortProjectsAndEvents(filteredObj);
+            const sortedObj = formatting.sortProjectsAndEvents(filteredObj);
 
             // Create and append time filter banner to item display
             displayContent.createFilterBanner('append', `${priority}-prio`);

@@ -1,6 +1,5 @@
 import { memoryHandler } from "./memoryHandler";
 import { eventsDisplay } from "./eventsDisplay";
-import { showModals } from "./showModals";
 
 const addEventToProject = (function () {
     let newProjectEvents = {};
@@ -36,14 +35,14 @@ const addEventToProject = (function () {
         // Note: Remove showFullEvent linked function to newEventCont
         newEventPreview.removeEventListener('click', eventsDisplay.showFullEvent);
 
-        //Create unlink button, then add eventListener
+        // Create unlink button, then add eventListener
         const unlinkButton = document.createElement('button');
         unlinkButton.setAttribute('type', 'button');
         unlinkButton.setAttribute('class', 'unlink-event');
         unlinkButton.dataset.id = eventObj.eventId;
         unlinkButton.addEventListener('click', unlinkEvent);
 
-        //Append components to newEventCont
+        // Append components to newEventCont
         const components = [newEventPreview, unlinkButton];
         components.forEach(comp => newEventCont.appendChild(comp));
 
