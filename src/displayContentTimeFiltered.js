@@ -6,6 +6,8 @@ import { displayContent } from "./apps/displayContent";
 import { eventsDisplay } from "./apps/eventsDisplay";
 import { projectsDisplay } from "./apps/projectsDisplay";
 
+import { contentMaker } from './apps/contentMaker';
+
 const displayContentTimeFiltered = (function () {
 
     // Dataset converter
@@ -38,7 +40,7 @@ const displayContentTimeFiltered = (function () {
             });
 
         } else {
-            const emptyNotif = displayContent.createEmptyPreviews(convertDataSet(filterName));
+            const emptyNotif = contentMaker.createEmptyPreviews(convertDataSet(filterName));
             previewsCont.appendChild(emptyNotif);
         }
          
@@ -109,7 +111,7 @@ const displayContentTimeFiltered = (function () {
             const timeObjArray = timeFilter(todoArray, time);
             
             // Create and append time filter banner to item display
-            displayContent.createFilterBanner('append', time);
+            contentMaker.createFilterBanner('append', time);
 
             // Sort project and event objects from upcoming to farthest time
             // Note: todayArray is not sorted by schedule/ deadline, order is sorted with creation date

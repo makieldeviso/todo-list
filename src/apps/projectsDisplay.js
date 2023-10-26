@@ -1,5 +1,6 @@
-import { formatting } from "./formatting";
 import { format } from 'date-fns';
+import { formatting } from "./formatting";
+
 import { projectsScripts } from "./projectsScripts";
 import { memoryHandler } from "./memoryHandler";
 import { displayContent } from "./displayContent";
@@ -8,6 +9,8 @@ import { showModals } from "./showModals";
 import { initDelete } from "./initDelete";
 import { projectEditForm } from "./projectEditForm";
 import projectIcon from '../assets/projects-icon.svg';
+
+import { contentMaker } from "./contentMaker";
 
 const projectsDisplay = (function () {
 
@@ -34,10 +37,10 @@ const projectsDisplay = (function () {
         const done = projectsScripts.countDoneEvents(project);
         const total = projectsScripts.countEventsOfProject(project);
 
-        displayContent.createSpan(newEventCounter, 'done', `${done}`);
-        displayContent.createSpan(newEventCounter, 'slash', '/');
-        displayContent.createSpan(newEventCounter, 'total', `${total}`);
-        displayContent.createSpan(newEventCounter, 'label', 'events');
+        contentMaker.createSpan(newEventCounter, 'done', `${done}`);
+        contentMaker.createSpan(newEventCounter, 'slash', '/');
+        contentMaker.createSpan(newEventCounter, 'total', `${total}`);
+        contentMaker.createSpan(newEventCounter, 'label', 'events');
 
         if (done === total) {
             newEventCounter.classList.remove('pending');
@@ -65,12 +68,12 @@ const projectsDisplay = (function () {
 
         // (1) (start)-
         // Add event marking to indicate if 'pending' or 'done'
-        const newMarker = displayContent.createStatusMarker(projectObj);
+        const newMarker = contentMaker.createStatusMarker(projectObj);
         // (1) (end)-
 
         // (2) (start) -
         // Add indicator icon to classify as event or project. UI related
-        const newIndicator = displayContent.createIndicatorIcon('projects');
+        const newIndicator = contentMaker.createIndicatorIcon('projects');
         // (2) (end) -
 
         // (3-5) (start)-
@@ -91,14 +94,14 @@ const projectsDisplay = (function () {
         // Checks if event was already completed
         let deadlineTitleAttr;
         if (projectObj.completion === undefined) {
-            displayContent.createSpan(newDeadline, `deadline-icon ${deadlineAlert}`, '');
+            contentMaker.createSpan(newDeadline, `deadline-icon ${deadlineAlert}`, '');
             deadlineTitleAttr = deadlineAlert;
         } else {
-            displayContent.createSpan(newDeadline, `deadline-icon ${projectObj.completion}`, '');
+            contentMaker.createSpan(newDeadline, `deadline-icon ${projectObj.completion}`, '');
             deadlineTitleAttr = `${projectObj.completion} completion`;
         }
 
-        displayContent.createSpan(newDeadline, 'deadline-date', dateString);
+        contentMaker.createSpan(newDeadline, 'deadline-date', dateString);
         const deadlineIcon = newDeadline.querySelector('span.deadline-icon');
         deadlineIcon.setAttribute('title', formatting.toProper(deadlineTitleAttr));
         // (6) (end)-
@@ -150,11 +153,11 @@ const projectsDisplay = (function () {
         }
 
         // Clear display panel
-        displayContent.createFilterBanner('remove');
+        contentMaker.createFilterBanner('remove');
         
         // Ensures the project full view is refreshed when changes is applied
         const projectFullViews = document.querySelectorAll('div.project-fullview');
-       projectFullViews.forEach(fullview => displayContent.removeDisplay(fullview));
+       projectFullViews.forEach(fullview => contentMaker.removeDisplay(fullview));
 
         // Add attribute to back-button
         backBtn.dataset.action = 'project-fullview';
@@ -183,16 +186,16 @@ const projectsDisplay = (function () {
         const existingEditBtn = document.querySelector('button[value="edit-project"]');
         const existingDeleteBtn = document.querySelector('button[value="delete-project"]');
 
-        displayContent.removeActionBtn(existingEditBtn, existingDeleteBtn);
+        contentMaker.removeActionBtn(existingEditBtn, existingDeleteBtn);
 
         // Conditional don't add edit button if event is completed
         if (projectObj.projectStatus !== 'done') {
-            displayContent.createActionBtn('edit', 'edit-project', projectObj.projectId, projectEditForm.showEditProjectForm, 'Edit');
+            contentMaker.createActionBtn('edit', 'edit-project', projectObj.projectId, projectEditForm.showEditProjectForm, 'Edit');
         }
         // Create edit button appended on the action buttons ribbon (end) -
 
         // Create delete button appended on the action buttons ribbon (start) -
-        displayContent.createActionBtn('delete', 'delete-project', projectObj.projectId, initDelete.showDeleteProjectPrompt, 'Delete');
+        contentMaker.createActionBtn('delete', 'delete-project', projectObj.projectId, initDelete.showDeleteProjectPrompt, 'Delete');
         // Create delete button appended on the action buttons ribbon (end) -
 
         // Create project full view container
@@ -225,8 +228,8 @@ const projectsDisplay = (function () {
         // Note: use date-fns
         const dateString = format(projectObj.deadline, 'ccc, MMM dd, yyyy');
 
-        displayContent.createSpan(deadline, 'deadline-icon', '');
-        displayContent.createSpan(deadline, 'deadline-date', dateString);
+        contentMaker.createSpan(deadline, 'deadline-icon', '');
+        contentMaker.createSpan(deadline, 'deadline-date', dateString);
          // Create sched (end) --
 
         // Create events list (start) --
@@ -321,7 +324,7 @@ const projectsDisplay = (function () {
                 previewsCont.appendChild(projectDisplay);
             });
         } else {
-            const emptyNotif = displayContent.createEmptyPreviews('projects');
+            const emptyNotif = contentMaker.createEmptyPreviews('projects');
             previewsCont.appendChild(emptyNotif);
         }
     }

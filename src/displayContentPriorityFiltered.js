@@ -5,6 +5,8 @@ import { displayContent } from "./apps/displayContent";
 import { eventsDisplay } from "./apps/eventsDisplay";
 import { projectsDisplay } from "./apps/projectsDisplay";
 
+import { contentMaker } from "./apps/contentMaker";
+
 const displayContentPriorityFiltered = (function () {
 
     // Reusable create and append filtered preview to the item display
@@ -28,7 +30,7 @@ const displayContentPriorityFiltered = (function () {
             });
 
         } else {
-            const emptyNotif = displayContent.createEmptyPreviews(`${convertDataSet(filterName)} Priority`);
+            const emptyNotif = contentMaker.createEmptyPreviews(`${convertDataSet(filterName)} Priority`);
             previewsCont.appendChild(emptyNotif);
         }
          
@@ -70,7 +72,7 @@ const displayContentPriorityFiltered = (function () {
             const sortedObj = formatting.sortProjectsAndEvents(filteredObj);
 
             // Create and append time filter banner to item display
-            displayContent.createFilterBanner('append', `${priority}-prio`);
+            contentMaker.createFilterBanner('append', `${priority}-prio`);
 
             // Create and append filtered projects and events previews
             createFilteredPreview(sortedObj, `${priority}-prio-view`);

@@ -1,14 +1,14 @@
+import { format } from 'date-fns';
 import { memoryHandler } from "./memoryHandler";
 import { formatting } from "./formatting";
 import { eventsScript } from "./eventsScript";
-import { projectsScripts } from "./projectsScripts";
-import { format } from 'date-fns';
-import { displayContent } from "./displayContent";
-import { createModal } from "./createModal";
+
 import { showModals } from "./showModals";
 import { eventEditForm } from "./eventEditForm";
 import { initDelete } from "./initDelete";
 import { projectsDisplay } from "./projectsDisplay";
+
+import { contentMaker } from "./contentMaker";
 
 const eventsDisplay = (function () {
 
@@ -36,10 +36,10 @@ const eventsDisplay = (function () {
         const done = eventsScript.countDoneTasks(tasks);
         const total = eventsScript.countTasksOfEvent(tasks);
 
-        displayContent.createSpan(newTaskCounter, 'done', `${done}`);
-        displayContent.createSpan(newTaskCounter, 'slash', '/');
-        displayContent.createSpan(newTaskCounter, 'total', `${total}`);
-        displayContent.createSpan(newTaskCounter, 'label', 'tasks');
+        contentMaker.createSpan(newTaskCounter, 'done', `${done}`);
+        contentMaker.createSpan(newTaskCounter, 'slash', '/');
+        contentMaker.createSpan(newTaskCounter, 'total', `${total}`);
+        contentMaker.createSpan(newTaskCounter, 'label', 'tasks');
 
         if (done === total) {
             newTaskCounter.classList.remove('pending');
@@ -89,16 +89,16 @@ const eventsDisplay = (function () {
         const existingEditBtn = document.querySelector('button[value="edit-event"]');
         const existingDeleteBtn = document.querySelector('button[value="delete-event"]');
 
-        displayContent.removeActionBtn(existingEditBtn, existingDeleteBtn);
+        contentMaker.removeActionBtn(existingEditBtn, existingDeleteBtn);
         
         // Conditional don't add edit button if event is completed
         if (eventObj.eventStatus !== 'done') {
-            displayContent.createActionBtn('edit', 'edit-event', eventObj.eventId, eventEditForm.showEditEventForm, 'Edit');
+            contentMaker.createActionBtn('edit', 'edit-event', eventObj.eventId, eventEditForm.showEditEventForm, 'Edit');
         }
         // Create edit button appended on the action buttons ribbon (end) -
 
         // Create delete button appended on the action buttons ribbon (start) -
-        displayContent.createActionBtn('delete', 'delete-event', eventObj.eventId, initDelete.showDeleteEventPrompt, 'Delete');
+        contentMaker.createActionBtn('delete', 'delete-event', eventObj.eventId, initDelete.showDeleteEventPrompt, 'Delete');
         // Create delete button appended on the action buttons ribbon (end) -
 
         // Create event full view container
@@ -147,8 +147,8 @@ const eventsDisplay = (function () {
         // Note: use date-fns
         const dateString = format(eventObj.schedule, 'ccc, MMM dd, yyyy');
 
-        displayContent.createSpan(sched, 'sched-icon', '');
-        displayContent.createSpan(sched, 'sched-date', dateString);
+        contentMaker.createSpan(sched, 'sched-icon', '');
+        contentMaker.createSpan(sched, 'sched-date', dateString);
          // Create sched (end) --
 
         // Create tasks list (start) --
@@ -268,12 +268,12 @@ const eventsDisplay = (function () {
 
         // (1) (start)-
         // Add event marking to indicate if 'pending' or 'done'
-        const newMarker = displayContent.createStatusMarker(eventObj);
+        const newMarker = contentMaker.createStatusMarker(eventObj);
         // (1) (end)-
 
         // (2) (start)-
         // Add indicator icon to classify as event or project. UI related
-        const newIndicator = displayContent.createIndicatorIcon('events');
+        const newIndicator = contentMaker.createIndicatorIcon('events');
         // (2) (end)-
 
         // (3-6) (start)-
@@ -295,14 +295,14 @@ const eventsDisplay = (function () {
         // Checks if event was already completed
         let deadlineTitleAttr;
         if (eventObj.completion === undefined) {
-            displayContent.createSpan(newSched, `sched-icon ${deadlineAlert}`, '');
+            contentMaker.createSpan(newSched, `sched-icon ${deadlineAlert}`, '');
             deadlineTitleAttr = deadlineAlert;
         } else {
-            displayContent.createSpan(newSched, `sched-icon ${eventObj.completion}`, '');
+            contentMaker.createSpan(newSched, `sched-icon ${eventObj.completion}`, '');
             deadlineTitleAttr = `${eventObj.completion} completion`;
         }
 
-        displayContent.createSpan(newSched, 'sched-date', dateString);
+        contentMaker.createSpan(newSched, 'sched-date', dateString);
         const deadlineIcon = newSched.querySelector('span.sched-icon');
         deadlineIcon.setAttribute('title', formatting.toProper(deadlineTitleAttr));
         // (7) (end)-
@@ -352,7 +352,7 @@ const eventsDisplay = (function () {
                 // Remove buttons in the ribbon
                 const editBtn = document.querySelector('button[value="edit-project"]');
                 const deleteBtn = document.querySelector('button[value="delete-project"]');
-                displayContent.removeActionBtn(editBtn, deleteBtn);
+                contentMaker.removeActionBtn(editBtn, deleteBtn);
 
             } 
 
@@ -364,11 +364,11 @@ const eventsDisplay = (function () {
         }
          
         // Clear display panel
-        displayContent.createFilterBanner('remove');
+        contentMaker.createFilterBanner('remove');
         
         // Ensures the event full view is refreshed when changes are applied
         const eventFullViews = document.querySelectorAll('div.event-fullview');
-        eventFullViews.forEach(fullview => displayContent.removeDisplay(fullview));
+        eventFullViews.forEach(fullview => contentMaker.removeDisplay(fullview));
 
         // Add attribute to back-button
         backBtn.dataset.action = 'event-fullview';
@@ -404,10 +404,9 @@ const eventsDisplay = (function () {
             });
 
         } else {
-            const emptyNotif = displayContent.createEmptyPreviews('events');
+            const emptyNotif = contentMaker.createEmptyPreviews('events');
             previewsCont.appendChild(emptyNotif);
         }
-
     }
 
     const showFullEventToDOM = function (event, action) {

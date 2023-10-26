@@ -14,6 +14,8 @@ import { displayContentTimeFiltered } from "../displayContentTimeFiltered";
 import { displayContentPriorityFiltered } from "../displayContentPriorityFiltered";
 import { createFormComponents } from "./createFormComponents";
 
+import { contentMaker } from "./contentMaker";
+
 const showModals = (function () {
     
     // Opens Modal and adds required eventListeners to elements inside the modal
@@ -252,7 +254,7 @@ const showModals = (function () {
                 backBtn.dataset.action = 'events-previews';
 
                 // Display events previews
-                displayContent.createFilterBanner('append', 'events');
+                contentMaker.createFilterBanner('append', 'events');
                 eventsDisplay.displayEventsToDOM();
             }
         }
@@ -382,7 +384,7 @@ const showModals = (function () {
             
         } else {
             backBtn.dataset.action = 'projects-previews';
-            displayContent.createFilterBanner('append', 'projects');
+            contentMaker.createFilterBanner('append', 'projects');
             projectsDisplay.displayProjectsToDOM();
         }
 
