@@ -1,19 +1,19 @@
+import { format } from 'date-fns';
 import { memoryHandler } from "./memoryHandler";
 import { showModals } from "./showModals";
 import { addEventForm } from "./addEventForm";
 import { addTaskToEvent } from "./addTaskToEvent";
-import { eventsDisplay } from "./eventsDisplay";
 import { onLoadScreen } from "./onLoadScreen";
 import { eventsScript } from "./eventsScript";
 import { displayContent } from "./displayContent";
 
-import { format, differenceInCalendarDays } from 'date-fns';
+import { eventFullView } from "./eventFullView";
 
 const saveFormValuesEvent = (function () {
 
     // Reusable DOM value getter function
     const valueGet = function (selector) {
-        const value = document.querySelector(`${selector}`).value;
+        const { value } = document.querySelector(`${selector}`);
         return value;
     }
 
@@ -84,10 +84,10 @@ const saveFormValuesEvent = (function () {
     
         // Add tasks to the newEvent object
         const tasks = addTaskToEvent.getNewTasks();
-        newEvent['tasks'] = tasks;
+        newEvent.tasks = tasks;
 
         // Add default status = pending to newEvent;
-        newEvent[`eventStatus`] = 'pending';
+        newEvent.eventStatus = 'pending';
 
         // Create an id for the newEvent object
         const eventId = function (object) {
@@ -101,7 +101,7 @@ const saveFormValuesEvent = (function () {
             // Double check and ensure no duplication of id
             // If same title and due date is created add additional id indicator
             const events = memoryHandler.getEvents();
-            const sameId = events.filter(event => event['eventId'].includes(newEventId));
+            const sameId = events.filter(event => event.eventId.includes(newEventId));
             
             if (eventForModId === undefined) {
                 if (sameId.length > 0) {
@@ -109,9 +109,10 @@ const saveFormValuesEvent = (function () {
                 }
             }
 
-            object['eventId'] = newEventId;
+            return newEventId;
         }
-        eventId(newEvent); // Executes event id maker
+        // Executes event id maker then assign return value as eventId property
+        newEvent.eventId = eventId(newEvent);
 
         // Save newEvent Object using the memory handler module
         // If save button was from edit event
@@ -140,11 +141,11 @@ const saveFormValuesEvent = (function () {
 
             // Direct item display to the full view of newly created event
             displayContent.showDisplay('events-previews', true);
-            eventsDisplay.showFullEvent(newEvent.eventId);
+            eventFullView.showFullEvent(newEvent.eventId);
             
         } else if (saveType === 'save-edit-event') {
             showModals.closeEventEdit();
-            eventsDisplay.showFullEvent(newEvent.eventId);
+            eventFullView.showFullEvent(newEvent.eventId);
         }
 
         // Execute other display events counters

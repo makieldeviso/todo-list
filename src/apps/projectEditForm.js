@@ -1,6 +1,7 @@
+import { format } from 'date-fns';
 import { showModals } from "./showModals";
 import { memoryHandler } from "./memoryHandler";
-import { format, formatDistance } from 'date-fns';
+
 import { modalUX } from "./modalUX";
 import { addEventToProject } from "./addEventToProject";
 
@@ -47,7 +48,6 @@ const projectEditForm = (function () {
         }
 
     }
-
 
     // Initiate project edit modal with form
     const showEditProjectForm = function () {

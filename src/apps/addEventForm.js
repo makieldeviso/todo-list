@@ -122,10 +122,7 @@ const addEventForm = (function () {
         if (form !== null) {
             // Remove form from modal
             modalCont.removeChild(form);
-            
-        } else {
-            return;
-        }
+        } 
     }
 
     const addEventFormEvent = function() {

@@ -1,25 +1,15 @@
 import { addTaskToEvent } from "./addTaskToEvent";
-import { saveFormValues } from "./saveFormValuesEvent";
 
 const modalUX = (function () {
 
     // Closes/ unselect all buttons from given nodeList
     const closeBtns = function (nodeList) {
         nodeList.forEach(btn => {
-            if (btn.dataset.selected === 'selected') {
-                btn.dataset.selected = "";
+            const closeBtn = btn
+            if (closeBtn.dataset.selected === 'selected') {
+                closeBtn.dataset.selected = "";
             }
         });
-    }
-
-    // Set the default selected button on modal closing
-    // Note: includes closeBtns function, 1st argument is nodeList
-    const setDefaultBtn = function (nodeList, defaultBtn) {
-        // Ensures other buttons are closed
-        closeBtns(nodeList);
-
-        // Defaults newEventBtn as selected
-        defaultBtn.dataset.selected = 'selected';
     }
 
     // UX for changing add options button  

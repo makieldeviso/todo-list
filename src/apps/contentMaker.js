@@ -7,7 +7,24 @@ import projectsIcon from '../assets/projects-icon.svg'
 import eventsIcon from '../assets/events-icon.svg'
 import emptyIcon from '../assets/empty.svg';
 
+import { projectsScripts } from "./projectsScripts";
+import { eventsScript } from "./eventsScript";
+
 const contentMaker = (function () {
+
+    // Reusable p text maker function
+    const makeText = function (assignClass, text) {
+        const newText = document.createElement('p');
+        newText.setAttribute('class', assignClass);
+        newText.textContent = text;
+
+        if ( assignClass.includes('prio') ) {
+            newText.classList.add(`${text}`);
+            newText.textContent = formatting.toProper(text);
+        }
+
+        return newText;
+    }
 
     // Reusable create and append span function
     const createSpan = function (parentP, assignClass, text) {
@@ -49,8 +66,8 @@ const contentMaker = (function () {
             newBtn.dataset.id = linkedId;
             newBtn.addEventListener('click', linkedFunc);
 
-            contentMaker.createSpan(newBtn, 'icon', '');
-            contentMaker.createSpan(newBtn, 'text', text);
+            createSpan(newBtn, 'icon', '');
+            createSpan(newBtn, 'text', text);
 
             actionRibbon.appendChild(newBtn);
         } 
@@ -126,12 +143,12 @@ const contentMaker = (function () {
             banner.setAttribute('id', 'filter-banner');
 
             if (text.includes('prio')) {
-                contentMaker.createSpan(banner, `${text} icon`, '');
-                contentMaker.createSpan(banner, 'main-text', `${formatting.toProper(text).slice(0,-5)} Priority`);
+                createSpan(banner, `${text} icon`, '');
+                createSpan(banner, 'main-text', `${formatting.toProper(text).slice(0,-5)} Priority`);
                 
             } else {
-                contentMaker.createSpan(banner, `${text} icon`, '');
-                contentMaker.createSpan(banner, 'main-text', formatting.toProper(text));
+                createSpan(banner, `${text} icon`, '');
+                createSpan(banner, 'main-text', formatting.toProper(text));
             }
 
             itemDisplay.appendChild(banner);
@@ -155,7 +172,7 @@ const contentMaker = (function () {
         const notifCont = document.createElement('div');
         notifCont.setAttribute('class', 'empty-notif');
 
-        const icon = contentMaker.createIndicatorIcon('empty');
+        const icon = createIndicatorIcon('empty');
         const messageText = document.createElement('p');
         messageText.setAttribute('class', 'empty-msg');
         messageText.textContent = `No ${formatting.toProper(category)}`;
@@ -166,7 +183,56 @@ const contentMaker = (function () {
         return notifCont;
     }
 
+    // Reusable task counter creator function
+    const createEventCounter = function (project) {
+        const newEventCounter = document.createElement('p');
+        newEventCounter.setAttribute('class', 'project-event-count pending');
+        newEventCounter.dataset.id = project.projectId;
+
+        const done = projectsScripts.countDoneEvents(project);
+        const total = projectsScripts.countEventsOfProject(project);
+
+        createSpan(newEventCounter, 'done', `${done}`);
+        createSpan(newEventCounter, 'slash', '/');
+        createSpan(newEventCounter, 'total', `${total}`);
+        createSpan(newEventCounter, 'label', 'events');
+
+        if (done === total) {
+            newEventCounter.classList.remove('pending');
+            newEventCounter.classList.add('done');
+        } 
+
+        return newEventCounter;
+    }
+
+        // Reusable task counter creator function
+        const createTaskCounter = function (event) {
+            const newTaskCounter = document.createElement('p');
+            newTaskCounter.setAttribute('class', 'event-task-count pending');
+            newTaskCounter.dataset.id = event.eventId;
+    
+            const { tasks } = event; // this is Object
+            const done = eventsScript.countDoneTasks(tasks);
+            const total = eventsScript.countTasksOfEvent(tasks);
+    
+            contentMaker.createSpan(newTaskCounter, 'done', `${done}`);
+            contentMaker.createSpan(newTaskCounter, 'slash', '/');
+            contentMaker.createSpan(newTaskCounter, 'total', `${total}`);
+            contentMaker.createSpan(newTaskCounter, 'label', 'tasks');
+    
+            if (done === total) {
+                newTaskCounter.classList.remove('pending');
+                newTaskCounter.classList.add('done');
+            } 
+    
+            return newTaskCounter;
+        }
+
+        
+    
+
     return { 
+        makeText,
         createSpan, 
         removeDisplay, 
         removeActionBtn, 
@@ -174,7 +240,9 @@ const contentMaker = (function () {
         createStatusMarker,
         createIndicatorIcon,
         createFilterBanner,
-        createEmptyPreviews
+        createEmptyPreviews,
+        createEventCounter,
+        createTaskCounter,
     }
 
 })();

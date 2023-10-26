@@ -1,6 +1,5 @@
 import { formatting } from "./formatting";
 import { memoryHandler } from "./memoryHandler";
-import { saveFormValuesProject } from "./saveFormValuesProject";
 
 const createFormComponents = (function () {
 
@@ -60,11 +59,11 @@ const createFormComponents = (function () {
         // Creates container - parent
         const container = createContainer('comp-container', dataId);
 
-        //Create p as label
+        // Create p as label
         const label = document.createElement('p');
         label.textContent = `${assignLabel}:`;
 
-        //Create another container for the buttons
+        // Create another container for the buttons
         const btnCont = document.createElement('div');
         btnCont.setAttribute('id', 'prio-btns-cont');
 
@@ -107,7 +106,7 @@ const createFormComponents = (function () {
          // lvl-1 parent
          const container = createContainer('comp-container', dataId); 
 
-         //Create p as label - lvl-1 child
+         // Create p as label - lvl-1 child
          const label = document.createElement('p');
          label.textContent = 'Tasks:'
 
@@ -126,7 +125,7 @@ const createFormComponents = (function () {
         taskInput.setAttribute('type', 'text');
         // taskInput.setAttribute('maxlength', '50');
 
-        //Create create task button - lvl-2 child, lvl-3 parent
+        // Create create task button - lvl-2 child, lvl-3 parent
         const addTaskBtn = adderBtn('add-task-btn');
 
         // Assemble component
@@ -145,7 +144,7 @@ const createFormComponents = (function () {
     const createEventAdder = function (dataId) {
         const container = createContainer('comp-container', dataId);
 
-        //Create p as label - lvl-1 child
+        // Create p as label - lvl-1 child
         const label = document.createElement('p');
         label.textContent = 'Add Event:'
 
@@ -225,11 +224,11 @@ const createFormComponents = (function () {
         const container = createContainer('comp-container save-cont', dataId);
 
         // Creates and appends buttons
-        const addBtn = function (assignClass, dataId, label) {
+        const addBtn = function (assignClass, assignDataId, label) {
             const newBtn = document.createElement('button');
             newBtn.setAttribute('class', assignClass);
-            newBtn.dataset.id = dataId;
-            newBtn.setAttribute('id', `${assignClass}-${dataId}`);
+            newBtn.dataset.id = assignDataId;
+            newBtn.setAttribute('id', `${assignClass}-${assignDataId}`);
             newBtn.textContent = label;
 
             newBtn.setAttribute('type', 'button');

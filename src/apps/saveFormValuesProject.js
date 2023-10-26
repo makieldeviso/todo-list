@@ -1,12 +1,13 @@
+import { format } from 'date-fns';
 import { addEventToProject } from "./addEventToProject";
 import { memoryHandler } from "./memoryHandler";
-import { projectsDisplay } from "./projectsDisplay";
+
 import { showModals } from "./showModals";
 import { onLoadScreen } from "./onLoadScreen";
 import { displayContent } from "./displayContent";
 
-import { format, differenceInCalendarDays } from 'date-fns';
 import { addProjectForm } from "./addProjectForm";
+import { projectFullView } from "./projectFullView";
 
 const saveFormValuesProject = (function () {
 
@@ -48,6 +49,15 @@ const saveFormValuesProject = (function () {
         return errors;
     };
 
+    // Link events to project
+    const linkEventsToProject = function (projectObj) {
+        const projectEventsKeys = Object.keys(projectObj.eventLinks); // Array;
+
+        projectEventsKeys.forEach((key) => {
+            memoryHandler.linkEventToProject(projectObj.eventLinks[key], projectObj.projectId);
+        });
+    }
+
     // Save project form values
     // Note: validated first
     const saveProjectForm = function () {
@@ -67,7 +77,7 @@ const saveFormValuesProject = (function () {
 
         // Reusable DOM value getter function
         const valueGet = function (selector) {
-            const value = document.querySelector(`${selector}`).value;
+            const { value } = document.querySelector(`${selector}`);
             return value
         }
 
@@ -81,7 +91,7 @@ const saveFormValuesProject = (function () {
         );
 
         // Add eventLinks object as property to newProject
-        newProject['eventLinks'] = addEventToProject.getProjectEvents();
+        newProject.eventLinks = addEventToProject.getProjectEvents();
 
         // Create an id for the newProject object
         const projectId = function (object) {
@@ -95,7 +105,7 @@ const saveFormValuesProject = (function () {
             // Double check and ensure no duplication of id
             // If same title and due date is created add additional id indicator
             const projects = memoryHandler.getProjects();
-            const sameId = projects.filter(project => project['projectId'].includes(newProjectId));
+            const sameId = projects.filter(project => project.projectId.includes(newProjectId));
 
             if (projectForModId === undefined) {
                 if (sameId.length > 0) {
@@ -103,14 +113,15 @@ const saveFormValuesProject = (function () {
                 }
             }
 
-            object['projectId'] = newProjectId;
+            return newProjectId;
         }
-        projectId(newProject); // Executes project id maker
 
-        //Add default project status
-        newProject['projectStatus'] = 'pending';
+        // Executes project id maker then assign return value as projectId property
+        newProject.projectId = projectId(newProject); 
 
-        
+        // Add default project status
+        newProject.projectStatus = 'pending';
+
         if (saveType === 'save-new-project') {
             // Save the project in array memory
             memoryHandler.saveProject(newProject);
@@ -123,7 +134,7 @@ const saveFormValuesProject = (function () {
 
             // Direct item display to the full view of newly created project
             displayContent.showDisplay('projects-previews', true);
-            projectsDisplay.showFullProject(newProject.projectId);
+            projectFullView.showFullProject(newProject.projectId);
 
         } else if ('save-edit-project') {
             const currentObj = memoryHandler.getProject(this.dataset.project);
@@ -135,21 +146,12 @@ const saveFormValuesProject = (function () {
             showModals.closeProjectEdit();
 
             // Display newly edited project full view
-            projectsDisplay.showFullProject(newProject.projectId);
+            projectFullView.showFullProject(newProject.projectId);
             
         }
 
         // Execute other display project counters
         onLoadScreen.loadCounters();
-    }
-
-    // Link events to project
-    const linkEventsToProject = function (projectObj) {
-        const projectEventsKeys = Object.keys(projectObj.eventLinks); //Array;
-
-        projectEventsKeys.forEach((key) => {
-            memoryHandler.linkEventToProject(projectObj.eventLinks[key], projectObj.projectId);
-        });
     }
 
     // Clear project form

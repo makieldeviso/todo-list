@@ -1,6 +1,5 @@
 import { eventsScript } from "./eventsScript";
 import { memoryHandler } from "./memoryHandler";
-import { modalUX } from "./modalUX";
 import { projectsScripts } from "./projectsScripts";
 
 const createModal = (function () {
@@ -99,7 +98,7 @@ const createModal = (function () {
     const createCheckbox = function (legendText, projectObj) {
 
         const eventsArray = projectsScripts.getProjectEvents(projectObj);
-        const projectStatus = projectObj.projectStatus;
+        const { projectStatus } = projectObj;
 
         if (eventsArray.length === 0) {
             return 'noEvent';
@@ -122,16 +121,16 @@ const createModal = (function () {
 
             const input = document.createElement('input');
             input.setAttribute('type', 'checkbox');
-            input.setAttribute('id', event['eventId'] );
-            input.setAttribute('name', event['eventId'] ); 
-            input.setAttribute('value', event['eventId'] ); 
+            input.setAttribute('id', event.eventId );
+            input.setAttribute('name', event.eventId ); 
+            input.setAttribute('value', event.eventId ); 
 
             if (projectStatus === 'done') {
                 input.checked = true;
             }
 
             const inputLabel = document.createElement('label');
-            inputLabel.setAttribute('for', event['eventId']);
+            inputLabel.setAttribute('for', event.eventId);
             inputLabel.textContent = event.title;
 
             inputCont.appendChild(input);
@@ -193,8 +192,8 @@ const createModal = (function () {
                 }
         });
 
-        content.appendChild(reminder); //Append reminder message to content div
-        content.appendChild(confirmBtnsCont); //Append buttons container to content div
+        content.appendChild(reminder); // Append reminder message to content div
+        content.appendChild(confirmBtnsCont); // Append buttons container to content div
 
         const components = [promptHeader, content];
         components.forEach(comp => modalCont.appendChild(comp));
@@ -205,7 +204,7 @@ const createModal = (function () {
 
         const eventObj = memoryHandler.getEvent(eventId);
 
-        const eventStatus = eventObj.eventStatus;
+        const { eventStatus } = eventObj;
 
         // Create dialog element with addition elements
         createNewModal('delete-event');
@@ -244,8 +243,8 @@ const createModal = (function () {
                 }
         });
 
-        content.appendChild(reminder); //Append reminder message to content div
-        content.appendChild(confirmBtnsCont); //Append buttons container to content div
+        content.appendChild(reminder); // Append reminder message to content div
+        content.appendChild(confirmBtnsCont); // Append buttons container to content div
 
         const components = [promptHeader, content];
         components.forEach(comp => modalCont.appendChild(comp));
@@ -296,8 +295,8 @@ const createModal = (function () {
                 }
         });
 
-        content.appendChild(reminder); //Append reminder message to content div
-        content.appendChild(confirmBtnsCont); //Append buttons container to content div
+        content.appendChild(reminder); // Append reminder message to content div
+        content.appendChild(confirmBtnsCont); // Append buttons container to content div
 
         const components = [promptHeader, content];
         components.forEach(comp => modalCont.appendChild(comp));
@@ -308,7 +307,7 @@ const createModal = (function () {
 
         const projectObj = memoryHandler.getProject(projectId);
 
-        const projectStatus = projectObj.projectStatus;
+        const { projectStatus } = projectObj;
 
         // Create dialog element with addition elements
         createNewModal('delete-project');
@@ -357,13 +356,13 @@ const createModal = (function () {
                 }
         });
 
-        content.appendChild(reminder); //Append reminder message to content div
+        content.appendChild(reminder); // Append reminder message to content div
 
         if (eventsCheckbox !== 'noEvent') {
-            content.appendChild(eventsCheckbox); //Append checkbox of events
+            content.appendChild(eventsCheckbox); // Append checkbox of events
         }
 
-        content.appendChild(confirmBtnsCont); //Append buttons container to content div
+        content.appendChild(confirmBtnsCont); // Append buttons container to content div
 
         const components = [promptHeader, content];
         components.forEach(comp => modalCont.appendChild(comp));

@@ -1,11 +1,8 @@
+import { format } from 'date-fns'
 import { memoryHandler } from "./memoryHandler";
-import { createModal } from "./createModal";
-import { addEventForm } from "./addEventForm";
 import { showModals } from "./showModals";
-import { format, formatDistance } from 'date-fns'
 import { modalUX } from "./modalUX";
 import { addTaskToEvent } from "./addTaskToEvent";
-import { saveFormValuesEvent } from "./saveFormValuesEvent";
 
 const eventEditForm = (function () {
     
@@ -47,7 +44,6 @@ const eventEditForm = (function () {
             addTaskToEvent.addNewTask(task, status);
         }
     } 
-
 
     // Initiate event edit modal with form
     const showEditEventForm = function () {

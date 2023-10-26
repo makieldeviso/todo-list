@@ -1,5 +1,4 @@
 import { showModals } from "./showModals";
-import { memoryHandler } from "./memoryHandler";
 
 const initDelete = (function () {
     const showDeleteEventPrompt = async function () {

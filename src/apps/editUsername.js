@@ -35,7 +35,6 @@ const editUsername = (function () {
 
             inputBox.addEventListener('blur', saveUsername);
         }
-
     }
 
     const saveUsername = function () {

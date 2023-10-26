@@ -1,93 +1,18 @@
-import { eventsDisplay } from "./eventsDisplay";
-import { projectsDisplay } from "./projectsDisplay";
-import { memoryHandler } from "./memoryHandler";
 import { displayContentTimeFiltered } from "../displayContentTimeFiltered";
 import { displayContentPriorityFiltered } from "../displayContentPriorityFiltered";
-import { formatting } from "./formatting";
 
 import { contentMaker } from "./contentMaker";
 
+import { projectsDisplay } from "./projectsDisplay";
+import { projectFullView } from "./projectFullView";
+
+import { changeCategory } from "./changeCategory";
+
+import { eventsDisplay } from "./eventsDisplay";
+import { eventFullView } from "./eventFullView";
+import { clearItemDisplay } from "./clearItemDisplay";
+
 const displayContent = (function () {
-
-    const clearItemDisplay = function (action) {
-        // Note: These variables might return null, conditions are specified which nodes will be used
-        const projectFullView = document.querySelector('div.project-fullview');
-        const eventFullView = document.querySelector('div.event-fullview');
-        const editEventBtn = document.querySelector('button[value="edit-event"]');
-        const deleteEventBtn = document.querySelector('button[value="delete-event"]');
-        const editProjectBtn = document.querySelector('button[value="edit-project"]');
-        const deleteProjectBtn = document.querySelector('button[value="delete-project"]');
-
-        if (action === 'projects-previews' || action === 'events-previews' ) {
-            // Remove filter banner and previews
-            contentMaker.createFilterBanner('remove');
-
-        } else if (action === 'event-fullview') {
-            // Close/ remove event full view
-            contentMaker.removeDisplay(eventFullView);
-
-            // Note: contentMaker.removeActionBtn accepts multiple buttons argument
-            contentMaker.removeActionBtn(editEventBtn, deleteEventBtn);
-  
-        } else if (action === 'project-fullview') {
-            // Close/ remove event full view
-            contentMaker.removeDisplay(projectFullView);
-
-            // Note: contentMaker.removeActionBtn accepts multiple buttons argument
-            contentMaker.removeActionBtn(editProjectBtn, deleteProjectBtn);
-
-        } else if (action === 'category-change') {
-            // Note: Removes all possible items on the item display
-
-            // Remove full views or previews
-           const allFullViews = [projectFullView, eventFullView];
-           allFullViews.forEach(item => {
-                if (item !== null) {
-                    contentMaker.removeDisplay(item);
-                }
-           });
-
-           // Remove filter banner and previews
-           contentMaker.createFilterBanner('remove');
-
-            // Remove action buttons
-           contentMaker.removeActionBtn(editEventBtn, deleteEventBtn, editProjectBtn, deleteProjectBtn);
-        }
-    }
-
-    // Revert display to default
-    const defaultDisplay = function () {
-        
-        // Clears display
-        clearItemDisplay('category-change');
-
-        // Removes dataset on the back button
-        const backBtn = document.querySelector('button#back-sidebar');
-        backBtn.dataset.action = 'default';
-        const addedDataset = ['filter', 'mode', 'link'];
-        addedDataset.forEach(dataset => {
-            if (backBtn.hasAttribute(`data-${dataset}`)) {
-                backBtn.removeAttribute(`data-${dataset}`);
-            }
-        });
-    }
-
-    // Add UI highlight to selected category/ filter
-    const highlightCategory = function (categoryNode) {
-        const categories = Array.from(document.querySelectorAll('div.category'));
-        // Remove selected class of previous category
-        categories.some(node => {
-            let found;
-            if (node.getAttribute('class').includes('selected')) {
-                node.classList.remove('selected');
-                found = true;
-            }
-            return found
-        });
-
-        // Add selected class to new selected node 
-        categoryNode.classList.add('selected');
-    }
 
     const translateSidebar = function (action) {
         const sidebar = document.querySelector('div#sidebar');
@@ -117,8 +42,8 @@ const displayContent = (function () {
                 const category = action.slice(0, -9);
 
                 const categorySelected = document.querySelector(`div.category#${category}`);
-                highlightCategory(categorySelected);
-                defaultDisplay();
+                changeCategory.highlightCategory(categorySelected);
+                changeCategory.defaultDisplay();
             }
 
         } else {
@@ -134,9 +59,8 @@ const displayContent = (function () {
 
             assignAction = `${this.getAttribute('id')}-previews`;
 
-            highlightCategory(this);
-            
-            defaultDisplay();
+            changeCategory.highlightCategory(this);
+            changeCategory.defaultDisplay();
         }
         
         backBtn.dataset.action = assignAction;
@@ -176,7 +100,7 @@ const displayContent = (function () {
             const {mode, filter, link} = this.dataset;
 
             if (mode !== undefined) {
-                clearItemDisplay(backAction);   
+                clearItemDisplay.clear(backAction);   
 
                 // Removes the additional datasets after executing clearItemDisplay function
                 this.removeAttribute('data-mode');
@@ -184,15 +108,15 @@ const displayContent = (function () {
 
                 // Show corresponding display, depending of the mode and action
                 if (mode === 'project-view') {
-                    projectsDisplay.showFullProject(link);
+                    projectFullView.showFullProject(link);
 
                 } else if (mode === 'event-view') {
-                    eventsDisplay.showFullEvent(link);
+                    eventFullView.showFullEvent(link);
                 }
             
             } else if (filter !== undefined) {
                 // This executes when using time filter
-                clearItemDisplay(backAction);
+                clearItemDisplay.clear(backAction);
 
                 if (filter.includes('prio')) {
                     const priority = displayContentPriorityFiltered.convertDataSet(filter);
@@ -213,7 +137,7 @@ const displayContent = (function () {
                 this.removeAttribute('data-filter');
 
             } else {
-                clearItemDisplay(backAction);
+                clearItemDisplay.clear(backAction);
 
                 if (backAction === 'event-fullview') {
                     showDisplay('events-previews');
@@ -239,11 +163,6 @@ const displayContent = (function () {
             addSidebarEvents, 
             translateSidebar,
             backBtnEvents, 
-
-            clearItemDisplay, 
-
-            highlightCategory,
-            defaultDisplay,
         }
 
 })();

@@ -1,8 +1,9 @@
+import { format } from 'date-fns'
 import { memoryHandler } from "./memoryHandler";
 import { displayContentTimeFiltered } from "../displayContentTimeFiltered";
 import { displayContentPriorityFiltered } from "../displayContentPriorityFiltered";
 import { formatting } from "./formatting";
-import { format, formatDistance } from 'date-fns'
+
 import { editUsername } from "./editUsername";
 
 const onLoadScreen = (function () {
@@ -28,7 +29,7 @@ const onLoadScreen = (function () {
 
     // Display counters for projects or events
     // Note: argument requires string (e.g. 'projects', 'events);
-    const displayProjectEventCount = function (todoType) {
+    const displayProjectEventCount = function () {
 
         const todoTypes = ['events', 'projects'];
         todoTypes.forEach(type => {

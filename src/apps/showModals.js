@@ -4,17 +4,18 @@ import { modalUX } from "./modalUX";
 import { addProjectForm } from "./addProjectForm";
 import { memoryHandler } from "./memoryHandler";
 import { eventsDisplay } from "./eventsDisplay";
-import { saveFormValues } from "./saveFormValuesEvent";
-import { addTaskToEvent } from "./addTaskToEvent";
-import { displayContent } from "./displayContent";
+
 import { onLoadScreen } from "./onLoadScreen";
 import { projectsDisplay } from "./projectsDisplay";
-import { addEventToProject } from "./addEventToProject";
+
 import { displayContentTimeFiltered } from "../displayContentTimeFiltered";
 import { displayContentPriorityFiltered } from "../displayContentPriorityFiltered";
-import { createFormComponents } from "./createFormComponents";
+
 
 import { contentMaker } from "./contentMaker";
+import { projectFullView } from "./projectFullView";
+import { eventFullView } from "./eventFullView";
+import { clearItemDisplay } from "./clearItemDisplay";
 
 const showModals = (function () {
     
@@ -118,7 +119,7 @@ const showModals = (function () {
         closeCompletion();
 
         // Display new event full view
-        eventsDisplay.showFullEvent(eventId);
+        eventFullView.showFullEvent(eventId);
 
         // reload counters
         onLoadScreen.loadCounters();
@@ -215,7 +216,7 @@ const showModals = (function () {
         closeEventDelete();
 
         // Removes current event full view in the DOM
-        displayContent.clearItemDisplay('event-fullview');
+        clearItemDisplay.clear('event-fullview');
 
         // Change back button action
         // Note: Item display depends on where event full view was accessed
@@ -229,7 +230,7 @@ const showModals = (function () {
             backBtn.removeAttribute('data-link');
 
             // Display project fullview
-            projectsDisplay.showFullProject(this.dataset.link);
+            projectFullView.showFullProject(this.dataset.link);
 
         } else {
 
@@ -360,7 +361,7 @@ const showModals = (function () {
         closeProjectDelete();
 
         // Removes current project full view in the DOM
-        displayContent.clearItemDisplay('project-fullview');
+        clearItemDisplay.clear('project-fullview');
 
         // Change back button action
         // Note: Item display depends on where event full view was accessed
@@ -467,7 +468,7 @@ const showModals = (function () {
         closeProjectCompletion();   
 
         // Display new event full view
-        projectsDisplay.showFullProject(projectId);
+        projectFullView.showFullProject(projectId);
 
         // Reload counter
         // Note: useful when reloading count for overdue filter

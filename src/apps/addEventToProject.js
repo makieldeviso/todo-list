@@ -1,4 +1,5 @@
 import { memoryHandler } from "./memoryHandler";
+import { eventFullView } from "./eventFullView";
 import { eventsDisplay } from "./eventsDisplay";
 
 const addEventToProject = (function () {
@@ -33,7 +34,7 @@ const addEventToProject = (function () {
         newEventPreview.classList.add('event-project');
 
         // Note: Remove showFullEvent linked function to newEventCont
-        newEventPreview.removeEventListener('click', eventsDisplay.showFullEvent);
+        newEventPreview.removeEventListener('click', eventFullView.showFullEvent);
 
         // Create unlink button, then add eventListener
         const unlinkButton = document.createElement('button');
