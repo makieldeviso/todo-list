@@ -1,11 +1,9 @@
 import { format } from 'date-fns';
-
 import { projectsScripts } from './projectsScripts';
 import { contentMaker } from "./contentMaker";
 import { memoryHandler } from "./memoryHandler";
 import { projectEditForm } from "./projectEditForm";
 import { initDelete } from "./initDelete";
-
 import { eventsDisplay } from './eventsDisplay';
 import { showModals } from './showModals';
 import { changeCategory } from './changeCategory';

@@ -9,6 +9,15 @@ import { contentMaker } from "./apps/contentMaker";
 
 const displayContentPriorityFiltered = (function () {
 
+    // Dataset converter
+    const convertDataSet = function (priorityString) {
+        const priorityConditions = ['high', 'mid', 'low'];
+
+        const priority = priorityConditions.find(prio => priorityString.includes(prio));
+
+        return priority;
+    }
+
     // Reusable create and append filtered preview to the item display
     const createFilteredPreview = function (objArray, filterName) {
         // Create and append project previews on itemDisplay
@@ -18,10 +27,10 @@ const displayContentPriorityFiltered = (function () {
             objArray.forEach(obj => {
                 // Note: conditional detect if obj is eventObj or projectObj
                 let preview;
-                if (obj.hasOwnProperty('projectId')) {
+                if ( Object.hasOwn(obj, 'projectId') ) {
                     preview = projectsDisplay.createProjectPreview(obj);
     
-                } else if (obj.hasOwnProperty('eventId')) {
+                } else if ( Object.hasOwn(obj, 'eventId') ) {
                     preview = eventsDisplay.createEventDisplay(obj);
                 }
     
@@ -33,24 +42,6 @@ const displayContentPriorityFiltered = (function () {
             const emptyNotif = contentMaker.createEmptyPreviews(`${convertDataSet(filterName)} Priority`);
             previewsCont.appendChild(emptyNotif);
         }
-         
-    }
-
-    // Dataset converter
-    const convertDataSet = function (priorityString) {
-        const priorityConditions = ['high', 'mid', 'low'];
-
-        const priority = priorityConditions.find(prio => priorityString.includes(prio));
-
-        return priority;
-    }
-
-    // Count priority filtered todo (array.length)
-    // Note: needs condition argument, then return the length of the filtered array
-    const countPriorityFiltered = function (condition) {
-        const todoArray = memoryHandler.getAll();
-        const filteredArray = priorityFilter(todoArray, condition);
-        return filteredArray.length;
     }
 
     // Return array of todoItems(objects) filtered by priority condition argument
@@ -58,6 +49,14 @@ const displayContentPriorityFiltered = (function () {
         const filteredArray = objArray.filter(obj => obj.priority === condition);
 
         return filteredArray;
+    }
+    
+    // Count priority filtered todo (array.length)
+    // Note: needs condition argument, then return the length of the filtered array
+    const countPriorityFiltered = function (condition) {
+        const todoArray = memoryHandler.getAll();
+        const filteredArray = priorityFilter(todoArray, condition);
+        return filteredArray.length;
     }
 
     const displayPriorityFiltered = function (action) {

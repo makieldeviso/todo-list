@@ -1,9 +1,7 @@
 import { format } from 'date-fns';
 import { formatting } from "./formatting";
-
 import { projectsScripts } from "./projectsScripts";
 import { memoryHandler } from "./memoryHandler";
-
 import { contentMaker } from "./contentMaker";
 import { projectFullView } from './projectFullView';
 

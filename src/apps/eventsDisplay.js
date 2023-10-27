@@ -2,14 +2,11 @@ import { format } from 'date-fns';
 import { memoryHandler } from "./memoryHandler";
 import { formatting } from "./formatting";
 import { eventsScript } from "./eventsScript";
-
 import { contentMaker } from "./contentMaker";
-
 import { eventFullView } from './eventFullView';
 
 const eventsDisplay = (function () {
 
-  
     // Event preview/ display  DOM maker
     const createEventDisplay = function (eventObj) {
         
@@ -112,7 +109,7 @@ const eventsDisplay = (function () {
         }
     }
 
-    return {displayEventsToDOM, createEventDisplay};
+    return {displayEventsToDOM, createEventDisplay, showFullEventToDOM};
 })();
 
 export {eventsDisplay}

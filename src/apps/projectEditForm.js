@@ -32,8 +32,9 @@ const projectEditForm = (function () {
         priorityBtnSelected.dataset.selected = 'selected';
 
         // Add eventsLinks preview to the DOM
-        const eventLinks = projectObj.eventLinks;
-        for (const event in eventLinks) {
+        const { eventLinks } = projectObj;
+        const eventKeys = Object.keys(eventLinks);
+        eventKeys.forEach(event => {
             const eventId = eventLinks[event];
             const eventObj = memoryHandler.getEvent(eventId);
 
@@ -45,8 +46,7 @@ const projectEditForm = (function () {
             eventSelect.appendChild(eventOption);
 
             addEventToProject.addEvent(eventId);
-        }
-
+        });
     }
 
     // Initiate project edit modal with form

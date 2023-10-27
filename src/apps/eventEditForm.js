@@ -38,11 +38,11 @@ const eventEditForm = (function () {
 
         const tasksObj = eventObj.tasks;
 
-        for (const individualTask in tasksObj) {
-            const task = tasksObj[individualTask].task;
-            const status = tasksObj[individualTask].status;
+        const taskKeys = Object.keys(tasksObj);
+        taskKeys.forEach(key => {
+            const { task, status } = tasksObj[key];
             addTaskToEvent.addNewTask(task, status);
-        }
+        });
     } 
 
     // Initiate event edit modal with form

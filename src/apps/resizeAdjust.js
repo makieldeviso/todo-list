@@ -14,7 +14,7 @@ const resizeAdjust = (function () {
         window.addEventListener('resize', adjustMainSize);
     }
 
-    return {addResizeEvent}
+    return { addResizeEvent }
 })();
 
 export { resizeAdjust }

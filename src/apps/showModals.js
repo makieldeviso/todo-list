@@ -11,11 +11,11 @@ import { projectsDisplay } from "./projectsDisplay";
 import { displayContentTimeFiltered } from "../displayContentTimeFiltered";
 import { displayContentPriorityFiltered } from "../displayContentPriorityFiltered";
 
-
 import { contentMaker } from "./contentMaker";
 import { projectFullView } from "./projectFullView";
 import { eventFullView } from "./eventFullView";
 import { clearItemDisplay } from "./clearItemDisplay";
+import { closeModal } from "./closeModal";
 
 const showModals = (function () {
     
@@ -81,7 +81,7 @@ const showModals = (function () {
         addPromptModal.showModal();
 
         // Add eventListener to close-add/ close modal button
-        closeBtn.addEventListener('click', closeModal);
+        closeBtn.addEventListener('click', closeModal.closeAddModal);
     } 
 
     // Opens prompt before completing an event (start)
@@ -156,21 +156,10 @@ const showModals = (function () {
         editForm.dataset.id = eventId;
         
         // Add close modal event listener
-        closeBtn.addEventListener('click', closeEventEdit);
+        closeBtn.addEventListener('click', closeModal.closeEventEdit);
 
         // Show Modal created
         editModal.showModal();
-    }
-
-    // Closes event edit modal
-    const closeEventEdit = function () {
-        // Closes modal
-        const editEventModal = document.querySelector('dialog#edit-event-prompt');
-        editEventModal.close();
-
-         // Removes modal from the DOM
-        const main = document.querySelector('main');
-        main.removeChild(editEventModal);
     }
 
     // Show event delete prompt modal (start) - 
@@ -275,21 +264,6 @@ const showModals = (function () {
         main.removeChild(deletePromptModal);
     }
     // Show event delete prompt modal (end) - 
-
-    // Closes Modal, removes eventListeners to elements inside the modal then removes the modal in the DOM
-    const closeModal = function () {
-        // Removes form and event listeners from elements inside modal
-        modalUX.removeModalUX();
-        addEventForm.removeEventForm();
-
-        // Closes modal
-        const addPromptModal = document.querySelector('dialog#add-prompt');
-        addPromptModal.close();
-
-        // Removes modal from the DOM
-        const main = document.querySelector('main');
-        main.removeChild(addPromptModal);
-    }
 
     // Adds event listener to addButton
     const addButtonEvent = function () {
@@ -492,10 +466,8 @@ const showModals = (function () {
     }
 
     return { addButtonEvent, 
-            closeModal, 
             addCompletionPromptEvent, 
             showEventEditModal,
-            closeEventEdit,
             showEventDeletePrompt,
         
             addCompletionPromptProject,
